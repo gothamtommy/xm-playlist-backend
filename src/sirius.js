@@ -57,7 +57,6 @@ async function checkEndpoint(channel) {
     lastSong = {};
   }
   if (!res.channelMetadataResponse || !res.channelMetadataResponse.status) {
-    debug('invalid');
     return Promise.resolve();
   }
   const newSong = parseChannelMetadataResponse(res);

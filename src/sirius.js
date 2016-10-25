@@ -1,4 +1,4 @@
-// const debug = require('debug')('xmplaylist');
+const debug = require('debug')('xmplaylist:sirius');
 const moment = require('moment');
 const rp = require('request-promise-native');
 const _ = require('lodash');
@@ -8,7 +8,7 @@ const tracks = require('./tracks');
 
 // http://www.siriusxm.com/metadata/pdt/en-us/json/channels/thebeat/timestamp/02-25-08:10:00
 const baseurl = 'http://www.siriusxm.com';
-// const badIds = ['^I', ''];
+const badIds = ['^I', ''];
 
 function parseChannelMetadataResponse(obj) {
   const meta = obj.channelMetadataResponse.metaData;
@@ -19,8 +19,6 @@ function parseChannelMetadataResponse(obj) {
   const startTime = new Date(currentEvent.startTime);
   const res = {
     channelId: meta.channelId,
-    channelName: meta.channelName,
-    channelNumber: meta.channelNumber,
     name: song.name,
     artists,
     artistsId: currentEvent.artists.id,
@@ -44,10 +42,10 @@ function parseChannelMetadataResponse(obj) {
 async function checkEndpoint(channel) {
   const dateString = moment.utc().format('MM-DD-HH:mm:00');
   const opt = {
-    uri: `${baseurl}/metadata/pdt/en-us/json/channels/${channel.channel}/timestamp/${dateString}`,
+    uri: `${baseurl}/metadata/pdt/en-us/json/channels/${channel.id}/timestamp/${dateString}`,
     json: true,
   };
-  console.log(opt.uri);
+  debug(opt.uri);
   let res;
   let lastSong;
   try {
@@ -59,14 +57,18 @@ async function checkEndpoint(channel) {
     lastSong = {};
   }
   if (!res.channelMetadataResponse || !res.channelMetadataResponse.status) {
+    debug('invalid');
     return Promise.resolve();
   }
   const newSong = parseChannelMetadataResponse(res);
+  if (badIds.includes(newSong.songId) || newSong.name[0] === '#') {
+    return Promise.resolve();
+  }
   if (lastSong.songId === newSong.songId) {
     return Promise.resolve();
   }
   // TODO: announce
-  console.log(newSong);
+  debug(newSong);
   return Promise.all([
     stream.insert(newSong),
     tracks.update(newSong),

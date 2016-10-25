@@ -3,7 +3,7 @@ const mongo = require('./mongo');
 async function getLast(channel) {
   const db = await mongo;
   return db.collection('stream')
-    .findOne({ channelId: channel.channel }, {
+    .findOne({ channelId: channel.id }, {
       sort: { $natural: -1 },
     });
 }

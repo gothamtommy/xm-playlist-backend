@@ -1,0 +1,15 @@
+{
+  "apps" : [{
+    "name"        : "xmplaylist",
+    "script"      : "dist/index.js",
+    "env": {
+      "NODE_ENV": "prod"
+    }
+  },{
+    "name"       : "cron",
+    "script"     : "dist/cron.js",
+    "env": {
+      "NODE_ENV": "prod"
+    }
+  }]
+}

@@ -1,3 +1,4 @@
 module.exports = [
-  { name: 'BPM', channel: 'thebeat' },
+  { name: 'BPM', id: 'thebeat' },
+  { name: 'Electric Area', id: 'area33' },
 ];

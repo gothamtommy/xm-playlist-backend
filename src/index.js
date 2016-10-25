@@ -1,12 +1,11 @@
-const debug = require('debug')('xmplaylist');
+const debug = require('debug')('xmplaylist:index');
 const Koa = require('koa');
 const logger = require('koa-logger');
 const route = require('koa-route');
 const cors = require('kcors');
 
 const config = require('../config');
-const sirius = require('./sirius');
-const channels = require('./channels');
+
 
 const app = module.exports = new Koa();
 app.proxy = true;
@@ -28,13 +27,6 @@ app.use((ctx, next) => {
 // app.use(route.get('/artist/:artist', ep.artists));
 // app.use(route.get('/song/:song', ep.songFromID));
 // app.use(route.get('/songstream/:song', ep.songstream));
-
-app.use(route.get('/update', async (ctx, next) => {
-  ctx.assert(ctx.request.ip.includes('127.0.0.1'), 400);
-  await sirius.checkEndpoint(channels[0]);
-  ctx.body = 'ok';
-  return next();
-}))
 
 
 if (!module.parent) {

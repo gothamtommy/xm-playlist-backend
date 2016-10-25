@@ -1,7 +1,7 @@
 const moment = require('moment');
 const JSONStream = require('JSONStream');
 
-function* recentBPM(next) {
+async function recentBPM(ctx, next) {
   const date = moment().subtract(1, 'days').toDate();
   this.body = this.db.collection('stream')
     .find({ heard: { $gt: date } })
@@ -10,7 +10,7 @@ function* recentBPM(next) {
     .pipe(JSONStream.stringify());
   yield next;
 }
-function* newsongs(next) {
+async function newsongs(ctx, next) {
   this.body = this.db.collection('tracks')
     .find({}).sort({ $natural: -1 })
     .limit(100)
@@ -18,7 +18,7 @@ function* newsongs(next) {
     .pipe(JSONStream.stringify());
   yield next;
 }
-function* mostHeard(next) {
+async function mostHeard(ctx, next) {
   const date = moment().subtract(7, 'days').toDate();
   this.body = this.db.collection('stream')
     .aggregate([
@@ -38,7 +38,7 @@ function* mostHeard(next) {
     .pipe(JSONStream.stringify());
   yield next;
 }
-function* artists(artist, next) {
+async function artists(artist, next) {
   this.body = this.db.collection('tracks')
     .find({ artists: artist })
     .stream()
@@ -52,11 +52,11 @@ function distinctArtists(db) {
     });
   });
 }
-function* allArtists(next) {
+async function allArtists(ctx, next) {
   this.body = yield distinctArtists(this.db);
   yield next;
 }
-function* songFromID(song, next) {
+async function songFromID(song, next) {
   this.body = this.db.collection('tracks')
     .find({ xmSongID: song.replace('-', '#') })
     .limit(1)
@@ -64,7 +64,7 @@ function* songFromID(song, next) {
     .pipe(JSONStream.stringify());
   yield next;
 }
-function* songstream(song, next) {
+async function songstream(song, next) {
   const songID = song.replace('-', '#');
   this.body = this.db.collection('stream')
     .aggregate([

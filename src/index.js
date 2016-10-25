@@ -1,13 +1,12 @@
+const debug = require('debug')('xmplaylist');
 const Koa = require('koa');
 const logger = require('koa-logger');
 const route = require('koa-route');
-const _ = require('lodash');
-const moment = require('moment');
 const cors = require('kcors');
-const rp = require('request-promise-native');
 
-const ep = require('./endpoints');
-const config = require('./config');
+const config = require('../config');
+const sirius = require('./sirius');
+const channels = require('./channels');
 
 const app = module.exports = new Koa();
 app.proxy = true;
@@ -22,16 +21,23 @@ app.use((ctx, next) => {
 });
 
 // routes
-app.use(route.get('/recentBPM', ep.recentBPM));
-app.use(route.get('/new', ep.newsongs));
-app.use(route.get('/mostHeard', ep.mostHeard));
-app.use(route.get('/artists', ep.allArtists));
-app.use(route.get('/artist/:artist', ep.artists));
-app.use(route.get('/song/:song', ep.songFromID));
-app.use(route.get('/songstream/:song', ep.songstream));
+// app.use(route.get('/recentBPM', ep.recentBPM));
+// app.use(route.get('/new', ep.newsongs));
+// app.use(route.get('/mostHeard', ep.mostHeard));
+// app.use(route.get('/artists', ep.allArtists));
+// app.use(route.get('/artist/:artist', ep.artists));
+// app.use(route.get('/song/:song', ep.songFromID));
+// app.use(route.get('/songstream/:song', ep.songstream));
+
+app.use(route.get('/update', async (ctx, next) => {
+  ctx.assert(ctx.request.ip.includes('127.0.0.1'), 400);
+  await sirius.checkEndpoint(channels[0]);
+  ctx.body = 'ok';
+  return next();
+}))
 
 
-
-
-
-app.listen(5000);
+if (!module.parent) {
+  app.listen(config.port);
+  debug('listening on port:', config.port);
+}

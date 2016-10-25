@@ -1,14 +1,14 @@
-const debug = require('debug')('xmplaylist');
+// const debug = require('debug')('xmplaylist');
 const moment = require('moment');
 const rp = require('request-promise-native');
 const _ = require('lodash');
 
 const stream = require('./stream');
-const channels = require('./channels');
+const tracks = require('./tracks');
 
 // http://www.siriusxm.com/metadata/pdt/en-us/json/channels/thebeat/timestamp/02-25-08:10:00
 const baseurl = 'http://www.siriusxm.com';
-const badIds = ['^I', ''];
+// const badIds = ['^I', ''];
 
 function parseChannelMetadataResponse(obj) {
   const meta = obj.channelMetadataResponse.metaData;
@@ -52,51 +52,25 @@ async function checkEndpoint(channel) {
   let lastSong;
   try {
     [res, lastSong] = await Promise.all([rp(opt), stream.getLast(channel)]);
-    if (!lastSong) {
-      lastSong = {};
-    }
   } catch (e) {
-    return;
+    return Promise.resolve();
   }
-  if (res.status) {
-    return;
+  if (!lastSong) {
+    lastSong = {};
   }
-  let newSong;
-  try {
-    newSong = parseChannelMetadataResponse(res);
-  } catch (e) {
-    console.log('Parse Failed', e);
-    return;
+  if (!res.channelMetadataResponse || !res.channelMetadataResponse.status) {
+    return Promise.resolve();
   }
+  const newSong = parseChannelMetadataResponse(res);
   if (lastSong.songId === newSong.songId) {
-    return;
+    return Promise.resolve();
   }
   // TODO: announce
   console.log(newSong);
-  await stream.insert(newSong);
+  return Promise.all([
+    stream.insert(newSong),
+    tracks.update(newSong),
+  ]);
 }
 
-setInterval(() => checkEndpoint(channels[0]), 10000);
-
-
-function spotify(artists, track, info) {
-  const uri = `https://api.spotify.com/v1/search?q=artist:${artists}+track:${track}&type=track`;
-  console.log(uri);
-  const options = {
-    uri,
-    json: true,
-  };
-  return rp(options).then((res) => {
-    const chosen = _.maxBy(res.tracks.items, 'popularity');
-    if (chosen) {
-      info.spotify.artists = _.map(chosen.artists, 'name');
-      info.spotify.name = chosen.name;
-      info.spotify.url = chosen.external_urls.spotify;
-      info.spotify.album_image = chosen.album.images[0].url;
-      info.spotify.album = chosen.album.name;
-    }
-    return info;
-  });
-}
-
-
+exports.checkEndpoint = checkEndpoint;

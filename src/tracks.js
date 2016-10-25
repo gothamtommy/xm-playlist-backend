@@ -1,6 +1,6 @@
 const mongo = require('./mongo');
 
-async function insert(doc) {
+async function update(doc) {
   // TODO: spotify
   const db = await mongo;
   return db.collection('tracks')
@@ -19,4 +19,4 @@ async function insert(doc) {
   );
 }
 
-exports.insert = insert;
+exports.update = update;

@@ -7,14 +7,14 @@ const sirius = require('./sirius');
 const channels = require('./channels');
 
 async function updateAll() {
-  const throttle = createThrottle(2);
-  const res = await Promise.all(channels.map(channel => throttle(async () => {
+  const throttle = createThrottle(1);
+  const res = await Promise.all(channels.map(channel => throttle(() => {
     debug('Processing', channel);
-    await sirius.checkEndpoint(channel);
+    return sirius.checkEndpoint(channel);
   })));
   debug('FINISHED', _.compact(res).length);
 }
 
 if (!module.parent) {
-  setInterval(() => updateAll(), 10000);
+  setInterval(() => updateAll(), 15000);
 }

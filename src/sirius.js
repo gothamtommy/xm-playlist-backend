@@ -51,27 +51,28 @@ async function checkEndpoint(channel) {
   try {
     [res, lastSong] = await Promise.all([rp(opt), stream.getLast(channel)]);
   } catch (e) {
-    return Promise.resolve();
+    return Promise.resolve(false);
   }
   if (!lastSong) {
     lastSong = {};
   }
   if (!res.channelMetadataResponse || !res.channelMetadataResponse.status) {
-    return Promise.resolve();
+    return Promise.resolve(false);
   }
   const newSong = parseChannelMetadataResponse(res);
   if (badIds.includes(newSong.songId) || newSong.name[0] === '#') {
-    return Promise.resolve();
+    return Promise.resolve(false);
   }
   if (lastSong.songId === newSong.songId) {
-    return Promise.resolve();
+    return Promise.resolve(false);
   }
   // TODO: announce
   debug(newSong);
-  return Promise.all([
+  await Promise.all([
     stream.insert(newSong),
     tracks.update(newSong),
   ]);
+  return Promise.resolve(true);
 }
 
 exports.checkEndpoint = checkEndpoint;

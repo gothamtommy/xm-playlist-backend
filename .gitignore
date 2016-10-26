@@ -28,4 +28,3 @@ node_modules
 
 /dist
 /.nyc_output
-config.prod.js

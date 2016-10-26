@@ -19,4 +19,11 @@ async function update(doc) {
   );
 }
 
+async function artists() {
+  const db = await mongo;
+  return db.collection('tracks')
+    .distinct('artists');
+}
+
 exports.update = update;
+exports.artists = artists;

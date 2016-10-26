@@ -1,15 +1,3 @@
-const moment = require('moment');
-const JSONStream = require('JSONStream');
-// 
-// async function recentBPM(ctx, next) {
-//   const date = moment().subtract(1, 'days').toDate();
-//   this.body = this.db.collection('stream')
-//     .find({ heard: { $gt: date } })
-//     .sort({ $natural: -1 })
-//     .stream()
-//     .pipe(JSONStream.stringify());
-//   yield next;
-// }
 // async function newsongs(ctx, next) {
 //   this.body = this.db.collection('tracks')
 //     .find({}).sort({ $natural: -1 })
@@ -45,13 +33,6 @@ const JSONStream = require('JSONStream');
 //     .pipe(JSONStream.stringify());
 //   yield next;
 // }
-// function distinctArtists(db) {
-//   return new Promise((resolve) => {
-//     db.collection('tracks').distinct('artists', (err, doc) => {
-//       resolve(doc);
-//     });
-//   });
-// }
 // async function allArtists(ctx, next) {
 //   this.body = yield distinctArtists(this.db);
 //   yield next;
@@ -82,10 +63,3 @@ const JSONStream = require('JSONStream');
 //     .pipe(JSONStream.stringify());
 //   yield next;
 // }
-// exports.recentBPM = recentBPM;
-// exports.newsongs = newsongs;
-// exports.mostHeard = mostHeard;
-// exports.artists = artists;
-// exports.allArtists = allArtists;
-// exports.songFromID = songFromID;
-// exports.songstream = songstream;

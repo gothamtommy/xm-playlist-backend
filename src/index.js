@@ -8,6 +8,7 @@ const _ = require('lodash');
 const config = require('../config');
 const channels = require('./channels');
 const stream = require('./stream');
+const tracks = require('./tracks');
 
 
 const app = module.exports = new Koa();
@@ -27,6 +28,11 @@ router.get('/recent/:channelName', async (ctx, next) => {
   const channel = _.find(channels, { name: ctx.params.channelName });
   ctx.assert(channel, 400, 'Channel does not exist');
   ctx.body = await stream.getRecent(channel);
+  return next();
+});
+
+router.get('/artists', async (ctx, next) => {
+  ctx.body = await tracks.artists();
   return next();
 });
 // app.use(route.get('/new', ep.newsongs));

@@ -1,4 +1,4 @@
 module.exports = {
   db: 'mongodb://localhost/xmplaylist',
-  port: 5000,
+  port: 5001,
 };

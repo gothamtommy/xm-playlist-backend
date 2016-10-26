@@ -35,6 +35,11 @@ router.get('/artists', async (ctx, next) => {
   ctx.body = await tracks.artists();
   return next();
 });
+
+router.get('/channels', (ctx, next) => {
+  ctx.body = channels;
+  return next();
+});
 // app.use(route.get('/new', ep.newsongs));
 // app.use(route.get('/mostHeard', ep.mostHeard));
 // app.use(route.get('/artists', ep.allArtists));

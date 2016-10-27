@@ -53,6 +53,23 @@
     "supertest": "^2.0.1",
     "supertest-as-promised": "^4.0.1"
   },
+  "nyc": {
+    "sourceMap": false,
+    "instrument": false,
+    "require": [
+      "babel-register"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "exclude": [
+      "test",
+      "config",
+      "build",
+      "dist"
+    ]
+  },
   "engines": {
     "node": ">=6"
   }

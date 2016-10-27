@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "start": "DEBUG=xmplaylist:* NODE_ENV=dev pm2 start process.dev.json --no-daemon ",
-    "test": "NODE_ENV=test ./node_modules/.bin/mocha --compilers js:babel-register ./test/index.spec.js",
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha --compilers js:babel-register ./test/test.js ./test/**/*.spec.js",
     "coverage": "nyc npm test",
     "build": "./node_modules/.bin/babel src -d src -d dist",
     "lint": "eslint --format=node_modules/eslint-formatter-pretty src test; exit 0"
@@ -20,7 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "JSONStream": "^1.2.1",
-    "async-throttle": "0.0.1",
+    "async-throttle": "1.0.0",
     "debug": "^2.2.0",
     "kcors": "^2.2.0",
     "koa": "2.0.0-alpha.7",
@@ -42,15 +42,16 @@
     "chai": "^3.5.0",
     "coveralls": "^2.11.14",
     "eslint": "^3.8.1",
-    "istanbul": "1.1.0-alpha.1",
     "eslint-config-airbnb-base": "^9.0.0",
     "eslint-formatter-pretty": "^1.1.0",
     "eslint-plugin-import": "^2.0.1",
+    "istanbul": "1.1.0-alpha.1",
     "mocha": "^3.1.2",
     "nock": "^9.0.0",
-    "pm2": "^2.0.19",
     "nyc": "^8.3.2",
-    "supertest": "^2.0.1"
+    "pm2": "^2.0.19",
+    "supertest": "^2.0.1",
+    "supertest-as-promised": "^4.0.1"
   },
   "engines": {
     "node": ">=6"

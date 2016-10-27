@@ -1,7 +1,6 @@
 const debug = require('debug')('xmplaylist:sirius');
 const moment = require('moment');
 const rp = require('request-promise-native');
-const _ = require('lodash');
 
 const stream = require('./stream');
 const tracks = require('./tracks');
@@ -10,33 +9,26 @@ const tracks = require('./tracks');
 const baseurl = 'http://www.siriusxm.com';
 const badIds = ['^I', ''];
 
+function parseArtists(artists) {
+  return artists.match(/(?:\/\\|[^/\\])+/g);
+}
+
 function parseChannelMetadataResponse(obj) {
   const meta = obj.channelMetadataResponse.metaData;
   const currentEvent = meta.currentEvent;
   const song = currentEvent.song;
   // some artists have a /\ symbol
-  const artists = currentEvent.artists.name.match(/(?:\/\\|[^/\\])+/g);
-  const startTime = new Date(currentEvent.startTime);
-  const res = {
+  const artists = parseArtists(currentEvent.artists.name);
+  return {
     channelId: meta.channelId,
+    channelName: meta.channelName,
+    channelNumber: meta.channelNumber,
     name: song.name,
     artists,
     artistsId: currentEvent.artists.id,
-    startTime,
+    startTime: new Date(currentEvent.startTime),
     songId: song.id,
   };
-  // find largest album art
-  const albumArts = _.filter(song.creativeArts, (n) => {
-    return n.url && n.url.length
-      && n.encrypted === false
-      && n.type === 'IMAGE'
-      && ['LARGE', 'MEDIUM'].includes(n.size)
-      && !n.url.includes('DefaultMDS');
-  }).reverse();
-  if (albumArts.length) {
-    res.cover = currentEvent.baseUrl + albumArts[0].url;
-  }
-  return res;
 }
 
 async function checkEndpoint(channel) {
@@ -76,3 +68,5 @@ async function checkEndpoint(channel) {
 }
 
 exports.checkEndpoint = checkEndpoint;
+exports.parseArtists = parseArtists;
+exports.parseChannelMetadataResponse = parseChannelMetadataResponse;

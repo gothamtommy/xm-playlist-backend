@@ -28,6 +28,27 @@ async function getRecent(channel) {
     .toArray();
 }
 
+async function mostHeard(channel) {
+  const db = await mongo;
+  const date = moment().subtract(1, 'days').toDate();
+  return db.collection('stream')
+    .aggregate([
+      { $match: {
+        startTime: { $gt: date },
+        channelId: channel.id,
+      } },
+      { $group: {
+        _id: '$songId',
+        count: { $sum: 1 },
+        songId: { $first: '$songId' },
+      } },
+      { $sort: { count: -1 } },
+      { $limit: 100 },
+    ])
+    .toArray();
+}
+
 exports.getLast = getLast;
 exports.insert = insert;
 exports.getRecent = getRecent;
+exports.mostHeard = mostHeard;

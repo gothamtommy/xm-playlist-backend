@@ -6,26 +6,6 @@
 //     .pipe(JSONStream.stringify());
 //   yield next;
 // }
-// async function mostHeard(ctx, next) {
-//   const date = moment().subtract(7, 'days').toDate();
-//   this.body = this.db.collection('stream')
-//     .aggregate([
-//       { $match: { heard: { $gt: date } } },
-//       { $group: {
-//         _id: '$xmSongID',
-//         count: { $sum: 1 },
-//         xmSongID: { $first: '$xmSongID' },
-//         track: { $first: '$track' },
-//         spotify: { $first: '$spotify' },
-//         artists: { $first: '$artists' },
-//         heard: { $first: '$heard' } } },
-//       { $sort: { count: -1 } },
-//       { $limit: 100 },
-//     ])
-//     .stream()
-//     .pipe(JSONStream.stringify());
-//   yield next;
-// }
 // async function artists(artist, next) {
 //   this.body = this.db.collection('tracks')
 //     .find({ artists: artist })

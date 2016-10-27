@@ -30,6 +30,12 @@ router.get('/recent/:channelName', async (ctx, next) => {
   ctx.body = await stream.getRecent(channel);
   return next();
 });
+router.get('/mostHeard/:channelName', async (ctx, next) => {
+  const channel = _.find(channels, { name: ctx.params.channelName });
+  ctx.assert(channel, 400, 'Channel does not exist');
+  ctx.body = await stream.mostHeard(channel);
+  return next();
+});
 
 router.get('/artists', async (ctx, next) => {
   ctx.body = await tracks.artists();
@@ -41,7 +47,6 @@ router.get('/channels', (ctx, next) => {
   return next();
 });
 // app.use(route.get('/new', ep.newsongs));
-// app.use(route.get('/mostHeard', ep.mostHeard));
 // app.use(route.get('/artists', ep.allArtists));
 // app.use(route.get('/artist/:artist', ep.artists));
 // app.use(route.get('/song/:song', ep.songFromID));

@@ -38,7 +38,12 @@ async function findAndCache(ctx, next) {
   }
   const track = await tracks.getTrack(songId);
   ctx.assert(track, 400, 'Track not found');
-  const search = await searchTrack(track);
+  let search;
+  try {
+    search = await searchTrack(track);
+  } catch (e) {
+    ctx.throw(404, 'Not found on spotify');
+  }
   search.songId = songId;
   db.collection('spotify').insertOne(search);
   ctx.body = search;

@@ -12,7 +12,7 @@ async function getLast(channel) {
 
 async function insert(doc) {
   const db = await mongo;
-  return db.collection('stream').insert(doc);
+  return db.collection('stream').insertOne(doc);
 }
 
 async function getRecent(channel) {

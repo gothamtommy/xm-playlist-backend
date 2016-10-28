@@ -1,21 +1,20 @@
 const mongo = require('./mongo');
 
 async function update(doc) {
-  // TODO: spotify
   const db = await mongo;
   return db.collection('tracks')
-    .update({ songId: doc.songId }, {
+    .updateOne({ songId: doc.songId }, {
       $inc: { plays: 1 },
       $currentDate: { lastHeard: true },
-      // $set: { spotify: doc.spotify },
       $setOnInsert: {
         firstHeard: doc.startTime,
         artists: doc.artists,
+        artistsId: doc.artistsId,
         name: doc.name,
         songId: doc.songId,
       },
     },
-    { upsert: true }
+    { upsert: true },
   );
 }
 
@@ -25,5 +24,12 @@ async function artists() {
     .distinct('artists');
 }
 
+async function getTrack(songId) {
+  const db = await mongo;
+  return db.collection('tracks')
+    .findOne({ songId });
+}
+
 exports.update = update;
 exports.artists = artists;
+exports.getTrack = getTrack;

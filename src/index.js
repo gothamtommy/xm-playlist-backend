@@ -9,6 +9,7 @@ const config = require('../config');
 const channels = require('./channels');
 const stream = require('./stream');
 const tracks = require('./tracks');
+const spotify = require('./spotify');
 
 
 const app = module.exports = new Koa();
@@ -46,6 +47,8 @@ router.get('/channels', (ctx, next) => {
   ctx.body = channels;
   return next();
 });
+
+router.get('/spotify/:songId', spotify.findAndCache);
 // app.use(route.get('/new', ep.newsongs));
 // app.use(route.get('/artists', ep.allArtists));
 // app.use(route.get('/artist/:artist', ep.artists));

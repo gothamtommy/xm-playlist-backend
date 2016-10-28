@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "private": true,
   "scripts": {
-    "start": "DEBUG=xmplaylist:* NODE_ENV=dev pm2 start process.dev.json --no-daemon ",
+    "start": "DEBUG=xmplaylist:* NODE_ENV=dev pm2-dev start process.dev.json",
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --compilers js:babel-register ./test/test.js ./test/**/*.spec.js",
     "coverage": "nyc npm test",
     "build": "./node_modules/.bin/babel src -d src -d dist",
@@ -30,8 +30,7 @@
     "moment": "^2.15.2",
     "mongodb": "^2.2.11",
     "request": "^2.76.0",
-    "request-promise-native": "^1.0.3",
-    "spotify-web-api-node": "^2.3.6"
+    "request-promise-native": "^1.0.3"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

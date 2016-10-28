@@ -7,7 +7,6 @@ const tracks = require('./tracks');
 
 // http://www.siriusxm.com/metadata/pdt/en-us/json/channels/thebeat/timestamp/02-25-08:10:00
 const baseurl = 'http://www.siriusxm.com';
-const badIds = ['^I', ''];
 
 function parseArtists(artists) {
   return artists.match(/(?:\/\\|[^/\\])+/g);
@@ -52,7 +51,7 @@ async function checkEndpoint(channel) {
     return Promise.resolve(false);
   }
   const newSong = parseChannelMetadataResponse(res);
-  if (badIds.includes(newSong.songId) || newSong.name[0] === '#') {
+  if (['^I', ''].includes(newSong.songId) || newSong.name[0] === '#') {
     return Promise.resolve(false);
   }
   if (lastSong.songId === newSong.songId) {

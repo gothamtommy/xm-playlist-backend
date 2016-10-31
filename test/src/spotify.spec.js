@@ -60,4 +60,12 @@ describe('spotify', function () {
     const res = await spotify.searchTrack(stream);
     expect(res.spotifyId).to.eq('0Ye1olMyvB2rLjZ4vlYVWI');
   });
+  it('should find Closer (R3HAB Mix)', async function () {
+    const stream = {
+      name: 'Crash 2.0-Dave Dresden Edit',
+      artists: ['Adventure Club vs. DallasK'],
+    };
+    const res = await spotify.searchTrack(stream);
+    expect(res.spotifyId).to.eq('27aftq9i01N0yVKZyimwlG');
+  });
 });

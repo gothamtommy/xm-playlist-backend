@@ -34,16 +34,18 @@ async function mostHeard(channel) {
   return db.collection('stream')
     .aggregate([
       { $match: {
-        startTime: { $gt: date },
+        startTime: { $gte: date },
         channelId: channel.id,
       } },
       { $group: {
         _id: '$songId',
         count: { $sum: 1 },
         songId: { $first: '$songId' },
+        name: { $first: '$name' },
+        artistsId: { $first: '$artistsId' },
+        artists: { $first: '$artists' },
       } },
       { $sort: { count: -1 } },
-      { $limit: 100 },
     ])
     .toArray();
 }

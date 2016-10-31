@@ -52,4 +52,12 @@ describe('spotify', function () {
     const res = await spotify.searchTrack(stream);
     expect(res.spotifyId).to.eq('7FWSYDL3TOu0Q4fzBdx3F5');
   });
+  it('should find Closer (R3HAB Mix)', async function () {
+    const stream = {
+      name: 'Closer (R3HAB Mix)',
+      artists: ['The Chainsmokers', 'Halsey'],
+    };
+    const res = await spotify.searchTrack(stream);
+    expect(res.spotifyId).to.eq('0Ye1olMyvB2rLjZ4vlYVWI');
+  });
 });

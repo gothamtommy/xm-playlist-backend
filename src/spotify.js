@@ -16,15 +16,20 @@ function parseSpotify(obj) {
 }
 
 async function searchTrack(stream) {
-  const a = `artist:${stream.artists.join('+')}`;
-  const t = `track:${stream.name}`;
-  const options = {
-    uri: `https://api.spotify.com/v1/search?q=${a}+${t}+&limit=1&type=track`,
+  const a = stream.artists.join('+');
+  const t = stream.name.replace(/[ ](mix)/i, '');
+  const opt = {
+    uri: `https://api.spotify.com/v1/search?q=artist:${a}+track:${t}+&limit=1&type=track`,
     json: true,
   };
-  const res = await rp(options);
+  const res = await rp(opt);
   if (res.tracks.items.length > 0) {
     return parseSpotify(_.first(res.tracks.items));
+  }
+  opt.uri = `https://api.spotify.com/v1/search?q=track:${t}+&limit=1&type=track`;
+  const backup = await rp(opt);
+  if (backup.tracks.items.length > 0) {
+    return parseSpotify(_.first(backup.tracks.items));
   }
   return Promise.reject();
 }

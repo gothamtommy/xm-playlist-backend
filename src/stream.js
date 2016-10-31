@@ -15,15 +15,15 @@ async function insert(doc) {
   return db.collection('stream').insertOne(doc);
 }
 
-async function getRecent(channel) {
+async function getRecent(channel, last = new Date()) {
   const db = await mongo;
-  const date = moment().subtract(1, 'days').toDate();
   return db.collection('stream')
     .find({
       channelId: channel.id,
-      startTime: { $gt: date },
+      startTime: { $lt: last },
     }, {
       sort: { $natural: -1 },
+      limit: 15,
     })
     .toArray();
 }

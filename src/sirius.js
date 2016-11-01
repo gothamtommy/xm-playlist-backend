@@ -4,6 +4,7 @@ const rp = require('request-promise-native');
 
 const stream = require('./stream');
 const tracks = require('./tracks');
+const spotify = require('./spotify');
 
 // http://www.siriusxm.com/metadata/pdt/en-us/json/channels/thebeat/timestamp/02-25-08:10:00
 const baseurl = 'http://www.siriusxm.com';
@@ -59,6 +60,11 @@ async function checkEndpoint(channel) {
   }
   // TODO: announce
   debug(newSong);
+  try {
+    spotify.findAndCache(newSong.songId);
+  } catch (e) {
+    debug(`${newSong.songId} not found on spotify`);
+  }
   await Promise.all([
     stream.insert(newSong),
     tracks.update(newSong),

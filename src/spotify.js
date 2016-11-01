@@ -35,28 +35,35 @@ async function searchTrack(stream) {
   return Promise.reject();
 }
 
-async function findAndCache(ctx, next) {
-  const songId = ctx.params.songId;
+async function get(songId) {
   const db = await mongo;
-  ctx.body = await db.collection('spotify').findOne({ songId }).catch();
-  if (ctx.body) {
-    return next();
+  return db.collection('spotify')
+    .findOne({ songId })
+    .catch(() => {
+      return Promise.resolve(false);
+    });
+}
+
+async function findAndCache(songId) {
+  const doc = await get(songId);
+  if (doc) {
+    return doc;
   }
   const track = await tracks.getTrack(songId);
-  ctx.assert(track, 400, 'Track not found');
   let search;
   try {
     search = await searchTrack(track);
   } catch (e) {
-    ctx.throw(404, 'Not found on spotify');
+    return Promise.reject(e);
   }
   search.songId = songId;
-  db.collection('spotify').insertOne(search);
-  ctx.body = search;
-  return next();
+  const db = await mongo;
+  db.collection('spotify').insertOne(search).catch();
+  return search;
 }
 
 
 exports.parseSpotify = parseSpotify;
 exports.searchTrack = searchTrack;
 exports.findAndCache = findAndCache;
+exports.get = get;

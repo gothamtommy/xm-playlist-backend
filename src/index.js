@@ -57,7 +57,20 @@ router.get('/channels', (ctx, next) => {
   return next();
 });
 
-router.get('/spotify/:songId', spotify.findAndCache);
+router.get('/spotify/:songId', async (ctx, next) => {
+  const songId = ctx.params.songId;
+  let doc;
+  try {
+    doc = await spotify.get(songId);
+  } catch (e) {
+    ctx.throw('Not Found', 404);
+  }
+  if (!doc) {
+    ctx.throw('Not Found', 404);
+  }
+  ctx.body = doc;
+  return next();
+});
 // app.use(route.get('/new', ep.newsongs));
 // app.use(route.get('/artists', ep.allArtists));
 // app.use(route.get('/artist/:artist', ep.artists));

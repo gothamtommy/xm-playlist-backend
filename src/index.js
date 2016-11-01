@@ -41,6 +41,11 @@ router.get('/mostHeard/:channelName', async (ctx, next) => {
   ctx.body = await stream.mostHeard(channel);
   return next();
 });
+router.get('/track/:songId', async (ctx, next) => {
+  ctx.assert(ctx.params.songId, 400, 'Song Id required');
+  ctx.body = await tracks.getTrack(ctx.params.songId);
+  return next();
+});
 
 router.get('/artists', async (ctx, next) => {
   ctx.body = await tracks.artists();

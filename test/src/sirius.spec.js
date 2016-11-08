@@ -45,4 +45,12 @@ describe('SIRIUS', function () {
     expect(res).to.eq(true);
     expect(res2).to.eq(false);
   });
+  it('should skip invalid id', async function () {
+    const scope = nock('http://www.siriusxm.com')
+      .get(/thebeat/)
+      .reply(200, channelMetadataInvalidId);
+    const res = await sirius.checkEndpoint(bpm);
+    scope.done();
+    expect(res).to.eq(false);
+  });
 });

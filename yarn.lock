@@ -498,7 +498,7 @@ charm@~0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/charm/-/charm-0.1.2.tgz#06c21eed1a1b06aeb67553cdc53e23274bac2296"
 
-chokidar@^1.0.0, chokidar@^1.6.0:
+chokidar@^1.0.0, chokidar@^1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-1.6.1.tgz#2f4447ab5e96e50fb3d789fd90d4c72e0e4c70c2"
   dependencies:
@@ -523,14 +523,11 @@ cli-cursor@^1.0.1:
   dependencies:
     restore-cursor "^1.0.1"
 
-cli-table2@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/cli-table2/-/cli-table2-0.2.0.tgz#2d1ef7f218a0e786e214540562d4bd177fe32d97"
+cli-table@0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/cli-table/-/cli-table-0.3.1.tgz#f53b05266a8b1a0b934b3d0821e6e2dc5914ae23"
   dependencies:
-    lodash "^3.10.1"
-    string-width "^1.0.1"
-  optionalDependencies:
-    colors "^1.1.2"
+    colors "1.0.3"
 
 cli-width@^2.0.0:
   version "2.1.0"
@@ -562,9 +559,9 @@ code-point-at@^1.0.0:
   dependencies:
     number-is-nan "^1.0.0"
 
-colors@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/colors/-/colors-1.1.2.tgz#168a4701756b6a7f51a12ce0c97bfa28c084ed63"
+colors@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/colors/-/colors-1.0.3.tgz#0433f44d809680fdeb60ed260f1b0c262e82a40b"
 
 combined-stream@^1.0.5, combined-stream@~1.0.5:
   version "1.0.5"
@@ -647,11 +644,11 @@ coveralls@^2.11.14:
     minimist "1.2.0"
     request "2.75.0"
 
-cron@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/cron/-/cron-1.1.0.tgz#61e868c6f18f98e8bcb88bcd7ab9fb8fae909453"
+cron@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/cron/-/cron-1.1.1.tgz#02719d4ef480dfc8ee24d81a3603460ba39013ce"
   dependencies:
-    moment-timezone "~0.3.0"
+    moment-timezone "~0.5.5"
 
 cross-spawn@^4:
   version "4.0.2"
@@ -683,6 +680,12 @@ debug@*, debug@^2.1.1, debug@^2.2, debug@^2.2.0, debug@~2.2.0, debug@2.2.0:
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.2.0.tgz#f87057e995b1a1f6ae6a4960664137bc56f039da"
   dependencies:
     ms "0.7.1"
+
+debug@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-2.3.0.tgz#3912dc55d7167fc3af17d2b85c13f93deaedaa43"
+  dependencies:
+    ms "0.7.2"
 
 decamelize@^1.0.0, decamelize@^1.1.1:
   version "1.2.0"
@@ -750,16 +753,9 @@ diff@1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-1.4.0.tgz#7f28d2eb9ee7b15a97efd89ce63dcfdaa3ccbabf"
 
-doctrine@^1.2.2:
+doctrine@^1.2.2, doctrine@1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-1.5.0.tgz#379dce730f6166f76cefa4e6707a159b02c5a6fa"
-  dependencies:
-    esutils "^2.0.2"
-    isarray "^1.0.0"
-
-doctrine@1.3.x:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-1.3.0.tgz#13e75682b55518424276f7c173783456ef913d26"
   dependencies:
     esutils "^2.0.2"
     isarray "^1.0.0"
@@ -861,9 +857,9 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-airbnb-base@^9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-airbnb-base/-/eslint-config-airbnb-base-9.0.0.tgz#03e135562aa6c4d0d9f1bbda96d901326bf58ad2"
+eslint-config-airbnb-base@^10.0.1:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-airbnb-base/-/eslint-config-airbnb-base-10.0.1.tgz#f17d4e52992c1d45d1b7713efbcd5ecd0e7e0506"
 
 eslint-formatter-pretty@^1.1.0:
   version "1.1.0"
@@ -883,31 +879,31 @@ eslint-import-resolver-node@^0.2.0:
     object-assign "^4.0.1"
     resolve "^1.1.6"
 
-eslint-module-utils@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-module-utils/-/eslint-module-utils-1.0.0.tgz#c4a57fd3a53efd8426cc2d5550aadab9bbd05fd0"
+eslint-module-utils@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-module-utils/-/eslint-module-utils-2.0.0.tgz#a6f8c21d901358759cdc35dbac1982ae1ee58bce"
   dependencies:
     debug "2.2.0"
     pkg-dir "^1.0.0"
 
-eslint-plugin-import@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.0.1.tgz#dcfe96357d476b3f822570d42c29bec66f5d9c5c"
+eslint-plugin-import@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.2.0.tgz#72ba306fad305d67c4816348a4699a4229ac8b4e"
   dependencies:
     builtin-modules "^1.1.1"
     contains-path "^0.1.0"
     debug "^2.2.0"
-    doctrine "1.3.x"
+    doctrine "1.5.0"
     eslint-import-resolver-node "^0.2.0"
-    eslint-module-utils "^1.0.0"
+    eslint-module-utils "^2.0.0"
     has "^1.0.1"
     lodash.cond "^4.3.0"
     minimatch "^3.0.3"
     pkg-up "^1.0.0"
 
-eslint@^3.9.0:
-  version "3.9.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.9.0.tgz#68c8fa86b1e0a3f038040f3b5808b7508c128f8e"
+eslint@^3.9.1:
+  version "3.9.1"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.9.1.tgz#5a8597706fc6048bc6061ac754d4a211d28f4f5b"
   dependencies:
     babel-code-frame "^6.16.0"
     chalk "^1.1.3"
@@ -1023,13 +1019,13 @@ fast-levenshtein@~2.0.4:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.5.tgz#bd33145744519ab1c36c3ee9f31f08e9079b67f2"
 
+fclone@1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/fclone/-/fclone-1.0.10.tgz#f7ad6ffa01c82488b16b741cdc04fad03405c64b"
+
 fclone@1.0.8:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/fclone/-/fclone-1.0.8.tgz#a0d4a73d983249978c0e0671a161520b996467eb"
-
-fclone@1.0.9:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/fclone/-/fclone-1.0.9.tgz#14c478e28d2a9a2963711388fd9a07edff5ccfe1"
 
 figures@^1.3.5:
   version "1.7.0"
@@ -1622,7 +1618,7 @@ istanbul-lib-hook@^1.0.0-alpha, istanbul-lib-hook@^1.0.0-alpha.4:
   dependencies:
     append-transform "^0.3.0"
 
-istanbul-lib-instrument@^1.1.0-alpha, istanbul-lib-instrument@^1.1.3, istanbul-lib-instrument@^1.1.4:
+istanbul-lib-instrument@^1.1.0-alpha, istanbul-lib-instrument@^1.1.4, istanbul-lib-instrument@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/istanbul-lib-instrument/-/istanbul-lib-instrument-1.2.0.tgz#73d5d108ab7568c373fdcb7d01c1d42d565bc8c4"
   dependencies:
@@ -1654,7 +1650,7 @@ istanbul-lib-source-maps@^1.0.0-alpha, istanbul-lib-source-maps@^1.0.2:
     rimraf "^2.4.4"
     source-map "^0.5.3"
 
-istanbul-reports@^1.0.0-alpha, istanbul-reports@^1.0.0-alpha.8:
+istanbul-reports@^1.0.0, istanbul-reports@^1.0.0-alpha:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/istanbul-reports/-/istanbul-reports-1.0.0.tgz#24b4eb2b1d29d50f103b369bd422f6e640aa0777"
   dependencies:
@@ -1916,15 +1912,11 @@ lodash.keys@^3.0.0:
     lodash.isarguments "^3.0.0"
     lodash.isarray "^3.0.0"
 
-lodash@^3.10.1:
-  version "3.10.1"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
-
 lodash@^4.0.0, lodash@^4.13.1, lodash@^4.2.0, lodash@^4.3.0:
   version "4.16.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.16.4.tgz#01ce306b9bad1319f2a5528674f88297aeb70127"
 
-lodash@^4.16.5:
+lodash@^4.16.6:
   version "4.16.6"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.16.6.tgz#d22c9ac660288f3843e16ba7d2b5d06cca27d777"
 
@@ -2055,13 +2047,13 @@ mocha@^3.1.2:
     mkdirp "0.5.1"
     supports-color "3.1.2"
 
-moment-timezone@~0.3.0:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.3.1.tgz#3ef47856b02d53b718a10a5ec2023aa299e07bf5"
+moment-timezone@~0.5.5:
+  version "0.5.9"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.9.tgz#e0ea82036d67d21d793544a91b5057f480eda2dd"
   dependencies:
     moment ">= 2.6.0"
 
-moment@^2.14, moment@^2.15.2, "moment@>= 2.6.0":
+moment@^2.15, moment@^2.15.2, "moment@>= 2.6.0":
   version "2.15.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.15.2.tgz#1bfdedf6a6e345f322fe956d5df5bd08a8ce84dc"
 
@@ -2083,6 +2075,10 @@ mongodb@^2.2.11:
 ms@0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.1.tgz#9cd13c03adbff25b65effde7ce864ee952017098"
+
+ms@0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.2.tgz#ae25cf2512b3885a1d95d7f037868d8431124765"
 
 mute-stream@0.0.5:
   version "0.0.5"
@@ -2170,9 +2166,9 @@ number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
 
-nyc@^8.3.2:
-  version "8.3.2"
-  resolved "https://registry.yarnpkg.com/nyc/-/nyc-8.3.2.tgz#a3b7a590fe1c6c4b2d0e3f24afe28b62bfafd745"
+nyc@^8.4.0:
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/nyc/-/nyc-8.4.0.tgz#660371c807caef0427fb9b0948f74180624ea6e4"
   dependencies:
     archy "^1.0.0"
     arrify "^1.0.1"
@@ -2185,10 +2181,10 @@ nyc@^8.3.2:
     glob "^7.0.6"
     istanbul-lib-coverage "^1.0.0"
     istanbul-lib-hook "^1.0.0-alpha.4"
-    istanbul-lib-instrument "^1.1.3"
+    istanbul-lib-instrument "^1.2.0"
     istanbul-lib-report "^1.0.0-alpha.3"
     istanbul-lib-source-maps "^1.0.2"
-    istanbul-reports "^1.0.0-alpha.8"
+    istanbul-reports "^1.0.0"
     md5-hex "^1.2.0"
     micromatch "^2.3.11"
     mkdirp "^0.5.0"
@@ -2336,7 +2332,7 @@ path-type@^1.0.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
-pidusage@^1.0.8:
+pidusage@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pidusage/-/pidusage-1.1.0.tgz#ffd58339a97aec470cff7cfe1a9853ec5cd415f8"
 
@@ -2392,9 +2388,9 @@ pm2-axon@3.0.2:
     debug "~2.2.0"
     escape-regexp "0.0.1"
 
-pm2-deploy@^0.3:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/pm2-deploy/-/pm2-deploy-0.3.1.tgz#013840f45531ce0bdc1e9ff55118ea622e8979ee"
+pm2-deploy@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/pm2-deploy/-/pm2-deploy-0.3.3.tgz#2378b8d8c85f771d7421aa886816221e515c6631"
   dependencies:
     async "^1.5"
     tv4 "^1.2"
@@ -2405,31 +2401,31 @@ pm2-multimeter@0.1.2:
   dependencies:
     charm "~0.1.1"
 
-pm2@^2.0.19:
-  version "2.0.19"
-  resolved "https://registry.yarnpkg.com/pm2/-/pm2-2.0.19.tgz#30f4205fd026a5130aaf6e94a623ec0849cf322b"
+pm2@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/pm2/-/pm2-2.1.4.tgz#ea8edf2da8c2153b4d6703c5ccbfee6c6e57acea"
   dependencies:
     async "1.5"
     chalk "^1.1"
-    chokidar "^1.6.0"
-    cli-table2 "0.2.0"
+    chokidar "^1.6.1"
+    cli-table "0.3.1"
     commander "^2.9"
-    cron "1.1.0"
+    cron "1.1.1"
     debug "2.2.0"
     eventemitter2 "1.0.5"
-    fclone "1.0.9"
+    fclone "1.0.10"
     mkdirp "0.5.1"
-    moment "^2.14"
+    moment "^2.15"
     nssocket "0.6.0"
-    pidusage "^1.0.8"
+    pidusage "^1.1.0"
     pm2-axon "3.0.2"
     pm2-axon-rpc "0.4.5"
-    pm2-deploy "^0.3"
+    pm2-deploy "^0.3.3"
     pm2-multimeter "0.1.2"
     pmx "^0.6"
     semver "^5.2"
-    shelljs "0.7.3"
-    source-map-support "^0.4"
+    shelljs "0.7.5"
+    source-map-support "^0.4.6"
     vizion "^0.2"
     yamljs "0.2.8"
   optionalDependencies:
@@ -2619,9 +2615,9 @@ request@^2.75.0, request@2.75.0:
     tough-cookie "~2.3.0"
     tunnel-agent "~0.4.1"
 
-request@^2.76.0:
-  version "2.76.0"
-  resolved "https://registry.yarnpkg.com/request/-/request-2.76.0.tgz#be44505afef70360a0436955106be3945d95560e"
+request@^2.78.0:
+  version "2.78.0"
+  resolved "https://registry.yarnpkg.com/request/-/request-2.78.0.tgz#e1c8dec346e1c81923b24acdb337f11decabe9cc"
   dependencies:
     aws-sign2 "~0.6.0"
     aws4 "^1.2.1"
@@ -2723,17 +2719,9 @@ setprototypeof@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.0.1.tgz#52009b27888c4dc48f591949c0a8275834c1ca7e"
 
-shelljs@^0.7.5:
+shelljs@^0.7.5, shelljs@0.7.5:
   version "0.7.5"
   resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.7.5.tgz#2eef7a50a21e1ccf37da00df767ec69e30ad0675"
-  dependencies:
-    glob "^7.0.0"
-    interpret "^1.0.0"
-    rechoir "^0.6.2"
-
-shelljs@0.7.3:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.7.3.tgz#a6d5e11d9644f596cc702aa447ff9b243c23de80"
   dependencies:
     glob "^7.0.0"
     interpret "^1.0.0"
@@ -2765,9 +2753,15 @@ sntp@1.x.x:
   dependencies:
     hoek "2.x.x"
 
-source-map-support@^0.4, source-map-support@^0.4.2:
+source-map-support@^0.4.2:
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.4.5.tgz#4438df4219e1b3c7feb674614b4c67f9722db1e4"
+  dependencies:
+    source-map "^0.5.3"
+
+source-map-support@^0.4.6:
+  version "0.4.6"
+  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.4.6.tgz#32552aa64b458392a85eab3b0b5ee61527167aeb"
   dependencies:
     source-map "^0.5.3"
 
@@ -2891,9 +2885,9 @@ superagent@^2.0.0:
     qs "^6.1.0"
     readable-stream "^2.0.5"
 
-supertest-as-promised@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/supertest-as-promised/-/supertest-as-promised-4.0.1.tgz#78eeafdbc7c9ea1973875f137efd4d3b04c12adc"
+supertest-as-promised@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/supertest-as-promised/-/supertest-as-promised-4.0.2.tgz#0464f2bd256568d4a59bce84269c0548f6879f1a"
   dependencies:
     bluebird "^3.3.1"
     methods "^1.1.1"

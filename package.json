@@ -21,15 +21,15 @@
   "dependencies": {
     "JSONStream": "^1.2.1",
     "async-throttle": "1.0.0",
-    "debug": "^2.2.0",
+    "debug": "^2.3.0",
     "kcors": "^2.2.0",
     "koa": "2.0.0-alpha.7",
     "koa-logger": "^2.0.0",
     "koa-router": "^7.0.1",
-    "lodash": "^4.16.5",
+    "lodash": "^4.16.6",
     "moment": "^2.15.2",
     "mongodb": "^2.2.11",
-    "request": "^2.76.0",
+    "request": "^2.78.0",
     "request-promise-native": "^1.0.3"
   },
   "devDependencies": {
@@ -40,17 +40,17 @@
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
     "coveralls": "^2.11.14",
-    "eslint": "^3.9.0",
-    "eslint-config-airbnb-base": "^10.0.0",
+    "eslint": "^3.9.1",
+    "eslint-config-airbnb-base": "^10.0.1",
     "eslint-formatter-pretty": "^1.1.0",
-    "eslint-plugin-import": "^2.0.1",
+    "eslint-plugin-import": "^2.2.0",
     "istanbul": "1.1.0-alpha.1",
     "mocha": "^3.1.2",
     "nock": "^9.0.2",
-    "nyc": "^8.3.2",
-    "pm2": "^2.0.19",
+    "nyc": "^8.4.0",
+    "pm2": "^2.1.4",
     "supertest": "^2.0.1",
-    "supertest-as-promised": "^4.0.1"
+    "supertest-as-promised": "^4.0.2"
   },
   "nyc": {
     "sourceMap": false,

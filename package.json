@@ -19,7 +19,7 @@
   "author": "scttcper",
   "license": "MIT",
   "dependencies": {
-    "async-throttle": "1.0.0",
+    "async-throttle": "^1.0.0",
     "debug": "^2.3.2",
     "kcors": "^2.2.0",
     "koa": "2.0.0-alpha.7",

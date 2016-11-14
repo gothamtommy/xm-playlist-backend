@@ -28,11 +28,11 @@ app.use((ctx, next) => {
 router.get('/recent/:channelName', async (ctx, next) => {
   const channel = _.find(channels, { name: ctx.params.channelName });
   ctx.assert(channel, 400, 'Channel does not exist');
-  let date = new Date();
+  let last = new Date();
   if (ctx.query.last) {
-    date = new Date(parseInt(ctx.query.last || 0, 10));
+    last = new Date(parseInt(ctx.query.last || 0, 10));
   }
-  ctx.body = await stream.getRecent(channel, date);
+  ctx.body = await stream.getRecent(channel, last);
   return next();
 });
 router.get('/mostHeard/:channelName', async (ctx, next) => {

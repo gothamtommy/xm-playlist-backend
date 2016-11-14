@@ -15,13 +15,16 @@ async function insert(doc) {
   return db.collection('stream').insertOne(doc);
 }
 
-async function getRecent(channel, last = new Date()) {
+async function getRecent(channel, last) {
   const db = await mongo;
+  const find = {
+    channelId: channel.id,
+  };
+  if (last) {
+    find.startTime = { $lt: last };
+  }
   return db.collection('stream')
-    .find({
-      channelId: channel.id,
-      startTime: { $lt: last },
-    }, {
+    .find(find, {
       sort: { $natural: -1 },
       limit: 15,
     })

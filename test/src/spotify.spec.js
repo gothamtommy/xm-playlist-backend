@@ -60,7 +60,7 @@ describe('spotify', function () {
     const res = await spotify.searchTrack(stream);
     expect(res.spotifyId).to.eq('0Ye1olMyvB2rLjZ4vlYVWI');
   });
-  it('should find Closer (R3HAB Mix)', async function () {
+  it('should find Crash 2.0', async function () {
     const stream = {
       name: 'Crash 2.0-Dave Dresden Edit',
       artists: ['Adventure Club vs. DallasK'],

@@ -10,7 +10,7 @@ const channelMetadataResponse1 = require('../mock/channelMetadataResponse1');
 
 const bpm = _.find(channels, { id: 'thebeat' });
 
-describe('SIRIUS', function () {
+describe('sirius', function () {
   it('should parse metadata response', function () {
     const stream = sirius.parseChannelMetadataResponse(channelMetadataResponse);
     expect(stream.name).to.eq('Closer (R3HAB Mix)');

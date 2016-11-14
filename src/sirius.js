@@ -62,7 +62,9 @@ async function checkEndpoint(channel) {
   // TODO: announce
   debug(newSong);
   try {
-    spotify.findAndCache(newSong.songId);
+    if (process.env.NODE_ENV !== 'test') {
+      spotify.findAndCache(newSong.songId);
+    }
   } catch (e) {
     debug(`${newSong.songId} not found on spotify`);
   }

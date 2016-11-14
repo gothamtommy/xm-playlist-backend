@@ -11,3 +11,7 @@ after(async function flush() {
   const db = await mongo;
   db.dropDatabase();
 });
+
+process.on('unhandledRejection', (event) => {
+  console.log(event);
+});

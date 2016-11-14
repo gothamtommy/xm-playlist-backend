@@ -10,6 +10,7 @@ const spotify = require('./spotify');
 const baseurl = 'http://www.siriusxm.com';
 
 function parseArtists(artists) {
+  // splits artists into an array
   return artists.match(/(?:\/\\|[^/\\])+/g);
 }
 

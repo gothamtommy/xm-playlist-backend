@@ -6,13 +6,6 @@
 //     .pipe(JSONStream.stringify());
 //   yield next;
 // }
-// async function artists(artist, next) {
-//   this.body = this.db.collection('tracks')
-//     .find({ artists: artist })
-//     .stream()
-//     .pipe(JSONStream.stringify());
-//   yield next;
-// }
 // async function allArtists(ctx, next) {
 //   this.body = yield distinctArtists(this.db);
 //   yield next;

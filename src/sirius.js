@@ -13,6 +13,9 @@ function parseArtists(artists) {
   // splits artists into an array
   return artists.match(/(?:\/\\|[^/\\])+/g);
 }
+function parseName(name) {
+  return name.split(' #')[0];
+}
 
 function parseChannelMetadataResponse(obj) {
   const meta = obj.channelMetadataResponse.metaData;
@@ -20,11 +23,12 @@ function parseChannelMetadataResponse(obj) {
   const song = currentEvent.song;
   // some artists have a /\ symbol
   const artists = parseArtists(currentEvent.artists.name);
+  const name = parseName(song.name);
   return {
     channelId: meta.channelId,
     channelName: meta.channelName,
     channelNumber: meta.channelNumber,
-    name: song.name,
+    name,
     artists,
     artistsId: currentEvent.artists.id,
     startTime: new Date(currentEvent.startTime),
@@ -77,4 +81,5 @@ async function checkEndpoint(channel) {
 
 exports.checkEndpoint = checkEndpoint;
 exports.parseArtists = parseArtists;
+exports.parseName = parseName;
 exports.parseChannelMetadataResponse = parseChannelMetadataResponse;

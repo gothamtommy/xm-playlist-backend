@@ -26,6 +26,10 @@ describe('sirius', function () {
     expect(artists.length).to.eq(2);
     expect(artists[0]).to.eq('Axwell/\\Ingrosso');
   });
+  it('should parse song name', function () {
+    const name = sirius.parseName('Jupiter #bpmDebut');
+    expect(name).to.eq('Jupiter');
+  });
   it('should get update from channel', async function () {
     const scope = nock('http://www.siriusxm.com')
       .get(/thebeat/)

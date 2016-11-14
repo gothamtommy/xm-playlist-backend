@@ -4,7 +4,7 @@ const mongo = require('../src/mongo');
 
 lint(['src', 'test'], {
   formatter: 'node_modules/eslint-formatter-pretty',
-  timeout: 5000,
+  timeout: 20000,
 });
 
 after(async function flush() {

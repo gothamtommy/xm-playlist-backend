@@ -1,6 +1,6 @@
 const debug = require('debug')('xmplaylist:sirius');
 const moment = require('moment');
-const rp = require('request-promise-native');
+const got = require('got');
 
 const stream = require('./stream');
 const tracks = require('./tracks');
@@ -38,30 +38,32 @@ function parseChannelMetadataResponse(obj) {
 
 async function checkEndpoint(channel) {
   const dateString = moment.utc().format('MM-DD-HH:mm:00');
-  const opt = {
-    uri: `${baseurl}/metadata/pdt/en-us/json/channels/${channel.id}/timestamp/${dateString}`,
-    json: true,
-  };
-  debug(opt.uri);
-  let res;
+  const url = `${baseurl}/metadata/pdt/en-us/json/channels/${channel.id}/timestamp/${dateString}`;
+  debug(url);
+  const req = got(url, { json: true })
+    .then(r => r.body);
+  const last = stream.getLast(channel)
+    .then(d => d || {})
+    .catch(() => { return {}; });
   let lastSong;
+  let res;
   try {
-    [res, lastSong] = await Promise.all([rp(opt), stream.getLast(channel)]);
+    [res, lastSong] = await Promise.all([req, last]);
   } catch (e) {
-    return Promise.resolve(false);
+    return false;
   }
   if (!lastSong) {
     lastSong = {};
   }
   if (!res.channelMetadataResponse || !res.channelMetadataResponse.status) {
-    return Promise.resolve(false);
+    return false;
   }
   const newSong = parseChannelMetadataResponse(res);
   if (['^I', ''].includes(newSong.songId) || newSong.name[0] === '#') {
-    return Promise.resolve(false);
+    return false;
   }
   if (lastSong.songId === newSong.songId) {
-    return Promise.resolve(false);
+    return false;
   }
   // TODO: announce
   debug(newSong);

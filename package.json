@@ -21,25 +21,24 @@
   "dependencies": {
     "async-throttle": "^1.0.0",
     "debug": "^2.3.2",
+    "got": "^6.6.3",
     "kcors": "^2.2.0",
     "koa": "2.0.0-alpha.7",
     "koa-logger": "^2.0.0",
     "koa-router": "^7.0.1",
-    "lodash": "^4.16.6",
+    "lodash": "^4.17.0",
     "moment": "^2.16.0",
-    "mongodb": "^2.2.11",
-    "request": "^2.78.0",
-    "request-promise-native": "^1.0.3"
+    "mongodb": "^2.2.11"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
-    "babel-plugin-istanbul": "^2.0.3",
+    "babel-plugin-istanbul": "^3.0.0",
     "babel-plugin-syntax-async-functions": "^6.13.0",
     "babel-plugin-transform-async-to-generator": "^6.16.0",
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
     "coveralls": "^2.11.15",
-    "eslint": "^3.10.0",
+    "eslint": "^3.10.1",
     "eslint-config-airbnb-base": "^10.0.1",
     "eslint-formatter-pretty": "^1.1.0",
     "eslint-plugin-import": "^2.2.0",
@@ -47,10 +46,9 @@
     "mocha": "^3.1.2",
     "mocha-eslint": "^3.0.1",
     "nock": "^9.0.2",
-    "nyc": "^8.4.0",
+    "nyc": "^9.0.1",
     "pm2": "^2.1.5",
-    "supertest": "^2.0.1",
-    "supertest-as-promised": "^4.0.2"
+    "supertest": "^2.0.1"
   },
   "nyc": {
     "sourceMap": false,
@@ -64,9 +62,7 @@
     ],
     "exclude": [
       "test",
-      "config",
-      "build",
-      "dist"
+      "config"
     ]
   },
   "engines": {

@@ -1,4 +1,4 @@
-const rp = require('request-promise-native');
+const got = require('got');
 const _ = require('lodash');
 
 const mongo = require('./mongo');
@@ -18,19 +18,16 @@ function parseSpotify(obj) {
 async function searchTrack(stream) {
   const a = stream.artists.join('+');
   let t = stream.name.replace(/[ ](mix)/i, '');
-  const opt = {
-    uri: `https://api.spotify.com/v1/search?q=artist:${a}+track:${t}+&limit=1&type=track`,
-    json: true,
-  };
-  const res = await rp(opt);
+  const url = `https://api.spotify.com/v1/search?q=artist:${a}+track:${t}+&limit=1&type=track`;
+  const res = await got(url, { json: true }).then(r => r.body);
   if (res.tracks.items.length > 0) {
     return parseSpotify(_.first(res.tracks.items));
   }
   t = t.split('-')[0];
-  opt.uri = `https://api.spotify.com/v1/search?q=track:${t}+&limit=1&type=track`;
-  const backup = await rp(opt);
-  if (backup.tracks.items.length > 0) {
-    return parseSpotify(_.first(backup.tracks.items));
+  const url2 = `https://api.spotify.com/v1/search?q=track:${t}+&limit=1&type=track`;
+  const res2 = await got(url2, { json: true }).then(r => r.body);
+  if (res2.tracks.items.length > 0) {
+    return parseSpotify(_.first(res2.tracks.items));
   }
   return Promise.reject();
 }
@@ -65,5 +62,5 @@ async function findAndCache(songId) {
 
 exports.parseSpotify = parseSpotify;
 exports.searchTrack = searchTrack;
-exports.findAndCache = findAndCache;
 exports.get = get;
+exports.findAndCache = findAndCache;

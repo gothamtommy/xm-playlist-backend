@@ -8,7 +8,7 @@
       "NODE_ENV": "prod"
     }
   },{
-    "name": "cron",
+    "name": "xmcron",
     "script": "dist/cron.js",
     "env": {
       "NODE_ENV": "prod"

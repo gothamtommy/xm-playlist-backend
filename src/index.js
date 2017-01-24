@@ -65,7 +65,7 @@ router.get('/spotify/:songId', async (ctx, next) => {
   } catch (e) {
     ctx.throw(404, 'Not Found');
   }
-  ctx.asssert(doc, 404, 'Not Found');
+  ctx.assert(doc, 404, 'Not Found');
   ctx.body = doc;
   return next();
 });

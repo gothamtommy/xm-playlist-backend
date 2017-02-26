@@ -12,7 +12,8 @@ const tracks = require('./tracks');
 const spotify = require('./spotify');
 
 
-const app = module.exports = new Koa();
+const app = new Koa();
+module.exports = app;
 app.proxy = true;
 
 app.use(cors());

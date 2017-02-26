@@ -2,14 +2,17 @@
 
 [![Dependency Status][david-img]][david-url]
 [![build status][travis-img]][travis-url]
-[![coverage status][coveralls-img]][coveralls-url]
+[![coverage status][coverage-img]][coverage-url]
+[![greenkeeper][greenkeeper-image]][greenkeeper-url]
 
 [david-img]: https://img.shields.io/david/scttcper/xm-playlist-backend.svg
 [david-url]: https://david-dm.org/scttcper/xm-playlist-backend
 [travis-img]: https://img.shields.io/travis/scttcper/xm-playlist-backend.svg
 [travis-url]: https://travis-ci.org/scttcper/xm-playlist-backend
-[coveralls-img]: https://img.shields.io/coveralls/scttcper/xm-playlist-backend.svg
-[coveralls-url]: https://coveralls.io/github/scttcper/xm-playlist-backend?branch=master
+[coverage-img]: https://codecov.io/gh/scttcper/xm-playlist-backend/branch/master/graph/badge.svg
+[coverage-url]: https://codecov.io/gh/scttcper/xm-playlist-backend
+[greenkeeper-image]: https://badges.greenkeeper.io/scttcper/xm-playlist-backend.svg
+[greenkeeper-url]: https://greenkeeper.io/ 
 
 ## Setup
 Instructions for mac using [homebrew](http://brew.sh/)

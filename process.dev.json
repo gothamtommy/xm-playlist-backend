@@ -3,7 +3,6 @@
     "name": "xmplaylist",
     "script": "src/index.js",
     "watch": true,
-    "interpreter": "babel-node",
     "env": {
       "NODE_ENV": "dev"
     }
@@ -11,7 +10,6 @@
     "name": "cron",
     "script": "src/cron.js",
     "watch": true,
-    "interpreter": "babel-node",
     "env": {
       "NODE_ENV": "dev"
     }

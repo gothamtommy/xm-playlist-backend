@@ -1,8 +1,0 @@
-{
-  "plugins": ["transform-async-to-generator"],
-  "env": {
-    "test": {
-      "plugins": ["istanbul"]
-    }
-  }
-}

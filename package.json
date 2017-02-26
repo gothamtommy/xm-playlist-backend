@@ -6,56 +6,37 @@
   "private": true,
   "scripts": {
     "start": "DEBUG=xmplaylist:* NODE_ENV=dev pm2-dev start process.dev.json",
-    "test": "NODE_ENV=test ./node_modules/.bin/mocha --compilers js:babel-register ./test/index.js ./test/**/*.spec.js",
+    "test": "NODE_ENV=test mocha ./test/index.js ./test/**/*.spec.js",
     "coverage": "nyc npm test",
-    "build": "./node_modules/.bin/babel src -d src -d dist",
     "lint": "eslint --format=node_modules/eslint-formatter-pretty src test; exit 0"
   },
-  "keywords": [
-    "xm",
-    "radio",
-    "recentlyplayed"
-  ],
-  "author": "scttcper",
-  "license": "MIT",
   "dependencies": {
-    "async-throttle": "^1.0.0",
-    "debug": "^2.6.0",
+    "async-throttle": "^1.1.0",
+    "debug": "^2.6.1",
     "got": "^6.7.1",
     "kcors": "^2.2.0",
-    "koa": "2.0.0-alpha.7",
-    "koa-logger": "^2.0.0",
+    "koa": "^2.0.1",
+    "koa-logger": "^2.0.1",
     "koa-router": "^7.1.0",
     "lodash": "^4.17.4",
     "moment": "^2.17.1",
-    "mongodb": "^2.2.22"
+    "mongodb": "^2.2.24"
   },
   "devDependencies": {
-    "babel-cli": "^6.22.2",
-    "babel-plugin-istanbul": "^3.1.2",
-    "babel-plugin-syntax-async-functions": "^6.13.0",
-    "babel-plugin-transform-async-to-generator": "^6.22.0",
-    "babel-register": "^6.22.0",
     "chai": "^3.5.0",
-    "coveralls": "^2.11.15",
-    "eslint": "^3.14.0",
-    "eslint-config-airbnb-base": "^11.0.1",
+    "eslint": "^3.16.1",
+    "eslint-config-airbnb-base": "^11.1.0",
     "eslint-formatter-pretty": "^1.1.0",
     "eslint-plugin-import": "^2.2.0",
     "istanbul": "1.1.0-alpha.1",
     "mocha": "^3.2.0",
     "mocha-eslint": "^3.0.1",
-    "nock": "^9.0.2",
+    "nock": "^9.0.7",
     "nyc": "^10.1.2",
-    "pm2": "^2.3.0",
-    "supertest": "^2.0.1"
+    "pm2": "^2.4.0",
+    "supertest": "^3.0.0"
   },
   "nyc": {
-    "sourceMap": false,
-    "instrument": false,
-    "require": [
-      "babel-register"
-    ],
     "reporter": [
       "lcov",
       "text"
@@ -66,6 +47,15 @@
     ]
   },
   "engines": {
-    "node": ">=6"
-  }
+    "node": ">= 7.6"
+  },
+  "keywords": [
+    "xm",
+    "sirius",
+    "siriusxm",
+    "radio",
+    "recentlyplayed"
+  ],
+  "author": "scttcper",
+  "license": "MIT"
 }

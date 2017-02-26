@@ -34,7 +34,7 @@ describe('spotify', function () {
       artists: ['Flux Pavillion', 'NGHTMRE'],
     };
     const res = await spotify.searchTrack(stream);
-    expect(res.spotifyId).to.eq('5av9pOEpuRuUcxZ1y0s65P');
+    expect(res.spotifyId).to.eq('0agrVBcyVQwg01ba6xS4qy');
   });
   it('should find The Right Song', async function () {
     const stream = {

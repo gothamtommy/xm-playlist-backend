@@ -14,8 +14,7 @@ async function update(doc) {
         songId: doc.songId,
       },
     },
-    { upsert: true },
-  );
+    { upsert: true });
 }
 
 async function artists() {

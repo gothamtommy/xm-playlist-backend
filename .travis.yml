@@ -4,6 +4,13 @@ node_js:
   - "7"
 services:
   - mongodb
+# until travis has mongodb > 3
+addons:
+  apt:
+    sources:
+    - mongodb-3.0-precise
+    packages:
+    - mongodb-org-server
 script:
   - yarn coverage
 after_success:

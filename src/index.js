@@ -54,7 +54,10 @@ router.get('/artists', async (ctx, next) => {
 });
 
 router.get('/channels', (ctx, next) => {
-  ctx.body = channels;
+  ctx.body = channels.map((n) => {
+    n.img = `https://www.siriusxm.com/albumart/Live/Default/DefaultMDS_m_${n.number}.jpg`;
+    return n;
+  });
   return next();
 });
 

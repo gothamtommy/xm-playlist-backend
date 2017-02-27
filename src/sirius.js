@@ -32,7 +32,7 @@ function parseChannelMetadataResponse(obj) {
     artists,
     artistsId: currentEvent.artists.id,
     startTime: new Date(currentEvent.startTime),
-    songId: song.id,
+    songId: song.id.replace(/#/g, '!'),
   };
 }
 

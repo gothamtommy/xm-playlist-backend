@@ -4,14 +4,18 @@
     "script": "src/index.js",
     "watch": true,
     "env": {
-      "NODE_ENV": "dev"
+      "NODE_ENV": "dev",
+      "DEBUG": "xmplaylist:*",
+      "DEBUG_COLORS": "true"
     }
   },{
     "name": "cron",
     "script": "src/cron.js",
     "watch": true,
     "env": {
-      "NODE_ENV": "dev"
+      "NODE_ENV": "dev",
+      "DEBUG": "xmplaylist:*",
+      "DEBUG_COLORS": "true"
     }
   }]
 }

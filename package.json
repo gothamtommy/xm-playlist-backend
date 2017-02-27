@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "private": true,
   "scripts": {
-    "start": "DEBUG=xmplaylist:* NODE_ENV=dev pm2-dev start process.dev.json",
+    "start": "pm2-dev start process.dev.json --raw",
     "test": "NODE_ENV=test mocha ./test/index.js ./test/**/*.spec.js",
     "coverage": "nyc npm test",
     "lint": "eslint --format=node_modules/eslint-formatter-pretty src test; exit 0"

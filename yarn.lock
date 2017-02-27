@@ -389,6 +389,10 @@ chalk@^1.0.0, chalk@^1.1, chalk@^1.1.0, chalk@^1.1.1, chalk@^1.1.3:
     strip-ansi "^3.0.0"
     supports-color "^2.0.0"
 
+charm@~0.1.1:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/charm/-/charm-0.1.2.tgz#06c21eed1a1b06aeb67553cdc53e23274bac2296"
+
 chokidar@^1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-1.6.1.tgz#2f4447ab5e96e50fb3d789fd90d4c72e0e4c70c2"
@@ -925,9 +929,9 @@ fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
 
-fclone@1.0.10:
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/fclone/-/fclone-1.0.10.tgz#f7ad6ffa01c82488b16b741cdc04fad03405c64b"
+fclone@1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/fclone/-/fclone-1.0.11.tgz#10e85da38bfea7fc599341c296ee1d77266ee640"
 
 fclone@1.0.8:
   version "1.0.8"
@@ -2153,10 +2157,6 @@ os-locale@^1.4.0:
   dependencies:
     lcid "^1.0.0"
 
-p-throttle@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/p-throttle/-/p-throttle-1.1.0.tgz#dd0822247ffc7767a8c7bb1186fcc632fea57075"
-
 parse-glob@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/parse-glob/-/parse-glob-3.0.4.tgz#b2c376cfb11f35513badd173ef0bb6e3a388391c"
@@ -2275,9 +2275,15 @@ pm2-deploy@^0.3.5:
     async "^1.5"
     tv4 "^1.2"
 
-pm2@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/pm2/-/pm2-2.4.0.tgz#d570f53118989828d0b8e0b1c0dc4f4be3e9f24a"
+pm2-multimeter@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/pm2-multimeter/-/pm2-multimeter-0.1.2.tgz#1a1e55153d41a05534cea23cfe860abaa0eb4ace"
+  dependencies:
+    charm "~0.1.1"
+
+pm2@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/pm2/-/pm2-2.4.1.tgz#ff4cf2e5959c85d190abb54e7fb402140bd73fc5"
   dependencies:
     async "1.5"
     blessed "^0.1.81"
@@ -2288,7 +2294,7 @@ pm2@^2.4.0:
     cron "1.2.1"
     debug "^2.3.2"
     eventemitter2 "1.0.5"
-    fclone "1.0.10"
+    fclone "1.0.11"
     mkdirp "0.5.1"
     moment "^2.15"
     nssocket "0.6.0"
@@ -2296,9 +2302,10 @@ pm2@^2.4.0:
     pm2-axon "3.0.2"
     pm2-axon-rpc "0.4.5"
     pm2-deploy "^0.3.5"
-    pmx "^1.0.1"
+    pm2-multimeter "^0.1.2"
+    pmx "^1.0.2"
     semver "^5.2"
-    shelljs "0.7.5"
+    shelljs "0.7.6"
     source-map-support "^0.4.6"
     sprintf-js "~1.0.2"
     vizion "^0.2"
@@ -2306,7 +2313,7 @@ pm2@^2.4.0:
   optionalDependencies:
     gkt "https://tgz.pm2.io/gkt-1.0.0.tgz"
 
-pmx@^1.0.1:
+pmx@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/pmx/-/pmx-1.0.3.tgz#ed325396f246123240996adac96c80be442b7a5f"
   dependencies:
@@ -2573,15 +2580,7 @@ setprototypeof@1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.0.3.tgz#66567e37043eeb4f04d91bd658c0cbefb55b8e04"
 
-shelljs@0.7.5:
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.7.5.tgz#2eef7a50a21e1ccf37da00df767ec69e30ad0675"
-  dependencies:
-    glob "^7.0.0"
-    interpret "^1.0.0"
-    rechoir "^0.6.2"
-
-shelljs@^0.7.5:
+shelljs@0.7.6, shelljs@^0.7.5:
   version "0.7.6"
   resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.7.6.tgz#379cccfb56b91c8601e4793356eb5382924de9ad"
   dependencies:

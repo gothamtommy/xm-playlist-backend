@@ -4,7 +4,7 @@ const spotify = require('../../src/spotify');
 
 
 describe('spotify', function () {
-  this.timeout(5000);
+  this.timeout(10000);
   it('should find Say My Name', async function () {
     const stream = {
       name: 'Say My Name (Remix)',

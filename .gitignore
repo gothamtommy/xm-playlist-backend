@@ -28,3 +28,5 @@ node_modules
 
 /dist
 /.nyc_output
+config/config.dev.ts
+config/config.prod.ts

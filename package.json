@@ -5,11 +5,13 @@
   "main": "src/index.js",
   "private": true,
   "scripts": {
+    "build": "rimraf build; tsc -p .",
     "start": "NODE_ENV=dev DEBUG=xmplaylist* nodemon --exec 'ts-node' src/index.ts",
     "scanner": "NODE_ENV=dev DEBUG=xmplaylist* nodemon --exec 'ts-node' src/scanner.ts",
     "test": "NODE_ENV=test mocha --timeout 10000 ./test/index.js ./test/**/*.spec.js",
     "coverage": "nyc npm test",
-    "lint": "eslint --format=node_modules/eslint-formatter-pretty src test; exit 0"
+    "test": "NODE_ENV=test mocha --require ts-node/register test/*.spec.ts",
+    "lint": "tslint \"src/**/*.ts\""
   },
   "dependencies": {
     "date-fns": "^1.28.5",
@@ -46,6 +48,7 @@
     "nock": "^9.0.13",
     "nodemon": "^1.11.0",
     "nyc": "^11.0.2",
+    "rimraf": "^2.6.1",
     "supertest": "^3.0.0",
     "ts-node": "^3.0.6",
     "typescript": "^2.3.4"

@@ -59,7 +59,7 @@ async function loop() {
       .collection('stream')
       .find({ startTime: { $lt: cur } })
       .sort({ startTime: -1 })
-      .limit(1000)
+      .limit(50)
       .toArray();
     cur = batch[batch.length - 1].startTime;
     await Promise.all(batch.map((b) => insertPlay(b)));

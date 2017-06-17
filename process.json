@@ -1,7 +1,7 @@
 {
   "apps" : [{
     "name": "xmplaylist",
-    "script": "src/index.js",
+    "script": "build/index.js",
     "exec_mode": "cluster",
     "instances": "3",
     "env": {
@@ -9,7 +9,7 @@
     }
   },{
     "name": "xmcron",
-    "script": "src/cron.js",
+    "script": "build/scanner.js",
     "env": {
       "NODE_ENV": "prod"
     }

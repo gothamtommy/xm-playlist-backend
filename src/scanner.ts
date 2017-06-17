@@ -15,3 +15,4 @@ if (!module.parent) {
   log('cron running');
   setInterval(async () => await updateAll(), 10000);
 }
+updateAll();

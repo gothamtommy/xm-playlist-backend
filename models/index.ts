@@ -64,17 +64,18 @@ export const Play = sequelize.define<PlayInstance, PlayAttributes>('play', {
 });
 
 export interface SpotifyAttributes {
-  trackId: string;
-  cover: string;
-  url: string;
-  spotifyId: string;
-  spotifyName: string;
-  durationMs: number;
+  trackId?: number;
+  cover?: string;
+  url?: string;
+  spotifyId?: string;
+  spotifyName?: string;
+  durationMs?: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
 export type SpotifyInstance = Sequelize.Instance<SpotifyAttributes>;
 export const Spotify = sequelize.define<SpotifyInstance, SpotifyAttributes>('spotify', {
+  spotifyId: { type: Sequelize.STRING(50) },
   spotifyName: { type: Sequelize.STRING(200) },
   cover: { type: Sequelize.STRING(200) },
   url: { type: Sequelize.STRING(200) },

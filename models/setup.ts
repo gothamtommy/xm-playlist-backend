@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 
 import { Track, Artist, ArtistTrack, ArtistTrackInstance, Play } from './index';
 import { encode } from '../src/util';
-import channels from '../src/channels';
+import { channels } from '../src/channels';
 
 const data = {
   channelId: 'thebeat',

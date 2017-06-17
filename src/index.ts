@@ -9,9 +9,10 @@ import * as _ from 'lodash';
 
 import config from '../config';
 import { channels } from './channels';
-const stream = require('./stream');
+import { getRecent } from './plays';
+import { Track, Artist } from '../models';
+import { spotifyFindAndCache } from './spotify';
 const tracks = require('./tracks');
-const spotify = require('./spotify');
 
 const log = debug('xmplaylist');
 const app = new Koa();
@@ -32,22 +33,20 @@ app.use((ctx, next) => {
 router.get('/recent/:channelName', async (ctx, next) => {
   const channel = _.find(channels, { name: ctx.params.channelName });
   ctx.assert(channel, 400, 'Channel does not exist');
-  let last = new Date();
-  if (ctx.query.last) {
-    last = new Date(parseInt(ctx.query.last || 0, 10));
-  }
-  ctx.body = await stream.getRecent(channel, last);
+  const last = parseInt(ctx.query.last || 0, 10);
+  ctx.body = await getRecent(channel, last);
   return next();
 });
-router.get('/mostHeard/:channelName', async (ctx, next) => {
-  const channel = _.find(channels, { name: ctx.params.channelName });
-  ctx.assert(channel, 400, 'Channel does not exist');
-  ctx.body = await stream.mostHeard(channel);
-  return next();
-});
-router.get('/track/:songId', async (ctx, next) => {
-  ctx.assert(ctx.params.songId, 400, 'Song Id required');
-  ctx.body = await tracks.getTrack(ctx.params.songId);
+// router.get('/mostHeard/:channelName', async (ctx, next) => {
+//   const channel = _.find(channels, { name: ctx.params.channelName });
+//   ctx.assert(channel, 400, 'Channel does not exist');
+//   ctx.body = await stream.mostHeard(channel);
+//   return next();
+// });
+router.get('/track/:trackId', async (ctx, next) => {
+  const trackId = ctx.params.trackId;
+  ctx.assert(trackId, 400, 'Song Id required');
+  ctx.body = await Track.findById(trackId, { include: [{ model: Artist }] });
   return next();
 });
 
@@ -64,11 +63,11 @@ router.get('/channels', (ctx, next) => {
   return next();
 });
 
-router.get('/spotify/:songId', async (ctx, next) => {
-  const songId = ctx.params.songId;
+router.get('/spotify/:trackId', async (ctx, next) => {
+  const trackId = ctx.params.trackId;
   let doc;
   try {
-    doc = await spotify.get(songId);
+    doc = await spotifyFindAndCache(trackId);
   } catch (e) {
     ctx.throw(404, 'Not Found');
   }
@@ -88,5 +87,5 @@ app
 
 if (!module.parent) {
   app.listen(config.port);
-  log('listening on port:', config.port);
+  log(`http://localhost:${config.port}`);
 }

@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 
-import { Play, PlayAttributes, Track } from '../models';
+import { Play, PlayAttributes, Track, Artist } from '../models';
 import { Channel } from './channels';
 
 export async function getLast(channel: Channel) {
@@ -13,9 +13,14 @@ export async function getLast(channel: Channel) {
 }
 
 export async function getRecent(channel, last) {
+  let where = {};
+  if (last) {
+    where = { id: { $lt: last } };
+  }
   return await Play.findAll({
-    where: { startTime: { $lt: last } },
+    where,
     order: [['id', 'DESC']],
+    include: [{ model: Track, include: [{ model: Artist }] }],
     limit: 15,
   });
 }

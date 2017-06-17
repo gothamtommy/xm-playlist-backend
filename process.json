@@ -1,6 +1,6 @@
 {
   "apps" : [{
-    "name": "xmplaylist",
+    "name": "xm",
     "script": "build/index.js",
     "exec_mode": "cluster",
     "instances": "3",

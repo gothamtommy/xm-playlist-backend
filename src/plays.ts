@@ -7,7 +7,7 @@ export async function getLast(channel: Channel) {
   return await Play
     .findOne({
       where: { channel: channel.number },
-      order: [['id', 'DESC']],
+      order: [['startTime', 'DESC']],
       include: [{ model: Track }],
     });
 }

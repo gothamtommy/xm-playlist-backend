@@ -1,7 +1,7 @@
 {
   "apps" : [{
     "name": "xm",
-    "script": "build/index.js",
+    "script": "build/src/index.js",
     "exec_mode": "cluster",
     "instances": "3",
     "env": {
@@ -9,7 +9,7 @@
     }
   },{
     "name": "xmcron",
-    "script": "build/scanner.js",
+    "script": "build/src/scanner.js",
     "env": {
       "NODE_ENV": "prod"
     }

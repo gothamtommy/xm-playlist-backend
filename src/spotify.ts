@@ -18,14 +18,11 @@ export function parseSpotify(obj: any) {
 }
 
 export async function getToken() {
+  const auth = new Buffer(`${config.spotifyClientId}:${config.spotifyClientSecret}`).toString('base64');
   const options: request.Options = {
     uri: 'https://accounts.spotify.com/api/token',
-    headers: {
-      'Authorization': 'Basic ' + (new Buffer(config.spotifyClientId + ':' + config.spotifyClientSecret).toString('base64')),
-    },
-    form: {
-      grant_type: 'client_credentials'
-    },
+    headers: { Authorization: `Basic ${auth}` },
+    form: { grant_type: 'client_credentials' },
     json: true,
     gzip: true,
   };

@@ -12,14 +12,14 @@ export async function getLast(channel: Channel) {
     });
 }
 
-export async function getRecent(channel, last) {
-  let where = {};
+export async function getRecent(channel: Channel, last?: Date) {
+  let where: any = { channel: channel.number };
   if (last) {
-    where = { id: { $lt: last } };
+    where = { startTime: { $lt: last } };
   }
   return await Play.findAll({
     where,
-    order: [['id', 'DESC']],
+    order: [['startTime', 'DESC']],
     include: [{ model: Track, include: [{ model: Artist }] }],
     limit: 15,
   });

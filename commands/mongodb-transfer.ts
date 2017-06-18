@@ -27,7 +27,11 @@ async function insertPlay(data: any) {
   if (!created) {
     track.increment('plays');
   } else {
-    await track.update({ name: data.name });
+    await track.update({
+      name: data.name,
+      dateCreated: new Date(data.startTime),
+      dateUpdated: new Date(data.startTime),
+    });
     const at = artists.map((artist) => {
       return {
         artistId: artist.get('id'),
@@ -51,7 +55,7 @@ async function loop() {
     }, {
       sort: { startTime: -1 },
     });
-  const mid = await Play.findOne({ order: [['id', 'DESC']] });
+  const mid = await Play.findOne({ order: [['startTime', 'DESC']] });
   let cur = mid ? mid.get('startTime') : new Date();
   while (true) {
     const promises = [];

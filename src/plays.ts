@@ -13,9 +13,9 @@ export async function getLast(channel: Channel) {
 }
 
 export async function getRecent(channel: Channel, last?: Date) {
-  let where: any = { channel: channel.number };
+  const where: any = { channel: channel.number };
   if (last) {
-    where = { startTime: { $lt: last } };
+    where.startTime = { $lt: last };
   }
   return await Play.findAll({
     where,

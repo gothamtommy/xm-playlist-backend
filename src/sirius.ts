@@ -6,12 +6,12 @@ import * as _ from 'lodash';
 // import { findOrCreateTrack } from './tracks';
 import { getLast } from './plays';
 import { Track, ArtistTrack, Play, ArtistTrackInstance, Artist } from '../models';
-import { channels } from './channels';
+import { channels, Channel } from './channels';
 import { encode } from './util';
 import { spotifyFindAndCache } from './spotify';
 
 // http://www.siriusxm.com/metadata/pdt/en-us/json/channels/thebeat/timestamp/02-25-08:10:00
-const baseurl = 'http://www.siriusxm.com';
+const baseurl = 'https://www.siriusxm.com';
 const log = debug('xmplaylist');
 
 export function parseArtists(artists: string): string[] {
@@ -41,11 +41,10 @@ export function parseChannelMetadataResponse(obj: any) {
   };
 }
 
-export async function checkEndpoint(channel) {
+export async function checkEndpoint(channel: Channel) {
   const dateString = moment.utc().format('MM-DD-HH:mm:00');
   const url = `${baseurl}/metadata/pdt/en-us/json/channels/${channel.id}/timestamp/${dateString}`;
   log(url);
-  const last = await getLast(channel);
   let res;
   try {
     res = await request.get(url, { json: true, gzip: true, simple: true });
@@ -59,11 +58,12 @@ export async function checkEndpoint(channel) {
   if (['^I', ''].includes(newSong.songId) || newSong.name[0] === '#') {
     return false;
   }
+  const last = await getLast(channel);
   newSong.songId = encode(newSong.songId);
   if (last && last.get('track').songId === newSong.songId) {
     return false;
   }
-  const track = await insertPlay(newSong);
+  const track = await insertPlay(newSong, channel);
   // TODO: announce
   log(newSong);
   try {
@@ -88,7 +88,7 @@ function findOrCreateArtists(artists: string[]) {
   return Promise.all(promises);
 }
 
-async function insertPlay(data: any) {
+async function insertPlay(data: any, channel: Channel) {
   const artists = await findOrCreateArtists(data.artists);
   const [track, created] = await Track
     .findOrCreate({ where: { songId: data.songId } });
@@ -104,9 +104,8 @@ async function insertPlay(data: any) {
     });
     await ArtistTrack.bulkCreate(at, { returning: false });
   }
-  const chan = _.find(channels, _.matchesProperty('id', data.channelId));
   await Play.create(
-    { channel: chan.number, trackId: track.get('id'), startTime: new Date(data.startTime) },
+    { channel: channel.number, trackId: track.get('id'), startTime: new Date(data.startTime) },
     { returning: false },
   );
   return track;

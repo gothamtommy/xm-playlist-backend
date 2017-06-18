@@ -17,10 +17,14 @@ async function updateAll() {
   for (const channel of channels) {
     await checkEndpoint(channel);
   }
+  setTimeout(() => updateAll(), 5000);
 }
 
 if (!module.parent) {
   log('cron running');
-  setInterval(async () => await updateAll(), 10000);
+  updateAll();
 }
-updateAll();
+
+process.on('unhandledRejection', (reason) => {
+    console.log('Reason: ', reason);
+});

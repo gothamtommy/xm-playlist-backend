@@ -1,0 +1,835 @@
+[
+  {
+    "id": "https://www.siriusxm.com/siriusxmhits1",
+    "number": "2",
+    "name": "SiriusXM Hits 1",
+    "genre": "Pop",
+    "desc": "Today's Pop Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/venus",
+    "number": "3",
+    "name": "Venus",
+    "genre": "Pop",
+    "desc": "Pop Music You Can Move To"
+  },
+  {
+    "id": "https://www.siriusxm.com/pitbullsglobalization",
+    "number": "4",
+    "name": "Pitbull's Globalization",
+    "genre": "Pop",
+    "desc": "Worldwide Rhythmic Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/50son5",
+    "number": "5",
+    "name": "'50s on 5",
+    "genre": "Pop",
+    "desc": "'50s Pop Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/60son6",
+    "number": "6",
+    "name": "'60s on 6",
+    "genre": "Pop",
+    "desc": "'60s Pop Hits w/ Cousin Brucie"
+  },
+  {
+    "id": "https://www.siriusxm.com/70son7",
+    "number": "7",
+    "name": "'70s on 7",
+    "genre": "Pop",
+    "desc": "'70s Pop Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/80son8",
+    "number": "8",
+    "name": "'80s on 8",
+    "genre": "Pop",
+    "desc": "'80s Pop Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/90son9",
+    "number": "9",
+    "name": "'90s on 9",
+    "genre": "Pop",
+    "desc": "'90s Pop Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/pop2k",
+    "number": "10",
+    "name": "Pop2K",
+    "genre": "Pop",
+    "desc": "2000s Pop Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/siriusxmlimitedition",
+    "number": "13",
+    "name": "SiriusXM Limited Edition",
+    "genre": "Pop",
+    "desc": "Exclusive Limited-Run Channels"
+  },
+  {
+    "id": "https://www.siriusxm.com/thecoffeehouse",
+    "number": "14",
+    "name": "The Coffee House",
+    "genre": "Pop",
+    "desc": "Acoustic/Singer-Songwriters"
+  },
+  {
+    "id": "https://www.siriusxm.com/thepulse",
+    "number": "15",
+    "name": "The Pulse",
+    "genre": "Pop",
+    "desc": "Adult Pop Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/theblend",
+    "number": "16",
+    "name": "The Blend",
+    "genre": "Pop",
+    "desc": "Bright Pop Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/siriusxmlove",
+    "number": "17",
+    "name": "SiriusXM Love",
+    "genre": "Pop",
+    "desc": "Love Songs"
+  },
+  {
+    "id": "https://www.siriusxm.com/thebeatleschannel",
+    "number": "18",
+    "name": "The Beatles Channel",
+    "genre": "Rock",
+    "desc": "The Fab Four, 24/8"
+  },
+  {
+    "id": "https://www.siriusxm.com/elvisradio",
+    "number": "19",
+    "name": "Elvis Radio",
+    "genre": "Rock",
+    "desc": "Elvis 24/7 Live from Graceland"
+  },
+  {
+    "id": "https://www.siriusxm.com/estreetradio",
+    "number": "20",
+    "name": "E Street Radio",
+    "genre": "Rock",
+    "desc": "Bruce Springsteen, 24/7"
+  },
+  {
+    "id": "https://www.siriusxm.com/undergroundgarage",
+    "number": "21",
+    "name": "Underground Garage",
+    "genre": "Rock",
+    "desc": "Little Steven's Garage Rock"
+  },
+  {
+    "id": "https://www.siriusxm.com/pearljamradio",
+    "number": "22",
+    "name": "Pearl Jam Radio",
+    "genre": "Rock",
+    "desc": "Pearl Jam 24/7"
+  },
+  {
+    "id": "https://www.siriusxm.com/gratefuldead",
+    "number": "23",
+    "name": "Grateful Dead Channel",
+    "genre": "Rock",
+    "desc": "Grateful Dead, 24/7"
+  },
+  {
+    "id": "https://www.siriusxm.com/radiomargaritaville",
+    "number": "24",
+    "name": "Radio Margaritaville",
+    "genre": "Rock",
+    "desc": "Escape to Margaritaville"
+  },
+  {
+    "id": "https://www.siriusxm.com/classicrewind",
+    "number": "25",
+    "name": "Classic Rewind",
+    "genre": "Rock",
+    "desc": "'70s/'80s Classic Rock"
+  },
+  {
+    "id": "https://www.siriusxm.com/classicvinyl",
+    "number": "26",
+    "name": "Classic Vinyl",
+    "genre": "Rock",
+    "desc": "'60s/'70s Classic Rock"
+  },
+  {
+    "id": "https://www.siriusxm.com/deeptracks",
+    "number": "27",
+    "name": "Deep Tracks",
+    "genre": "Rock",
+    "desc": "Deep Classic Rock"
+  },
+  {
+    "id": "https://www.siriusxm.com/thespectrum",
+    "number": "28",
+    "name": "The Spectrum",
+    "genre": "Rock",
+    "desc": "New Rock Meets Classic Rock"
+  },
+  {
+    "id": "https://www.siriusxm.com/jamon",
+    "number": "29",
+    "name": "Jam_ON",
+    "genre": "Rock",
+    "desc": "Jam Bands"
+  },
+  {
+    "id": "https://www.siriusxm.com/theloft",
+    "number": "30",
+    "name": "The Loft",
+    "genre": "Rock",
+    "desc": "Eclectic Rock"
+  },
+  {
+    "id": "https://www.siriusxm.com/tompettyradio",
+    "number": "31",
+    "name": "Tom Petty Radio",
+    "genre": "Rock",
+    "desc": "Music Curated by Tom Petty"
+  },
+  {
+    "id": "https://www.siriusxm.com/thebridge",
+    "number": "32",
+    "name": "The Bridge",
+    "genre": "Rock",
+    "desc": "Mellow Rock"
+  },
+  {
+    "id": "https://www.siriusxm.com/1stwave",
+    "number": "33",
+    "name": "1st Wave",
+    "genre": "Rock",
+    "desc": "'80s Alternative/New Wave"
+  },
+  {
+    "id": "https://www.siriusxm.com/lithium",
+    "number": "34",
+    "name": "Lithium",
+    "genre": "Rock",
+    "desc": "'90s Alternative/Grunge"
+  },
+  {
+    "id": "https://www.siriusxm.com/siriusxmu",
+    "number": "35",
+    "name": "SiriusXMU",
+    "genre": "Rock",
+    "desc": "New Indie Rock"
+  },
+  {
+    "id": "https://www.siriusxm.com/altnation",
+    "number": "36",
+    "name": "Alt Nation",
+    "genre": "Rock",
+    "desc": "New Alternative Rock"
+  },
+  {
+    "id": "https://www.siriusxm.com/octane",
+    "number": "37",
+    "name": "Octane",
+    "genre": "Rock",
+    "desc": "New Hard Rock"
+  },
+  {
+    "id": "https://www.siriusxm.com/ozzysboneyard",
+    "number": "38",
+    "name": "Ozzy's Boneyard",
+    "genre": "Rock",
+    "desc": "Ozzy's Classic Hard Rock"
+  },
+  {
+    "id": "https://www.siriusxm.com/hairnation",
+    "number": "39",
+    "name": "Hair Nation",
+    "genre": "Rock",
+    "desc": "'80s Hair Bands"
+  },
+  {
+    "id": "https://www.siriusxm.com/liquidmetal",
+    "number": "40",
+    "name": "Liquid Metal",
+    "genre": "Rock",
+    "desc": "Heavy Metal-XL"
+  },
+  {
+    "id": "https://www.siriusxm.com/faction",
+    "number": "41",
+    "name": "Faction",
+    "genre": "Rock",
+    "desc": "Punk & Beats w/ Jason Ellis XL"
+  },
+  {
+    "id": "https://www.siriusxm.com/thejoint",
+    "number": "42",
+    "name": "The Joint",
+    "genre": "R&B",
+    "desc": "Reggae"
+  },
+  {
+    "id": "https://www.siriusxm.com/backspin",
+    "number": "43",
+    "name": "Backspin",
+    "genre": "Hip-Hop",
+    "desc": "Classic Hip-Hop-XL"
+  },
+  {
+    "id": "https://www.siriusxm.com/hiphopnation",
+    "number": "44",
+    "name": "Hip-Hop Nation",
+    "genre": "Hip-Hop",
+    "desc": "Today's Hip-Hop Hits-XL"
+  },
+  {
+    "id": "https://www.siriusxm.com/shade45",
+    "number": "45",
+    "name": "Shade 45",
+    "genre": "Hip-Hop",
+    "desc": "Eminem's Hip-Hop Channel XL"
+  },
+  {
+    "id": "https://www.siriusxm.com/theheat",
+    "number": "46",
+    "name": "The Heat",
+    "genre": "R&B",
+    "desc": "Today's R&B Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/siriusxmfly",
+    "number": "47",
+    "name": "SiriusXM FLY",
+    "genre": "R&B",
+    "desc": "'90s & 2000s Hip-Hop/R&B - XL"
+  },
+  {
+    "id": "https://www.siriusxm.com/heartandsoul",
+    "number": "48",
+    "name": "Heart & Soul",
+    "genre": "R&B",
+    "desc": "Adult R&B Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/soultown",
+    "number": "49",
+    "name": "Soul Town",
+    "genre": "R&B",
+    "desc": "Classic Soul/Motown"
+  },
+  {
+    "id": "https://www.siriusxm.com/thegroove",
+    "number": "50",
+    "name": "The Groove",
+    "genre": "R&B",
+    "desc": "'70s/'80s R&B"
+  },
+  {
+    "id": "https://www.siriusxm.com/bpm",
+    "number": "51",
+    "name": "BPM",
+    "genre": "Dance/Electronic",
+    "desc": "Electronic Dance Music Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/electricarea",
+    "number": "52",
+    "name": "Electric Area",
+    "genre": "Dance/Electronic",
+    "desc": "EDM DJ Mix Shows"
+  },
+  {
+    "id": "https://www.siriusxm.com/chill",
+    "number": "53",
+    "name": "SiriusXM Chill",
+    "genre": "Dance/Electronic",
+    "desc": "Downtempo/Deep House"
+  },
+  {
+    "id": "https://www.siriusxm.com/studio54radio",
+    "number": "54",
+    "name": "Studio 54 Radio",
+    "genre": "Dance/Electronic",
+    "desc": "'70s-2000s Dance Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/thegarthchannel",
+    "number": "55",
+    "name": "The Garth Channel",
+    "genre": "Country",
+    "desc": "Garth's Own Channel, 24/7"
+  },
+  {
+    "id": "https://www.siriusxm.com/thehighway",
+    "number": "56",
+    "name": "The Highway",
+    "genre": "Country",
+    "desc": "Today's Country Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/noshoesradio",
+    "number": "57",
+    "name": "No Shoes Radio",
+    "genre": "Country",
+    "desc": "Kenny Chesney's Music Channel"
+  },
+  {
+    "id": "https://www.siriusxm.com/primecountry",
+    "number": "58",
+    "name": "Prime Country",
+    "genre": "Country",
+    "desc": "'80s/'90s Country Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/williesroadhouse",
+    "number": "59",
+    "name": "Willie's Roadhouse",
+    "genre": "Country",
+    "desc": "Willie's Classic Country"
+  },
+  {
+    "id": "https://www.siriusxm.com/outlawcountry",
+    "number": "60",
+    "name": "Outlaw Country",
+    "genre": "Country",
+    "desc": "Rockin' Country Rebels"
+  },
+  {
+    "id": "https://www.siriusxm.com/y2kountry",
+    "number": "61",
+    "name": "Y2Kountry",
+    "genre": "Country",
+    "desc": "2000s Country Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/bluegrassjunction",
+    "number": "62",
+    "name": "Bluegrass Junction",
+    "genre": "Country",
+    "desc": "Bluegrass"
+  },
+  {
+    "id": "https://www.siriusxm.com/themessage",
+    "number": "63",
+    "name": "The Message",
+    "genre": "Christian",
+    "desc": "Christian Pop & Rock"
+  },
+  {
+    "id": "https://www.siriusxm.com/kirkfranklinspraise",
+    "number": "64",
+    "name": "Kirk Franklin's Praise",
+    "genre": "Christian",
+    "desc": "Kirk Franklin's Gospel Channel"
+  },
+  {
+    "id": "https://www.siriusxm.com/enlighten",
+    "number": "65",
+    "name": "enLighten",
+    "genre": "Christian",
+    "desc": "Southern Gospel"
+  },
+  {
+    "id": "https://www.siriusxm.com/watercolors",
+    "number": "66",
+    "name": "Watercolors",
+    "genre": "Jazz/Standards",
+    "desc": "Smooth/Contemporary Jazz"
+  },
+  {
+    "id": "https://www.siriusxm.com/realjazz",
+    "number": "67",
+    "name": "Real Jazz",
+    "genre": "Jazz/Standards",
+    "desc": "Classic Jazz"
+  },
+  {
+    "id": "https://www.siriusxm.com/spa",
+    "number": "68",
+    "name": "Spa",
+    "genre": "Jazz/Standards",
+    "desc": "New Age"
+  },
+  {
+    "id": "https://www.siriusxm.com/escape",
+    "number": "69",
+    "name": "Escape",
+    "genre": "Jazz/Standards",
+    "desc": "Easy Listening"
+  },
+  {
+    "id": "https://www.siriusxm.com/bbkingsbluesville",
+    "number": "70",
+    "name": "BB King's Bluesville",
+    "genre": "Jazz/Standards",
+    "desc": "B.B. King's Blues Channel"
+  },
+  {
+    "id": "https://www.siriusxm.com/siriuslysinatra",
+    "number": "71",
+    "name": "Siriusly Sinatra",
+    "genre": "Jazz/Standards",
+    "desc": "Standards By Sinatra & More"
+  },
+  {
+    "id": "https://www.siriusxm.com/onbroadway",
+    "number": "72",
+    "name": "On Broadway",
+    "genre": "Jazz/Standards",
+    "desc": "Show Tunes"
+  },
+  {
+    "id": "https://www.siriusxm.com/40sjunction",
+    "number": "73",
+    "name": "40s Junction",
+    "genre": "Jazz/Standards",
+    "desc": "'40s Pop Hits/Big Band"
+  },
+  {
+    "id": "https://www.siriusxm.com/metropolitanoperaradio",
+    "number": "74",
+    "name": "Met Opera Radio",
+    "genre": "Classical",
+    "desc": "Opera/Classical Voices"
+  },
+  {
+    "id": "https://www.siriusxm.com/symphonyhall",
+    "number": "76",
+    "name": "Symphony Hall",
+    "genre": "Classical",
+    "desc": "Classical Music"
+  },
+  {
+    "id": "https://www.siriusxm.com/caliente",
+    "number": "158",
+    "name": "Caliente",
+    "genre": "Pop",
+    "desc": "Tropical Latin Music"
+  },
+  {
+    "id": "https://www.siriusxm.com/Celebrate",
+    "number": "300",
+    "name": "Celebrate!",
+    "genre": "Pop",
+    "desc": "Happy Songs For A Celebration"
+  },
+  {
+    "id": "https://www.siriusxm.com/roadtripradio",
+    "number": "301",
+    "name": "Road Trip Radio",
+    "genre": "Pop",
+    "desc": "Music to Drive to!"
+  },
+  {
+    "id": "https://www.siriusxm.com/thecoverschannel",
+    "number": "302",
+    "name": "The Covers Channel",
+    "genre": "Pop",
+    "desc": "24/7 Cover Songs"
+  },
+  {
+    "id": "https://www.siriusxm.com/onederland",
+    "number": "303",
+    "name": "ONEderland",
+    "genre": "Pop",
+    "desc": "One-Hit Wonders, 24/7"
+  },
+  {
+    "id": "https://www.siriusxm.com/velvet",
+    "number": "304",
+    "name": "Velvet",
+    "genre": "Pop",
+    "desc": "Today’s Pop Vocalists"
+  },
+  {
+    "id": "https://www.siriusxm.com/rockandrollhalloffameradio",
+    "number": "310",
+    "name": "Rock and Roll Hall of Fame Radio",
+    "genre": "Rock",
+    "desc": "Rock Hall Inducted Artists"
+  },
+  {
+    "id": "https://www.siriusxm.com/yachtrockradio",
+    "number": "311",
+    "name": "Yacht Rock Radio",
+    "genre": "Rock",
+    "desc": "'70s/'80s Smooth-Sailing Soft Rock"
+  },
+  {
+    "id": "https://www.siriusxm.com/rockbar",
+    "number": "313",
+    "name": "RockBar",
+    "genre": "Rock",
+    "desc": "Rock & Roll Jukebox Songs"
+  },
+  {
+    "id": "https://www.siriusxm.com/siriusxmturbo",
+    "number": "314",
+    "name": "SiriusXM Turbo",
+    "genre": "Rock",
+    "desc": "Hard Rock from the '90s/2000s"
+  },
+  {
+    "id": "https://www.siriusxm.com/siriusxmcomesalive",
+    "number": "316",
+    "name": "SiriusXM Comes Alive!",
+    "genre": "Rock",
+    "desc": "Live Classic Rock"
+  },
+  {
+    "id": "https://www.siriusxm.com/siriusxmsilk",
+    "number": "330",
+    "name": "SiriusXM Silk",
+    "genre": "R&B",
+    "desc": "Smooth R&B Love Songs"
+  },
+  {
+    "id": "https://www.siriusxm.com/tiestosclublife",
+    "number": "340",
+    "name": "Tiësto's Club Life Radio",
+    "genre": "Dance/Electronic",
+    "desc": "Tiësto's EDM Channel"
+  },
+  {
+    "id": "https://www.siriusxm.com/utopia",
+    "number": "341",
+    "name": "Utopia",
+    "genre": "Dance/Electronic",
+    "desc": "'90s/2000s Dance Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/redwhite&booze",
+    "number": "350",
+    "name": "Red White & Booze",
+    "genre": "Country",
+    "desc": "Country Bar Songs"
+  },
+  {
+    "id": "https://www.siriusxm.com/neildiamondradio",
+    "number": "700",
+    "name": "Neil Diamond Radio",
+    "genre": "Pop",
+    "desc": "Neil Diamond, 24/7"
+  },
+  {
+    "id": "https://www.siriusxm.com/elevations",
+    "number": "702",
+    "name": "Elevations",
+    "genre": "Pop",
+    "desc": "Reimagined Pop & Rock Classics"
+  },
+  {
+    "id": "https://www.siriusxm.com/oldiesparty",
+    "number": "703",
+    "name": "Oldies Party",
+    "genre": "Pop",
+    "desc": "Party Songs from the 50s & 60s"
+  },
+  {
+    "id": "https://www.siriusxm.com/70s80spop",
+    "number": "704",
+    "name": "70s/80s Pop",
+    "genre": "Pop",
+    "desc": "''70s & '80s Super Party Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/80s90sparty",
+    "number": "705",
+    "name": "80s/90s Pop",
+    "genre": "Pop",
+    "desc": "'80s & '90s Party Hits"
+  },
+  {
+    "id": "https://www.siriusxm.com/tompettysburiedtreasure",
+    "number": "712",
+    "name": "Tom Petty's Buried Treasure",
+    "genre": "Rock",
+    "desc": "Tom Petty’s Buried Treasure 24/7"
+  },
+  {
+    "id": "https://www.siriusxm.com/emoproject",
+    "number": "713",
+    "name": "The Emo Project",
+    "genre": "Rock",
+    "desc": "Emotionally Driven Alt Rock"
+  },
+  {
+    "id": "https://www.siriusxm.com/classicrockparty",
+    "number": "715",
+    "name": "Classic Rock Party",
+    "genre": "Rock",
+    "desc": "Non-Stop Classic Rock"
+  },
+  {
+    "id": "https://www.siriusxm.com/siriusxmlimitededition2",
+    "number": "716",
+    "name": "SiriusXM Limited Edition 2",
+    "genre": "Rock",
+    "desc": "Home for limited-run channels"
+  },
+  {
+    "id": "https://www.siriusxm.com/siriusxmlimitededition3",
+    "number": "717",
+    "name": "SiriusXM Limited Edition 3",
+    "genre": "Rock",
+    "desc": "Home for limited-run channels"
+  },
+  {
+    "id": "https://www.siriusxm.com/swaysuniverse",
+    "number": "720",
+    "name": "Sway's Universe",
+    "genre": "Hip-Hop",
+    "desc": "Sway's Lifestyle Channel XL"
+  },
+  {
+    "id": "https://www.siriusxm.com/siriusxmlimitededition4",
+    "number": "721",
+    "name": "SiriusXM Limited Edition 4",
+    "genre": "Hip-Hop",
+    "desc": "Home for limited-run channels XL"
+  },
+  {
+    "id": "https://www.siriusxm.com/siriusxmlimitededition5",
+    "number": "726",
+    "name": "SiriusXM Limited Edition 5",
+    "genre": "R&B",
+    "desc": "Home for limited-run channels"
+  },
+  {
+    "id": "https://www.siriusxm.com/siriusxmlimitededition6",
+    "number": "730",
+    "name": "SiriusXM Limited Edition 6",
+    "genre": "Dance/Electronic",
+    "desc": "Home for limited-run channels"
+  },
+  {
+    "id": "https://www.siriusxm.com/thevillage",
+    "number": "741",
+    "name": "The Village",
+    "genre": "Country",
+    "desc": "Folk"
+  },
+  {
+    "id": "https://www.siriusxm.com/siriusxmlimitededition7",
+    "number": "742",
+    "name": "SiriusXM Limited Edition 7",
+    "genre": "Country",
+    "desc": "Home for limited-run channels"
+  },
+  {
+    "id": "https://www.siriusxm.com/siriusxmlimitededition8",
+    "number": "745",
+    "name": "SiriusXM Limited Edition 8",
+    "genre": "Christian",
+    "desc": "Home for limited-run channels"
+  },
+  {
+    "id": "https://www.siriusxm.com/cinemagic",
+    "number": "750",
+    "name": "Cinemagic",
+    "genre": "Jazz/Standards",
+    "desc": "Movie Soundtracks and More"
+  },
+  {
+    "id": "https://www.siriusxm.com/krishnadasyoga",
+    "number": "751",
+    "name": "Krishna Das Yoga Radio",
+    "genre": "Jazz/Standards",
+    "desc": "Chant/Sacred/Spiritual Music"
+  },
+  {
+    "id": "https://www.siriusxm.com/siriusxmlimitededition9",
+    "number": "752",
+    "name": "SiriusXM Limited Edition 9",
+    "genre": "Jazz/Standards",
+    "desc": "Home for limited-run channels"
+  },
+  {
+    "id": "https://www.siriusxm.com/siriusxmpops",
+    "number": "755",
+    "name": "SiriusXM Pops",
+    "genre": "Classical",
+    "desc": "Classical Pops"
+  },
+  {
+    "id": "https://www.siriusxm.com/siriusxmlimitededition10",
+    "number": "756",
+    "name": "SiriusXM Limited Edition 10",
+    "genre": "Classical",
+    "desc": "Home for limited-run channels"
+  },
+  {
+    "id": "https://www.siriusxm.com/aguila",
+    "number": "761",
+    "name": "Águila",
+    "genre": "Latino",
+    "desc": "Regional Mexican Music"
+  },
+  {
+    "id": "https://www.siriusxm.com/caricia",
+    "number": "762",
+    "name": "Caricia",
+    "genre": "Latino",
+    "desc": "Ballads in Spanish & English"
+  },
+  {
+    "id": "https://www.siriusxm.com/viva",
+    "number": "763",
+    "name": "Viva",
+    "genre": "Latino",
+    "desc": "Modern Latin Pop & Ballads"
+  },
+  {
+    "id": "https://www.siriusxm.com/latidos",
+    "number": "764",
+    "name": "Latidos",
+    "genre": "Latino",
+    "desc": "Latin Love Songs"
+  },
+  {
+    "id": "https://www.siriusxm.com/flownacion",
+    "number": "765",
+    "name": "Flow Nación",
+    "genre": "Latino",
+    "desc": "Latin Urban Music"
+  },
+  {
+    "id": "https://www.siriusxm.com/luna",
+    "number": "766",
+    "name": "Luna",
+    "genre": "Latino",
+    "desc": "Latin Jazz"
+  },
+  {
+    "id": "https://www.siriusxm.com/rumbon",
+    "number": "767",
+    "name": "Rumbón",
+    "genre": "Latino",
+    "desc": "Classic Salsa"
+  },
+  {
+    "id": "https://www.siriusxm.com/lakueva",
+    "number": "768",
+    "name": "La Kueva",
+    "genre": "Latino",
+    "desc": "Latin Rock"
+  },
+  {
+    "id": "https://www.siriusxm.com/holidaytraditionsonline",
+    "number": "782",
+    "name": "Holiday Traditions",
+    "genre": "Pop",
+    "desc": "Traditional Holiday Music"
+  },
+  {
+    "id": "https://www.siriusxm.com/jasonellis",
+    "number": "791",
+    "name": "Jason Ellis",
+    "genre": "Rock",
+    "desc": "Jason Ellis Show Nonstop XL"
+  }
+]

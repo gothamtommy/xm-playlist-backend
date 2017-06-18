@@ -24,6 +24,12 @@ app.use(kcors());
 if (process.env.NODE_ENV === 'dev') {
   app.use(logger());
 }
+if (config.dsn) {
+  const sentry = Raven
+    .config(config.dsn, { autoBreadcrumbs: true })
+    .install({ captureUnhandledRejections: true });
+  koaRaven(app, sentry);
+}
 app.use((ctx, next) => {
   ctx.type = 'json';
   return next();

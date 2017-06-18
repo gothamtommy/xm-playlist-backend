@@ -25,7 +25,10 @@ async function insertPlay(data: any) {
       },
     });
   if (!created) {
-    track.increment('plays');
+    await track.increment('plays');
+    await track.update({
+      dateCreated: new Date(data.startTime),
+    });
   } else {
     await track.update({
       name: data.name,
@@ -49,13 +52,7 @@ async function insertPlay(data: any) {
 
 async function loop() {
   const db = await MongoClient.connect('mongodb://127.0.0.1/xmplaylist');
-  const oldest = await db.collection('stream')
-    .findOne({
-      failed: false,
-    }, {
-      sort: { startTime: -1 },
-    });
-  const mid = await Play.findOne({ order: [['startTime', 'DESC']] });
+  const mid = await Play.findOne({ order: [['startTime']] });
   let cur = mid ? mid.get('startTime') : new Date();
   while (true) {
     const promises = [];
@@ -63,7 +60,7 @@ async function loop() {
       .collection('stream')
       .find({ startTime: { $lt: cur } })
       .sort({ startTime: -1 })
-      .limit(50)
+      .limit(100)
       .toArray();
     cur = batch[batch.length - 1].startTime;
     await Promise.all(batch.map((b) => insertPlay(b)));

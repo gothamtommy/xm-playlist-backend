@@ -7,13 +7,18 @@ export interface Channel {
 }
 export const channels: Channel[] = [
   {
-    name: 'BPM',
     id: 'thebeat',
+    name: 'BPM',
     number: 51,
   },
   {
-    name: 'Electric Area',
     id: 'area33',
+    name: 'Electric Area',
     number: 52,
+  },
+  {
+    id: 'chill',
+    name: 'SiriusXM Chill',
+    number: 53,
   },
 ];

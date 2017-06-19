@@ -67,8 +67,8 @@ router.get('/artists', async (ctx, next) => {
 
 router.get('/channels', (ctx, next) => {
   ctx.body = channels.map((n) => {
-    n.img = `https://www.siriusxm.com/albumart/Live/Default/DefaultMDS_m_${n.number}.jpg`;
-    // n.img = `http://pri.art.prod.streaming.siriusxm.com/images/channel/20170503/${n.id}-1-31-00-180x180.png`;
+    // n.img = `https://www.siriusxm.com/albumart/Live/Default/DefaultMDS_m_${n.number}.jpg`;
+    n.img = `http://pri.art.prod.streaming.siriusxm.com/images/channel/20170503/${n.id}-1-31-00-180x180.png`;
     return n;
   });
   return next();

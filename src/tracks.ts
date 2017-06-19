@@ -2,12 +2,12 @@ import { Track, Artist, ArtistTrack, ArtistTrackInstance } from '../models';
 
 import { encode } from '../src/util';
 
-export function findOrCreateArtists(artists: string[]) {
+export function findOrCreateArtists(artists: string[]): Promise<ArtistTrackInstance[]> {
   const promises: Array<Promise<ArtistTrackInstance>> = artists.map((n): any  => {
     return Artist
       .findOrCreate({ where: { name: n }})
       .spread((artist: ArtistTrackInstance, created) => {
-        return artist;
+        return artist.toJSON();
       });
   });
   return Promise.all(promises);

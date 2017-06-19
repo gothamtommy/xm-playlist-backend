@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 
-import { Play, PlayAttributes, Track, Artist } from '../models';
+import { Play, PlayAttributes, PlayInstance, Track, Artist } from '../models';
 import { Channel } from './channels';
 
 export async function getLast(channel: Channel) {
@@ -9,7 +9,8 @@ export async function getLast(channel: Channel) {
       where: { channel: channel.number },
       order: [['startTime', 'DESC']],
       include: [{ model: Track }],
-    });
+    })
+    .then((n) => n.toJSON());
 }
 
 export async function getRecent(channel: Channel, last?: Date) {
@@ -17,17 +18,21 @@ export async function getRecent(channel: Channel, last?: Date) {
   if (last) {
     where.startTime = { $lt: last };
   }
-  return await Play.findAll({
-    where,
-    order: [['startTime', 'DESC']],
-    include: [{ model: Track, include: [{ model: Artist }] }],
-    limit: 15,
-  });
+  return await Play
+    .findAll({
+      where,
+      order: [['startTime', 'DESC']],
+      include: [{ model: Track, include: [{ model: Artist }] }],
+      limit: 15,
+    })
+    .then((n) => n.map((x) => x.toJSON()));
 }
 
 export async function mostHeard(channel) {
   // TODO: group
-  return await Play.findAll();
+  return await Play
+    .findAll()
+    .then((n) => n.map((x) => x.toJSON()));
   // const db = await mongo;
   // const date = moment().subtract(1, 'days').toDate();
   // return db.collection('stream')

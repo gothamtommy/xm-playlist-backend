@@ -8,7 +8,7 @@
     "build": "rimraf build; tsc -p .",
     "start": "NODE_ENV=dev DEBUG=xmplaylist* nodemon --exec 'ts-node' src/index.ts",
     "scanner": "NODE_ENV=dev DEBUG=xmplaylist* nodemon --exec 'ts-node' src/scanner.ts",
-    "test": "NODE_ENV=test jest",
+    "test": "NODE_ENV=test npm run lint && jest --coverage --no-cache",
     "lint": "tslint \"src/**/*.ts\""
   },
   "dependencies": {
@@ -28,11 +28,9 @@
     "sequelize": "^4.1.0"
   },
   "devDependencies": {
-    "@types/jest": "^20.0.0",
-    "jest": "^20.0.4",
-    "ts-jest": "^20.0.6",
     "@types/chai": "^4.0.0",
     "@types/debug": "^0.0.29",
+    "@types/jest": "^20.0.0",
     "@types/kcors": "^2.2.1",
     "@types/koa": "^2.0.39",
     "@types/koa-logger": "^2.0.2",
@@ -45,11 +43,14 @@
     "@types/request-promise-native": "^1.0.5",
     "@types/sequelize": "^4.0.60",
     "chai": "^4.0.2",
+    "jest": "^20.0.4",
     "nock": "^9.0.13",
     "nodemon": "^1.11.0",
     "rimraf": "^2.6.1",
     "supertest": "^3.0.0",
+    "ts-jest": "^20.0.6",
     "ts-node": "^3.0.6",
+    "tslint": "^5.4.3",
     "typescript": "^2.3.4"
   },
   "jest": {
@@ -65,15 +66,7 @@
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/test/"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 90,
-        "functions": 95,
-        "lines": 95,
-        "statements": 95
-      }
-    }
+    ]
   },
   "engines": {
     "node": ">= 8"

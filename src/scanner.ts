@@ -24,7 +24,3 @@ if (!module.parent) {
   log('cron running');
   updateAll();
 }
-
-process.on('unhandledRejection', (reason) => {
-    console.log('Reason: ', reason);
-});

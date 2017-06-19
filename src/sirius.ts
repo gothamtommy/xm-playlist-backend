@@ -60,7 +60,7 @@ export async function checkEndpoint(channel: Channel) {
   }
   const last = await getLast(channel);
   newSong.songId = encode(newSong.songId);
-  if (last && last.get('track').songId === newSong.songId) {
+  if (last && last.track.songId === newSong.songId) {
     return false;
   }
   const track = await insertPlay(newSong, channel);

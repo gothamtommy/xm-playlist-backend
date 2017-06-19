@@ -1,13 +1,14 @@
 import { Track, Artist, ArtistTrack, Play, Spotify } from './index';
 
-export function setup(force = true): any {
-  return Track.sync({ force })
-    .then(() => Artist.sync({ force }))
-    .then(() => ArtistTrack.sync({ force }))
-    .then(() => Play.sync({ force }))
-    .then(() => Spotify.sync({ force }));
+export function setup(force = false): any {
+  const opt = { force };
+  return Track.sync(opt)
+    .then(() => Artist.sync(opt))
+    .then(() => ArtistTrack.sync(opt))
+    .then(() => Play.sync(opt))
+    .then(() => Spotify.sync(opt));
 }
 
 if (!module.parent) {
-  setup();
+  setup(true);
 }

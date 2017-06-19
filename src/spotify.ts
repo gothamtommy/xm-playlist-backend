@@ -41,7 +41,12 @@ export async function searchTrack(artists: string[], name: string) {
   let t = name.replace(/[ ](mix)/i, '');
   const token = await getToken();
   const options: request.Options = {
-    uri: `https://api.spotify.com/v1/search?q=artist:${a}+track:${t}+&limit=1&type=track`,
+    uri: `https://api.spotify.com/v1/search`,
+    qs: {
+      q: `${a} ${t}`,
+      type: 'track',
+      limit: 1,
+    },
     headers: { Authorization: `Bearer ${token}` },
     json: true,
     gzip: true,
@@ -51,10 +56,15 @@ export async function searchTrack(artists: string[], name: string) {
     return parseSpotify(_.first(res.tracks.items));
   }
   t = t.split('-')[0];
-  options.uri = `https://api.spotify.com/v1/search?q=track:${t}+&limit=1&type=track`;
+  options.qs.q = t;
   const res2 = await request.get(options);
   if (res2.tracks.items.length > 0) {
     return parseSpotify(_.first(res2.tracks.items));
+  }
+  options.qs.q = a;
+  const res3 = await request.get(options);
+  if (res3.tracks.items.length > 0) {
+    return parseSpotify(_.first(res3.tracks.items));
   }
   return Promise.reject('failed');
 }

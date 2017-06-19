@@ -1,6 +1,6 @@
 // this is returned sometimes
 
-module.exports = {
+export default {
   channelMetadataResponse: {
     messages: {
       code: 305,

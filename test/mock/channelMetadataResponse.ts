@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   channelMetadataResponse: {
     messages: {
       code: 100,
@@ -14,7 +14,7 @@ module.exports = {
           id: 'FQv',
           name: 'The Chainsmokers/Halsey',
         },
-        baseUrl: 'http://www.siriusxm.com/albumart/',
+        baseUrl: 'https://www.siriusxm.com/albumart/',
         epgInfo: {
           program: {
             description: 'Trailblazer. Tastemaker. Troublemaker. Liquid Todd is an award-winning dance radio pioneer, producer and performer. LT brings his signature irrepressible energy to BPM every weeknight. Todd also spins freshly-minted EDM every Tues on betaBPM',

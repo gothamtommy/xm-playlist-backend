@@ -10,7 +10,7 @@ import { channels, Channel } from './channels';
 import { encode } from './util';
 import { spotifyFindAndCache } from './spotify';
 
-// http://www.siriusxm.com/metadata/pdt/en-us/json/channels/thebeat/timestamp/02-25-08:10:00
+// https://www.siriusxm.com/metadata/pdt/en-us/json/channels/thebeat/timestamp/02-25-08:10:00
 const baseurl = 'https://www.siriusxm.com';
 const log = debug('xmplaylist');
 

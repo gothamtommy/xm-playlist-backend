@@ -8,22 +8,18 @@
     "build": "rimraf build; tsc -p .",
     "start": "NODE_ENV=dev DEBUG=xmplaylist* nodemon --exec 'ts-node' src/index.ts",
     "scanner": "NODE_ENV=dev DEBUG=xmplaylist* nodemon --exec 'ts-node' src/scanner.ts",
-    "test": "NODE_ENV=test mocha --timeout 10000 ./test/index.js ./test/**/*.spec.js",
-    "coverage": "nyc npm test",
-    "test": "NODE_ENV=test mocha --require ts-node/register test/*.spec.ts",
+    "test": "NODE_ENV=test jest",
     "lint": "tslint \"src/**/*.ts\""
   },
   "dependencies": {
-    "date-fns": "^1.28.5",
     "debug": "^2.6.8",
     "kcors": "^2.2.1",
     "koa": "^2.2.0",
     "koa-logger": "^3.0.0",
-    "koa-router": "^7.2.0",
+    "koa-router": "^7.2.1",
     "koa2-raven": "^4.0.9",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
-    "mongodb": "^2.2.28",
     "pg": "^6.2.4",
     "raven": "^2.0.2",
     "redis": "^2.7.1",
@@ -32,36 +28,52 @@
     "sequelize": "^4.1.0"
   },
   "devDependencies": {
+    "@types/jest": "^20.0.0",
+    "jest": "^20.0.4",
+    "ts-jest": "^20.0.6",
+    "@types/chai": "^4.0.0",
     "@types/debug": "^0.0.29",
     "@types/kcors": "^2.2.1",
+    "@types/koa": "^2.0.39",
     "@types/koa-logger": "^2.0.2",
     "@types/koa-router": "^7.0.22",
     "@types/lodash": "^4.14.66",
-    "@types/mongodb": "^2.2.5",
-    "@types/node": "^7.0.31",
+    "@types/moment": "^2.13.0",
+    "@types/progress": "^2.0.0",
     "@types/raven": "^1.2.2",
+    "@types/redis": "^2.6.0",
     "@types/request-promise-native": "^1.0.5",
     "@types/sequelize": "^4.0.60",
     "chai": "^4.0.2",
-    "istanbul": "1.1.0-alpha.1",
-    "mocha": "^3.4.2",
     "nock": "^9.0.13",
     "nodemon": "^1.11.0",
-    "nyc": "^11.0.2",
     "rimraf": "^2.6.1",
     "supertest": "^3.0.0",
     "ts-node": "^3.0.6",
     "typescript": "^2.3.4"
   },
-  "nyc": {
-    "reporter": [
-      "lcov",
-      "text"
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
     ],
-    "exclude": [
-      "test",
-      "config"
-    ]
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 95,
+        "lines": 95,
+        "statements": 95
+      }
+    }
   },
   "engines": {
     "node": ">= 8"

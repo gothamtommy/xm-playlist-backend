@@ -1,4 +1,4 @@
-// http://www.siriusxm.com/albumart/Live/Default/DefaultMDS_m_52.jpg
+// https://www.siriusxm.com/albumart/Live/Default/DefaultMDS_m_52.jpg
 export interface Channel {
   id: string;
   name: string;

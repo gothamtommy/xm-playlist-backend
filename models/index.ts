@@ -51,7 +51,7 @@ export interface PlayAttributes {
   trackId: string;
   startTime?: Date;
   channel?: number;
-  track: TrackAttributes;
+  track?: TrackAttributes;
 }
 export type PlayInstance = Sequelize.Instance<PlayAttributes>;
 export const Play = sequelize.define<PlayInstance, PlayAttributes>('play', {

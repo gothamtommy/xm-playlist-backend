@@ -3,14 +3,13 @@ import * as moment from 'moment';
 import { Play, PlayAttributes, PlayInstance, Track, Artist } from '../models';
 import { Channel } from './channels';
 
-export async function getLast(channel: Channel) {
+export async function getLast(channel: Channel): Promise<any> {
   return await Play
     .findOne({
       where: { channel: channel.number },
       order: [['startTime', 'DESC']],
       include: [{ model: Track }],
-    })
-    .then((n) => n.toJSON());
+    });
 }
 
 export async function getRecent(channel: Channel, last?: Date) {

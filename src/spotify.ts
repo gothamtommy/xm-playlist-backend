@@ -38,7 +38,7 @@ export async function getToken(): Promise<string> {
 
 export async function searchTrack(artists: string[], name: string) {
   const a = artists.join('+');
-  let t = name.replace(/[ ](mix)/i, '');
+  let t = name.replace(/[ ](mix)/i, '').replace('ft.', '').replace('feat.', '');
   const token = await getToken();
   const options: request.Options = {
     uri: `https://api.spotify.com/v1/search`,

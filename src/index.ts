@@ -36,8 +36,9 @@ app.use((ctx, next) => {
 });
 
 // routes
-router.get('/recent/:channelName', async (ctx, next) => {
-  const channel = _.find(channels, { name: ctx.params.channelName });
+router.get('/recent/:id', async (ctx, next) => {
+  ctx.assert(ctx.params.id, 400, 'Channel does not exist');
+  const channel = _.find(channels, _.matchesProperty('id', ctx.params.id));
   ctx.assert(channel, 400, 'Channel does not exist');
   if (ctx.query.last) {
     const last = new Date(parseInt(ctx.query.last, 10));

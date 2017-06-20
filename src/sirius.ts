@@ -54,7 +54,8 @@ export async function checkEndpoint(channel: Channel) {
   if (!res.channelMetadataResponse || !res.channelMetadataResponse.status) {
     return false;
   }
-  if (!res.channelMetadataResponse.metaData.currentEvent.song.id) {
+  if (!res.channelMetadataResponse.metaData.currentEvent.song.id ||
+    !res.channelMetadataResponse.metaData.currentEvent.artists) {
     return false;
   }
   const newSong = parseChannelMetadataResponse(res);

@@ -14,7 +14,7 @@ if (config.dsn) {
 
 async function updateAll() {
   for (const channel of channels) {
-    await checkEndpoint(channel);
+    await checkEndpoint(channel).catch((e) => catchError(e));
   }
   setTimeout(() => updateAll().catch((e) => catchError(e)), 5000);
 }
@@ -25,6 +25,6 @@ if (!module.parent) {
 }
 
 function catchError(err: Error) {
-  sentry.captureException(err);
   log(err);
+  sentry.captureException(err);
 }

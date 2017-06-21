@@ -12,15 +12,24 @@ if (config.dsn) {
   sentry.install({ captureUnhandledRejections: true });
 }
 
+export default function sleep(duration: number) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => { resolve(0); }, duration);
+  });
+}
+
 async function updateAll() {
-  for (const channel of channels) {
-    await checkEndpoint(channel).catch((e) => catchError(e));
+  while (true) {
+    for (const channel of channels) {
+      await checkEndpoint(channel).catch((e) => catchError(e));
+      await sleep(300);
+    }
   }
 }
 
 if (!module.parent) {
   log('cron running');
-  setInterval(async () => await updateAll().catch((e) => catchError(e)), 9000);
+  updateAll().catch((e) => catchError(e));
 }
 
 function catchError(err: Error) {

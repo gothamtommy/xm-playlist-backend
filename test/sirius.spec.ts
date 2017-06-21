@@ -19,7 +19,9 @@ const bpm = _.find(channels, _.matchesProperty('id', 'thebeat'));
 
 describe('sirius', function() {
   it('should parse metadata response', function() {
-    const stream = parseChannelMetadataResponse(channelMetadataResponse);
+    const meta = channelMetadataResponse.channelMetadataResponse.metaData;
+    const currentEvent = meta.currentEvent;
+    const stream = parseChannelMetadataResponse(meta, currentEvent);
     expect(stream.name).to.eq('Closer (R3HAB Mix)');
     expect(stream.songId).to.eq('$O1FhQ');
     expect(stream.channelNumber).to.eq(51);

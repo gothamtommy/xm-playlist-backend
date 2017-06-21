@@ -23,7 +23,6 @@ export function parseName(name: string) {
 }
 
 export function parseChannelMetadataResponse(meta: any, currentEvent: any) {
-  // some artists have a /\ symbol
   const artists = parseArtists(String(currentEvent.artists.name));
   const name = parseName(String(currentEvent.song.name));
   const songId = String(currentEvent.song.id);
@@ -58,6 +57,7 @@ export async function checkEndpoint(channel: Channel) {
     !currentEvent.song ||
     !currentEvent.song.id ||
     !currentEvent.artists ||
+    !currentEvent.artists.id ||
     !currentEvent.artists.name ||
     !currentEvent.song.name
   ) {

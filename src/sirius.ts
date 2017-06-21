@@ -28,7 +28,7 @@ export function parseChannelMetadataResponse(obj: any) {
   const song = currentEvent.song;
   // some artists have a /\ symbol
   const artists = parseArtists(String(currentEvent.artists.name));
-  const name = parseName(song.name);
+  const name = parseName(String(song.name));
   return {
     channelId: meta.channelId,
     channelName: meta.channelName,

@@ -16,12 +16,11 @@ async function updateAll() {
   for (const channel of channels) {
     await checkEndpoint(channel).catch((e) => catchError(e));
   }
-  setTimeout(() => updateAll().catch((e) => catchError(e)), 5000);
 }
 
 if (!module.parent) {
   log('cron running');
-  updateAll().catch((e) => catchError(e));
+  setInterval(async () => await updateAll().catch((e) => catchError(e)), 9000);
 }
 
 function catchError(err: Error) {

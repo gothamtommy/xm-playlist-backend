@@ -1,6 +1,8 @@
 import * as moment from 'moment';
+import * as sequelize from 'sequelize';
+import * as _ from 'lodash';
 
-import { Play, PlayAttributes, PlayInstance, Track, Artist } from '../models';
+import { Play, PlayAttributes, PlayInstance, Track, Artist, sequelize as s } from '../models';
 import { Channel } from './channels';
 
 export async function getLast(channel: Channel): Promise<any> {
@@ -27,13 +29,32 @@ export async function getRecent(channel: Channel, last?: Date) {
     .then((n) => n.map((x) => x.toJSON()));
 }
 
-export async function mostHeard(channel) {
+export async function mostHeard(channel: Channel) {
   // TODO: group
-  return await Play
-    .findAll()
+  const date = moment().subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss');
+  const trackAndCount: any = await s.query(`
+    SELECT "trackId", count('play.trackId') AS "playCount"
+    FROM "plays" AS "play"
+    WHERE "play"."channel" = ${channel.number}
+      AND "startTime" > '${date}'
+    GROUP BY "play"."trackId"
+    ORDER BY "playCount" DESC LIMIT 20;
+    `).spread((results, metadata) => {
+      return results;
+    });
+  const trackIds = trackAndCount.map((n) => n.trackId);
+  const tracks = await Track
+    .findAll({
+      where: { id: {$in: trackIds } },
+      include: [{ model: Artist }],
+    })
     .then((n) => n.map((x) => x.toJSON()));
+  return tracks.map((n: any) => {
+    n.playCount = _.find(trackAndCount, _.matchesProperty('trackId', n.id)).playCount;
+    n.playCount = Number(n.playCount);
+    return n;
+  });
   // const db = await mongo;
-  // const date = moment().subtract(1, 'days').toDate();
   // return db.collection('stream')
   //   .aggregate([
   //     { $match: {

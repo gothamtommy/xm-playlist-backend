@@ -9,7 +9,7 @@ import * as _ from 'lodash';
 
 import config from '../config';
 import { channels } from './channels';
-import { getRecent } from './plays';
+import { getRecent, mostHeard } from './plays';
 import { Track, Artist } from '../models';
 import { spotifyFindAndCache } from './spotify';
 const tracks = require('./tracks');
@@ -48,12 +48,13 @@ router.get('/recent/:id', async (ctx, next) => {
   }
   return next();
 });
-// router.get('/mostHeard/:channelName', async (ctx, next) => {
-//   const channel = _.find(channels, { name: ctx.params.channelName });
-//   ctx.assert(channel, 400, 'Channel does not exist');
-//   ctx.body = await stream.mostHeard(channel);
-//   return next();
-// });
+router.get('/mostHeard/:id', async (ctx, next) => {
+  ctx.assert(ctx.params.id, 400, 'Channel does not exist');
+  const channel = _.find(channels, _.matchesProperty('id', ctx.params.id));
+  ctx.assert(channel, 400, 'Channel does not exist');
+  ctx.body = await mostHeard(channel);
+  return next();
+});
 router.get('/track/:trackId', async (ctx, next) => {
   const trackId = ctx.params.trackId;
   ctx.assert(trackId, 400, 'Song Id required');

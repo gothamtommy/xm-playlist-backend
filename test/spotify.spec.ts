@@ -70,4 +70,10 @@ describe('spotify', function() {
     const res = await searchTrack(artists, name);
     expect(res.spotifyId).to.eq('2z50GlkP7GinGZauNHwD7j');
   });
+  it('should find Rush Over Me f.', async function() {
+    const name = 'Another Life (f.Ester Dean)';
+    const artists = ['David Guetta', 'Afrojack'];
+    const res = await searchTrack(artists, name);
+    expect(res.spotifyId).to.eq('0AOEd0Zw22aTE8LzsS4EMg');
+  });
 });

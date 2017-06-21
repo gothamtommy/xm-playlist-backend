@@ -22,13 +22,11 @@ export function parseName(name: string) {
   return name.split(' #')[0];
 }
 
-export function parseChannelMetadataResponse(obj: any) {
-  const meta = obj.channelMetadataResponse.metaData;
-  const currentEvent = meta.currentEvent;
-  const song = currentEvent.song;
+export function parseChannelMetadataResponse(meta: any, currentEvent: any) {
   // some artists have a /\ symbol
   const artists = parseArtists(String(currentEvent.artists.name));
-  const name = parseName(String(song.name));
+  const name = parseName(String(currentEvent.song.name));
+  const songId = String(currentEvent.song.id);
   return {
     channelId: meta.channelId,
     channelName: meta.channelName,
@@ -37,7 +35,7 @@ export function parseChannelMetadataResponse(obj: any) {
     artists,
     artistsId: currentEvent.artists.id,
     startTime: new Date(currentEvent.startTime),
-    songId: song.id.replace(/#/g, '!'),
+    songId: songId.replace(/#/g, '!'),
   };
 }
 
@@ -54,14 +52,19 @@ export async function checkEndpoint(channel: Channel) {
   if (!res.channelMetadataResponse || !res.channelMetadataResponse.status) {
     return false;
   }
-  if (!res.channelMetadataResponse.metaData.currentEvent.song ||
-    !res.channelMetadataResponse.metaData.currentEvent.song.id ||
-    !res.channelMetadataResponse.metaData.currentEvent.artists ||
-    !res.channelMetadataResponse.metaData.currentEvent.artists.name ||
-    !res.channelMetadataResponse.metaData.currentEvent.song.name) {
+  const meta = res.channelMetadataResponse.metaData;
+  const currentEvent = meta.currentEvent;
+  if (
+    !currentEvent.song ||
+    !currentEvent.song.id ||
+    !currentEvent.artists ||
+    !currentEvent.artists.name ||
+    !currentEvent.song.name
+  ) {
     return false;
   }
-  const newSong = parseChannelMetadataResponse(res);
+
+  const newSong = parseChannelMetadataResponse(meta, currentEvent);
   if (['^I', ''].includes(newSong.songId) || newSong.name[0] === '#') {
     return false;
   }

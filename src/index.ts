@@ -6,11 +6,13 @@ import * as koaRaven from 'koa2-raven';
 import * as Raven from 'raven';
 import * as Router from 'koa-router';
 import * as _ from 'lodash';
+import * as sequelize from 'sequelize';
+import * as moment from 'moment';
 
 import config from '../config';
 import { channels } from './channels';
 import { getRecent, mostHeard } from './plays';
-import { Track, Artist } from '../models';
+import { Track, Artist, Play } from '../models';
 import { spotifyFindAndCache } from './spotify';
 const tracks = require('./tracks');
 
@@ -48,6 +50,7 @@ router.get('/recent/:id', async (ctx, next) => {
   }
   return next();
 });
+
 router.get('/mostHeard/:id', async (ctx, next) => {
   ctx.assert(ctx.params.id, 400, 'Channel does not exist');
   const channel = _.find(channels, _.matchesProperty('id', ctx.params.id));
@@ -55,10 +58,21 @@ router.get('/mostHeard/:id', async (ctx, next) => {
   ctx.body = await mostHeard(channel);
   return next();
 });
+
 router.get('/track/:trackId', async (ctx, next) => {
   const trackId = ctx.params.trackId;
   ctx.assert(trackId, 400, 'Song Id required');
-  ctx.body = await Track.findById(trackId, { include: [{ model: Artist }] });
+  ctx.body = await Track.findById(trackId, { include: [{ model: Artist }] })
+    .then((t) => t.toJSON());
+  const daysago = moment().subtract(30, 'days');
+  ctx.body.playsByDay = await Play.findAll({
+    where: { trackId, startTime: { $gt: daysago } },
+    attributes: [
+      [sequelize.fn('date_trunc', 'day', sequelize.col('startTime')), 'day'],
+      [sequelize.fn('COUNT', 'trackId'), 'count'],
+    ],
+    group: ['day'],
+  }).then((t) => t.map((n) => n.toJSON()));
   return next();
 });
 

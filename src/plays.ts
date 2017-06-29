@@ -1,6 +1,6 @@
-import * as moment from 'moment';
 import * as sequelize from 'sequelize';
 import * as _ from 'lodash';
+import { subDays, format } from 'date-fns';
 
 import { Play, PlayAttributes, PlayInstance, Track, Artist, sequelize as s } from '../models';
 import { Channel } from './channels';
@@ -30,8 +30,7 @@ export async function getRecent(channel: Channel, last?: Date) {
 }
 
 export async function mostHeard(channel: Channel) {
-  // TODO: group
-  const date = moment().subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss');
+  const date = format(subDays(new Date(), 1), 'YYYY-MM-DD HH:mm:ss');
   const trackAndCount: any = await s.query(`
     SELECT "trackId", count('play.trackId') AS "playCount"
     FROM "plays" AS "play"

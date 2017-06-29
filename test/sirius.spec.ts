@@ -1,4 +1,3 @@
-import * as chai from 'chai';
 import * as nock from 'nock';
 import * as _ from 'lodash';
 
@@ -12,9 +11,7 @@ import { channels } from '../src/channels';
 import channelMetadataInvalidId from './mock/channelMetadataInvalidId';
 import channelMetadataResponse from './mock/channelMetadataResponse';
 import channelMetadataResponse1 from './mock/channelMetadataResponse1';
-import { setup } from '../models/dbinit';
 
-const expect = chai.expect;
 const bpm = _.find(channels, _.matchesProperty('id', 'thebeat'));
 
 describe('sirius', function() {
@@ -22,22 +19,22 @@ describe('sirius', function() {
     const meta = channelMetadataResponse.channelMetadataResponse.metaData;
     const currentEvent = meta.currentEvent;
     const stream = parseChannelMetadataResponse(meta, currentEvent);
-    expect(stream.name).to.eq('Closer (R3HAB Mix)');
-    expect(stream.songId).to.eq('$O1FhQ');
-    expect(stream.channelNumber).to.eq(51);
-    expect(stream.channelName).to.eq('BPM');
-    expect(stream.channelId).to.eq('thebeat');
-    expect(stream.artists.length).to.eq(2);
-    expect(stream.artistsId).to.eq('FQv');
+    expect(stream.name).toBe('Closer (R3HAB Mix)');
+    expect(stream.songId).toBe('$O1FhQ');
+    expect(stream.channelNumber).toBe(51);
+    expect(stream.channelName).toBe('BPM');
+    expect(stream.channelId).toBe('thebeat');
+    expect(stream.artists.length).toBe(2);
+    expect(stream.artistsId).toBe('FQv');
   });
   it('should parse artists', function() {
     const artists = parseArtists('Axwell/\\Ingrosso/Adventure Club vs. DallasK');
-    expect(artists.length).to.eq(2);
-    expect(artists[0]).to.eq('Axwell/\\Ingrosso');
+    expect(artists.length).toBe(2);
+    expect(artists[0]).toBe('Axwell/\\Ingrosso');
   });
   it('should parse song name', function() {
     const name = parseName('Jupiter #bpmDebut');
-    expect(name).to.eq('Jupiter');
+    expect(name).toBe('Jupiter');
   });
   it('should get update from channel', async function() {
     const scope = nock('https://www.siriusxm.com')
@@ -45,7 +42,7 @@ describe('sirius', function() {
       .reply(200, channelMetadataResponse);
     const res = await checkEndpoint(bpm);
     scope.done();
-    expect(res).to.eq(true);
+    expect(res).toBe(true);
   });
   it('should skip song that has already been recorded', async function() {
     const scope = nock('https://www.siriusxm.com')
@@ -55,8 +52,8 @@ describe('sirius', function() {
     const res = await checkEndpoint(bpm);
     const res2 = await checkEndpoint(bpm);
     scope.done();
-    expect(res).to.eq(true);
-    expect(res2).to.eq(false);
+    expect(res).toBe(true);
+    expect(res2).toBe(false);
   });
   it('should skip invalid id', async function() {
     const scope = nock('https://www.siriusxm.com')
@@ -64,6 +61,6 @@ describe('sirius', function() {
       .reply(200, channelMetadataInvalidId);
     const res = await checkEndpoint(bpm);
     scope.done();
-    expect(res).to.eq(false);
+    expect(res).toBe(false);
   });
 });

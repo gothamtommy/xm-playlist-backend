@@ -7,7 +7,7 @@ import * as Raven from 'raven';
 import * as Router from 'koa-router';
 import * as _ from 'lodash';
 import * as sequelize from 'sequelize';
-import * as moment from 'moment';
+import { subDays } from 'date-fns';
 
 import config from '../config';
 import { channels } from './channels';
@@ -64,7 +64,7 @@ router.get('/track/:trackId', async (ctx, next) => {
   ctx.assert(trackId, 400, 'Song Id required');
   ctx.body = await Track.findById(trackId, { include: [{ model: Artist }] })
     .then((t) => t.toJSON());
-  const daysago = moment().subtract(30, 'days');
+  const daysago = subDays(new Date(), 30);
   ctx.body.playsByDay = await Play.findAll({
     where: { trackId, startTime: { $gt: daysago } },
     attributes: [

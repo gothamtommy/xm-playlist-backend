@@ -1,7 +1,7 @@
 import * as debug from 'debug';
-import * as moment from 'moment';
 import * as request from 'request-promise-native';
 import * as _ from 'lodash';
+import { format as dateFmt } from 'date-fns';
 
 // import { findOrCreateTrack } from './tracks';
 import { getLast } from './plays';
@@ -39,7 +39,9 @@ export function parseChannelMetadataResponse(meta: any, currentEvent: any) {
 }
 
 export async function checkEndpoint(channel: Channel) {
-  const dateString = moment.utc().format('MM-DD-HH:mm:00');
+  const now = new Date();
+  const utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+  const dateString = dateFmt(utc, 'MM-DD-HH:mm:00');
   const url = `${baseurl}/metadata/pdt/en-us/json/channels/${channel.id}/timestamp/${dateString}`;
   log(url);
   let res;
@@ -73,12 +75,12 @@ export async function checkEndpoint(channel: Channel) {
   if (last && last.track.songId === newSong.songId) {
     return false;
   }
-  const track = await insertPlay(newSong, channel);
+  const trackId = await insertPlay(newSong, channel);
   // TODO: announce
   log(newSong);
   try {
     if (process.env.NODE_ENV !== 'test') {
-      spotifyFindAndCache(track.get('id'));
+      spotifyFindAndCache(trackId);
     }
   } catch (e) {
     log(`${newSong.songId} not found on spotify`);
@@ -98,7 +100,7 @@ function findOrCreateArtists(artists: string[]) {
   return Promise.all(promises);
 }
 
-async function insertPlay(data: any, channel: Channel) {
+export async function insertPlay(data: any, channel: Channel): Promise<number> {
   const artists = await findOrCreateArtists(data.artists);
   const [track, created] = await Track
     .findOrCreate({ where: { songId: data.songId } });
@@ -118,5 +120,5 @@ async function insertPlay(data: any, channel: Channel) {
     { channel: channel.number, trackId: track.get('id'), startTime: new Date(data.startTime) },
     { returning: false },
   );
-  return track;
+  return track.get('id');
 }

@@ -1,4 +1,9 @@
 import { searchTrack } from '../src/spotify';
+import { setup } from '../models/dbinit';
+
+beforeAll(function() {
+  return setup(true);
+});
 
 describe('spotify', function() {
   it('should find Say My Name', async function() {

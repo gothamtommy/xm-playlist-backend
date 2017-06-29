@@ -11,8 +11,13 @@ import { channels } from '../src/channels';
 import channelMetadataInvalidId from './mock/channelMetadataInvalidId';
 import channelMetadataResponse from './mock/channelMetadataResponse';
 import channelMetadataResponse1 from './mock/channelMetadataResponse1';
+import { setup } from '../models/dbinit';
 
 const bpm = _.find(channels, _.matchesProperty('id', 'thebeat'));
+
+beforeAll(function() {
+  return setup(true);
+});
 
 describe('sirius', function() {
   it('should parse metadata response', function() {

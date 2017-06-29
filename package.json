@@ -63,6 +63,7 @@
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
+      "/config/",
       "/test/"
     ]
   },

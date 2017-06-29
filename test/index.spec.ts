@@ -6,8 +6,9 @@ import app from '../src/index';
 import { setup } from '../models/dbinit';
 import { insertPlay } from '../src/sirius';
 
-beforeAll(function() {
-  return setup(true);
+beforeAll(async function(done) {
+  await setup(true);
+  done();
 });
 
 const play = {

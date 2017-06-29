@@ -1,8 +1,9 @@
 import { searchTrack } from '../src/spotify';
 import { setup } from '../models/dbinit';
 
-beforeAll(function() {
-  return setup(true);
+beforeAll(async function(done) {
+  await setup(true);
+  done();
 });
 
 describe('spotify', function() {

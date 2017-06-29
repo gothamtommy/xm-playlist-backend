@@ -15,8 +15,9 @@ import { setup } from '../models/dbinit';
 
 const bpm = _.find(channels, _.matchesProperty('id', 'thebeat'));
 
-beforeAll(function() {
-  return setup(true);
+beforeAll(async function(done) {
+  await setup(true);
+  done();
 });
 
 describe('sirius', function() {

@@ -35,7 +35,7 @@
     "@types/koa": "^2.0.39",
     "@types/koa-logger": "^2.0.2",
     "@types/koa-router": "^7.0.22",
-    "@types/lodash": "^4.14.66",
+    "@types/lodash": "^4.14.67",
     "@types/progress": "^2.0.0",
     "@types/raven": "^1.2.2",
     "@types/redis": "^2.6.0",
@@ -50,7 +50,7 @@
     "ts-jest": "^20.0.6",
     "ts-node": "^3.1.0",
     "tslint": "^5.4.3",
-    "typescript": "^2.3.4"
+    "typescript": "^2.4.1"
   },
   "jest": {
     "transform": {

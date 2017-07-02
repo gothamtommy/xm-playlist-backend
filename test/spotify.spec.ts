@@ -73,4 +73,10 @@ describe('spotify', function() {
     const res = await searchTrack(artists, name);
     expect(res.spotifyId).toBe('0AOEd0Zw22aTE8LzsS4EMg');
   });
+  it('should find Subeme La Radio-Ravell Remix', async function() {
+    const name = 'Subeme La Radio-Ravell Remix';
+    const artists = ['Enrique Iglesias', 'Descemer Bueno', 'Zio'];
+    const res = await searchTrack(artists, name);
+    expect(res.spotifyId).toBe('1eJaMOi47bQlinXC9wi5b3');
+  });
 });

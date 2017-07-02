@@ -76,6 +76,21 @@ router.get('/track/:trackId', async (ctx, next) => {
   return next();
 });
 
+router.get('/trackActivity/:trackId', async (ctx, next) => {
+  const trackId = ctx.params.trackId;
+  ctx.assert(trackId, 400, 'Song Id required');
+  const daysago = subDays(new Date(), 30);
+  ctx.body = await Play.findAll({
+    where: { trackId, startTime: { $gt: daysago } },
+    attributes: [
+      [sequelize.fn('date_trunc', 'day', sequelize.col('startTime')), 'day'],
+      [sequelize.fn('COUNT', 'trackId'), 'count'],
+    ],
+    group: ['day'],
+  }).then((t) => t.map((n) => n.toJSON()));
+  return next();
+});
+
 router.get('/artists', async (ctx, next) => {
   ctx.body = await tracks.artists();
   return next();

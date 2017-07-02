@@ -7,6 +7,6 @@ services:
   - redis
 script:
   - psql -c 'create database xmtest;' -U postgres
-  - CLIENT_ID=$CLIENT_ID CLIENT_SECRET=$CLIENT_SECRET npm run test
+  - CLIENT_ID=$CLIENT_ID CLIENT_SECRET=$CLIENT_SECRET npm run coverage
 after_success:
   - bash <(curl -s https://codecov.io/bash)

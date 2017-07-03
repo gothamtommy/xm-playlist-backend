@@ -79,4 +79,10 @@ describe('spotify', function() {
     const res = await searchTrack(artists, name);
     expect(res.spotifyId).toBe('1eJaMOi47bQlinXC9wi5b3');
   });
+  it('should find Something Just Like This-Alesso Rem', async function() {
+    const name = 'Something Just Like This-Alesso Rem';
+    const artists = ['The Chainsmokers', 'Coldplay'];
+    const res = await searchTrack(artists, name);
+    expect(res.spotifyId).toBe('50RJdoxw8iajGNtHQe6QeS');
+  });
 });

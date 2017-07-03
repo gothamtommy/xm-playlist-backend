@@ -85,4 +85,10 @@ describe('spotify', function() {
     const res = await searchTrack(artists, name);
     expect(res.spotifyId).toBe('50RJdoxw8iajGNtHQe6QeS');
   });
+  it('should find Jumpin\' Jumpin\'', async function() {
+    const name = 'Jumpin\' Jumpin\' (00)';
+    const artists = ['Destiny\'s Child'];
+    const res = await searchTrack(artists, name);
+    expect(res.spotifyId).toBe('4pmc2AxSEq6g7hPVlJCPyP');
+  });
 });

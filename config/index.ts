@@ -21,6 +21,7 @@ let config = {
   dsn: '',
   spotifyClientId: '',
   spotifyClientSecret: '',
+  location: '',
 };
 
 const filename = `./config.${env}`;

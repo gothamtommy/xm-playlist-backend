@@ -8,12 +8,13 @@ import * as Router from 'koa-router';
 import * as _ from 'lodash';
 import * as sequelize from 'sequelize';
 import { subDays } from 'date-fns';
+import * as Sequelize from 'sequelize';
 
 import config from '../config';
 import { channels } from './channels';
 import { getRecent, mostHeard } from './plays';
-import { Track, Artist, Play } from '../models';
-import { spotifyFindAndCache } from './spotify';
+import { Track, Artist, Play, Spotify } from '../models';
+import { spotifyFindAndCache, addToPlaylist } from './spotify';
 const tracks = require('./tracks');
 
 const log = debug('xmplaylist');
@@ -131,6 +132,33 @@ router.get('/spotify/:trackId', async (ctx, next) => {
   }
   ctx.assert(doc, 404, 'Not Found');
   ctx.body = doc;
+  return next();
+});
+
+router.get('/goUpdatePlaylist', (ctx, next) => {
+  ctx.redirect(`https://accounts.spotify.com/authorize?client_id=${config.spotifyClientId}&response_type=code&redirect_uri=${config.location}/updatePlaylist&scope=playlist-modify-public&state=xmplaylist`);
+});
+
+router.get('/updatePlaylist', async (ctx, next) => {
+  const code = ctx.query.code;
+  ctx.assert(code, 400, 'code required');
+  const lastWeek = subDays(new Date(), 7);
+  for (const chan of channels) {
+    const trackIds = await Play.findAll({
+      where: {
+        channel: chan.number,
+        startTime: { $gt: lastWeek },
+      },
+      attributes: [Sequelize.fn('DISTINCT', Sequelize.col('trackId')), 'trackId'],
+    }).then((t) => t.map((n) => n.get('trackId')));
+    const spotifyIds = await Spotify.findAll({
+      where: {trackId: {$in: trackIds } },
+      attributes: ['spotifyId'],
+    }).then((t) => t.map((n) => `spotify:track:${n.get('spotifyId')}`));
+    const res = await addToPlaylist(code, chan.playlist, spotifyIds);
+    console.log(res)
+  }
+  ctx.body = 'success';
   return next();
 });
 // app.use(route.get('/new', ep.newsongs));

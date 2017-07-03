@@ -6,6 +6,7 @@ export interface Channel {
   genre: string;
   desc: string;
   img?: string;
+  playlist?: string;
 }
 export const channels: Channel[] = [
   {
@@ -14,6 +15,7 @@ export const channels: Channel[] = [
     name: 'SiriusXM Hits 1',
     genre: 'Pop',
     desc: "Today's Pop Hits",
+    playlist: '40al90DcGyME5Hri3nxE9P',
   },
   {
     id: '9389',
@@ -21,6 +23,7 @@ export const channels: Channel[] = [
     name: 'Venus',
     genre: 'Pop',
     desc: 'Pop Music You Can Move To',
+    playlist: '5EMlxbEmQpcA9bMDZawvfN',
   },
   {
     id: '9406',
@@ -28,6 +31,7 @@ export const channels: Channel[] = [
     name: "Pitbull's Globalization",
     genre: 'Pop',
     desc: 'Worldwide Rhythmic Hits',
+    playlist: '6WV3W3FH1mgK9Ao3mRlsdW',
   },
   {
     id: 'siriusgold',
@@ -35,6 +39,7 @@ export const channels: Channel[] = [
     name: "'50s on 5",
     genre: 'Pop',
     desc: "'50s Pop Hits",
+    playlist: '0MQHK3oxSSaqQgIEd7sqCm',
   },
   {
     id: '60svibrations',
@@ -42,6 +47,7 @@ export const channels: Channel[] = [
     name: "'60s on 6",
     genre: 'Pop',
     desc: "'60s Pop Hits w/ Cousin Brucie",
+    playlist: '1TKPtgYaVx2XXDHyXG8vTr',
   },
   {
     id: 'totally70s',
@@ -49,6 +55,7 @@ export const channels: Channel[] = [
     name: "'70s on 7",
     genre: 'Pop',
     desc: "'70s Pop Hits",
+    playlist: '54XRfhXgr5N5QT4LRJ5Elf',
   },
   {
     id: 'big80s',
@@ -56,6 +63,7 @@ export const channels: Channel[] = [
     name: "'80s on 8",
     genre: 'Pop',
     desc: "'80s Pop Hits",
+    playlist: '47uqNTJniFyzXf5UMli4E7',
   },
   {
     id: '8206',
@@ -63,6 +71,7 @@ export const channels: Channel[] = [
     name: "'90s on 9",
     genre: 'Pop',
     desc: "'90s Pop Hits",
+    playlist: '3sZC2O1CF7b32afyxMohFs',
   },
   {
     id: '8208',
@@ -70,6 +79,7 @@ export const channels: Channel[] = [
     name: 'Pop2K',
     genre: 'Pop',
     desc: '2000s Pop Hits',
+    playlist: '0ho4C6Yj4EYJSpiFgwzXWC',
   },
   // {
   //   id: '9138',
@@ -84,6 +94,7 @@ export const channels: Channel[] = [
     name: 'The Coffee House',
     genre: 'Pop',
     desc: 'Acoustic/Singer-Songwriters',
+    playlist: '6KzgIcb4jxpU7dgq5WVJA1',
   },
   {
     id: 'thepulse',
@@ -91,6 +102,7 @@ export const channels: Channel[] = [
     name: 'The Pulse',
     genre: 'Pop',
     desc: 'Adult Pop Hits',
+    playlist: '1B8WYlu9LA5yDm3mPilKnK',
   },
   {
     id: 'starlite',
@@ -98,6 +110,7 @@ export const channels: Channel[] = [
     name: 'The Blend',
     genre: 'Pop',
     desc: 'Bright Pop Hits',
+    playlist: '4U1w1DNhpN6Y8ZvxvJpwn0',
   },
   // {
   //   id: 'siriuslove',
@@ -133,6 +146,7 @@ export const channels: Channel[] = [
     name: 'Underground Garage',
     genre: 'Rock',
     desc: "Little Steven's Garage Rock",
+    playlist: '1CRqLRDsoD0PJOJa4M87F4',
   },
   // {
   //   id: '8370',
@@ -154,6 +168,7 @@ export const channels: Channel[] = [
     name: 'Radio Margaritaville',
     genre: 'Rock',
     desc: 'Escape to Margaritaville',
+    playlist: '0JwUOCX909iPq2sk8mgtAU',
   },
   {
     id: 'classicrewind',
@@ -161,6 +176,7 @@ export const channels: Channel[] = [
     name: 'Classic Rewind',
     genre: 'Rock',
     desc: "'70s/'80s Classic Rock",
+    playlist: '7vTtnf3vjVvzvlCMGOrWyC',
   },
   {
     id: 'classicvinyl',
@@ -168,6 +184,7 @@ export const channels: Channel[] = [
     name: 'Classic Vinyl',
     genre: 'Rock',
     desc: "'60s/'70s Classic Rock",
+    playlist: '78n3FrbkunJt6IH5TUZ8Ni',
   },
   {
     id: 'thevault',
@@ -175,6 +192,7 @@ export const channels: Channel[] = [
     name: 'Deep Tracks',
     genre: 'Rock',
     desc: 'Deep Classic Rock',
+    playlist: '54uqMB4L3mmKJnxY8suNjZ',
   },
   {
     id: 'thespectrum',
@@ -182,20 +200,23 @@ export const channels: Channel[] = [
     name: 'The Spectrum',
     genre: 'Rock',
     desc: 'New Rock Meets Classic Rock',
+    playlist: '5wf2VnbUFSaOENW4NzL4Id',
   },
-  {
-    id: 'jamon',
-    number: 29,
-    name: 'Jam_ON',
-    genre: 'Rock',
-    desc: 'Jam Bands',
-  },
+  // {
+  //   id: 'jamon',
+  //   number: 29,
+  //   name: 'Jam_ON',
+  //   genre: 'Rock',
+  //   desc: 'Jam Bands',
+  //   playlist: '',
+  // },
   {
     id: '8207',
     number: 30,
     name: 'The Loft',
     genre: 'Rock',
     desc: 'Eclectic Rock',
+    playlist: '5SnpYIF1lrdv5pM9GYhpgJ',
   },
   // {
   //   id: '9407',
@@ -210,6 +231,7 @@ export const channels: Channel[] = [
     name: 'The Bridge',
     genre: 'Rock',
     desc: 'Mellow Rock',
+    playlist: '0NHFhSjOzj6WqKC35hnq3e',
   },
   {
     id: 'firstwave',
@@ -217,6 +239,7 @@ export const channels: Channel[] = [
     name: '1st Wave',
     genre: 'Rock',
     desc: "'80s Alternative/New Wave",
+    playlist: '5PirJdWNH0K8FecVmIZDog',
   },
   {
     id: '90salternative',
@@ -224,6 +247,7 @@ export const channels: Channel[] = [
     name: 'Lithium',
     genre: 'Rock',
     desc: "'90s Alternative/Grunge",
+    playlist: '0NSVcRasPeL716J4CCA4sX',
   },
   {
     id: 'leftofcenter',
@@ -231,6 +255,7 @@ export const channels: Channel[] = [
     name: 'SiriusXMU',
     genre: 'Rock',
     desc: 'New Indie Rock',
+    playlist: '2dUxEz8plLylyhIpa9ERXT',
   },
   {
     id: 'altnation',
@@ -238,6 +263,7 @@ export const channels: Channel[] = [
     name: 'Alt Nation',
     genre: 'Rock',
     desc: 'New Alternative Rock',
+    playlist: '2D0rRuf9aL6W8xRZ7Gbzpn',
   },
   {
     id: 'octane',
@@ -245,6 +271,7 @@ export const channels: Channel[] = [
     name: 'Octane',
     genre: 'Rock',
     desc: 'New Hard Rock',
+    playlist: '4uEfLey0UZfmEp4vobm378',
   },
   {
     id: 'buzzsaw',
@@ -252,6 +279,7 @@ export const channels: Channel[] = [
     name: "Ozzy's Boneyard",
     genre: 'Rock',
     desc: "Ozzy's Classic Hard Rock",
+    playlist: '3v2ddXnIRIq8A33FQH2DaJ',
   },
   {
     id: 'hairnation',
@@ -259,6 +287,7 @@ export const channels: Channel[] = [
     name: 'Hair Nation',
     genre: 'Rock',
     desc: "'80s Hair Bands",
+    playlist: '1lsFTg8ohGiqf1JHnwIrmB',
   },
   {
     id: 'hardattack',
@@ -266,6 +295,7 @@ export const channels: Channel[] = [
     name: 'Liquid Metal',
     genre: 'Rock',
     desc: 'Heavy Metal-XL',
+    playlist: '002KgHoHT4zKaarhGgpWhu',
   },
   {
     id: 'faction',
@@ -273,6 +303,7 @@ export const channels: Channel[] = [
     name: 'Faction',
     genre: 'Rock',
     desc: 'Punk & Beats w/ Jason Ellis XL',
+    playlist: '3HRoF7JJ3UcyRoc49eGNpZ',
   },
   {
     id: 'reggaerhythms',
@@ -280,6 +311,7 @@ export const channels: Channel[] = [
     name: 'The Joint',
     genre: 'R&B',
     desc: 'Reggae',
+    playlist: '3unI3vzoWlLSJzoeitejbC',
   },
   {
     id: '8124',
@@ -287,6 +319,7 @@ export const channels: Channel[] = [
     name: 'Backspin',
     genre: 'Hip-Hop',
     desc: 'Classic Hip-Hop-XL',
+    playlist: '6dJf2NJOX1l0mWoXFf1Hki',
   },
   {
     id: 'hiphopnation',
@@ -294,6 +327,7 @@ export const channels: Channel[] = [
     name: 'Hip-Hop Nation',
     genre: 'Hip-Hop',
     desc: "Today's Hip-Hop Hits-XL",
+    playlist: '1gjLA07Y6zdKtSdGx4NR0f',
   },
   {
     id: 'shade45',
@@ -301,6 +335,7 @@ export const channels: Channel[] = [
     name: 'Shade 45',
     genre: 'Hip-Hop',
     desc: "Eminem's Hip-Hop Channel XL",
+    playlist: '0p3t02TwsD8urU3ZNqVfMp',
   },
   {
     id: 'hotjamz',
@@ -308,6 +343,7 @@ export const channels: Channel[] = [
     name: 'The Heat',
     genre: 'R&B',
     desc: "Today's R&B Hits",
+    playlist: '0S2qEvq6d9pDwmhdHSSNIy',
   },
   {
     id: '9339',
@@ -315,6 +351,7 @@ export const channels: Channel[] = [
     name: 'SiriusXM FLY',
     genre: 'R&B',
     desc: "'90s & 2000s Hip-Hop/R&B - XL",
+    playlist: '4iCBk59izwYcvP4pzplQLg',
   },
   // {
   //   id: 'heartandsoul',
@@ -336,6 +373,7 @@ export const channels: Channel[] = [
     name: 'The Groove',
     genre: 'R&B',
     desc: "'70s/'80s R&B",
+    playlist: '0U3AEZcxXPCKYXimd8C3KE',
   },
   {
     id: 'thebeat',
@@ -343,6 +381,7 @@ export const channels: Channel[] = [
     name: 'BPM',
     genre: 'Dance/Electronic',
     desc: 'Electronic Dance Music Hits',
+    playlist: '7DEiHntTkFb4TcJcRCJhL0',
   },
   {
     id: 'area33',
@@ -350,6 +389,7 @@ export const channels: Channel[] = [
     name: 'Electric Area',
     genre: 'Dance/Electronic',
     desc: 'EDM DJ Mix Shows',
+    playlist: '5HpCrxQKRXg7YnYBdBY4eT',
   },
   {
     id: 'chill',
@@ -357,20 +397,23 @@ export const channels: Channel[] = [
     name: 'SiriusXM Chill',
     genre: 'Dance/Electronic',
     desc: 'Downtempo/Deep House',
+    playlist: '4zCgB1d2enUh63CdekFeij',
   },
-  // {
-  //   id: '9145',
-  //   number: 54,
-  //   name: 'Studio 54 Radio',
-  //   genre: 'Dance/Electronic',
-  //   desc: "'70s-2000s Dance Hits",
-  // },
+  {
+    id: '9145',
+    number: 54,
+    name: 'Studio 54 Radio',
+    genre: 'Dance/Electronic',
+    desc: "'70s-2000s Dance Hits",
+    playlist: '2gKrN0ChUDzaWkTpmvgsDf',
+  },
   {
     id: '9421',
     number: 55,
     name: 'The Garth Channel',
     genre: 'Country',
     desc: "Garth's Own Channel, 24/7",
+    playlist: '1F3Y68SEvPruvDQ9P1wICu',
   },
   {
     id: 'newcountry',
@@ -378,6 +421,7 @@ export const channels: Channel[] = [
     name: 'The Highway',
     genre: 'Country',
     desc: "Today's Country Hits",
+    playlist: '1NEhiGacNUMoSdH4pI73yr',
   },
   {
     id: '9418',
@@ -385,6 +429,7 @@ export const channels: Channel[] = [
     name: 'No Shoes Radio',
     genre: 'Country',
     desc: "Kenny Chesney's Music Channel",
+    playlist: '6MQ1c1ixTNbgP74sMJASgm',
   },
   {
     id: 'primecountry',
@@ -392,6 +437,7 @@ export const channels: Channel[] = [
     name: 'Prime Country',
     genre: 'Country',
     desc: "'80s/'90s Country Hits",
+    playlist: '7jnOANbKO2EHLg4bjCD4IO',
   },
   {
     id: 'theroadhouse',
@@ -399,6 +445,7 @@ export const channels: Channel[] = [
     name: "Willie's Roadhouse",
     genre: 'Country',
     desc: "Willie's Classic Country",
+    playlist: '0VTk5reFEU3RCTFMJsepOF',
   },
   {
     id: 'outlawcountry',
@@ -406,6 +453,7 @@ export const channels: Channel[] = [
     name: 'Outlaw Country',
     genre: 'Country',
     desc: "Rockin' Country Rebels",
+    playlist: '7q3kzMhlxwd9eoo9ZCPfSq',
   },
   {
     id: '9340',
@@ -413,6 +461,7 @@ export const channels: Channel[] = [
     name: 'Y2Kountry',
     genre: 'Country',
     desc: '2000s Country Hits',
+    playlist: '5anBQRaNx5vSG3x6ia0VpX',
   },
   {
     id: 'bluegrass',
@@ -420,6 +469,7 @@ export const channels: Channel[] = [
     name: 'Bluegrass Junction',
     genre: 'Country',
     desc: 'Bluegrass',
+    playlist: '3RzhOj8Kj2EtF6fiObNNvi',
   },
   // {
   //   id: 'spirit',
@@ -553,6 +603,7 @@ export const channels: Channel[] = [
     name: 'Velvet',
     genre: 'Pop',
     desc: 'Today’s Pop Vocalists',
+    playlist: '0rO5UkNWpDLOCPgBZdHNfK',
   },
   // {
   //   id: '9174',

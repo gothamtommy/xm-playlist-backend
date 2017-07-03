@@ -101,3 +101,58 @@ export async function spotifyFindAndCache(trackId: number) {
   }, { returning: false });
   return search;
 }
+
+export async function getUserToken(code: string): Promise<string> {
+  const cache = await getCache('spotifyusertoken:cache');
+  if (cache) {
+    return cache;
+  }
+  const auth = new Buffer(`${config.spotifyClientId}:${config.spotifyClientSecret}`).toString('base64');
+  const options: request.Options = {
+    uri: 'https://accounts.spotify.com/api/token',
+    headers: { Authorization: `Basic ${auth}` },
+    form: {
+      redirect_uri: `${config.location}/updatePlaylist`,
+      grant_type: 'authorization_code',
+      code,
+      state: 'xmplaylist',
+    },
+    json: true,
+    gzip: true,
+  };
+  const res = await request.post(options);
+  client.setex('spotifyusertoken:cache', res.expires_in - 100, res.access_token);
+  return res.access_token;
+}
+
+function sleep(ms = 0) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+export async function addToPlaylist(code: string, playlistId: string, trackIds: string[]) {
+  const token = await getUserToken(code);
+  const options: request.Options = {
+    uri: `https://api.spotify.com/v1/users/xmplaylist/playlists/${playlistId}/tracks`,
+    body: {
+      uris: [],
+    },
+    headers: { Authorization: `Bearer ${token}` },
+    json: true,
+    gzip: true,
+  };
+  let first = true;
+  const chunks = _.chunk(trackIds, 100);
+  for (const chunk of chunks) {
+    options.body.uris = chunk;
+    if (first) {
+      first = false;
+      await request.put(options)
+        .catch((e) => console.error(e));
+      await sleep(500);
+      continue;
+    }
+    await request.post(options)
+      .catch((e) => console.error(e));
+    await sleep(500);
+  }
+}

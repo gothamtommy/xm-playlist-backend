@@ -61,7 +61,7 @@ router.get('/mostHeard/:id', async (ctx, next) => {
 
 router.get('/track/:trackId', async (ctx, next) => {
   const trackId = ctx.params.trackId;
-  ctx.assert(trackId, 400, 'Song Id required');
+  ctx.assert(trackId, 400, 'Song ID required');
   ctx.body = await Track.findById(trackId, { include: [{ model: Artist }] })
     .then((t) => t.toJSON());
   const daysago = subDays(new Date(), 30);
@@ -76,9 +76,9 @@ router.get('/track/:trackId', async (ctx, next) => {
   return next();
 });
 
-router.get('/trackActivity/:trackId', async (ctx, next) => {
-  const trackId = ctx.params.trackId;
-  ctx.assert(trackId, 400, 'Song Id required');
+router.get('/trackActivity/:id', async (ctx, next) => {
+  const trackId = ctx.params.id;
+  ctx.assert(trackId, 400, 'Song ID required');
   const daysago = subDays(new Date(), 30);
   ctx.body = await Play.findAll({
     where: { trackId, startTime: { $gt: daysago } },
@@ -91,8 +91,24 @@ router.get('/trackActivity/:trackId', async (ctx, next) => {
   return next();
 });
 
-router.get('/artists', async (ctx, next) => {
-  ctx.body = await tracks.artists();
+router.get('/artist/:id', async (ctx, next) => {
+  const artistId = ctx.params.id;
+  ctx.assert(artistId, 400, 'Artist ID required');
+  const trackIds = await Track.findAll({
+    attributes: ['id'],
+    include: [{
+      model: Artist,
+      where: { id: artistId },
+      attributes: [],
+    }],
+  }).then((t) => t.map((n) => n.get('id')));
+  ctx.assert(trackIds.length, 400, 'No songs found');
+  ctx.body = {};
+  ctx.body.artist = await Artist.findById(artistId);
+  ctx.body.tracks = await Track.findAll({
+    where: { id: {$in: trackIds } },
+    include: [Artist],
+  });
   return next();
 });
 
@@ -118,8 +134,6 @@ router.get('/spotify/:trackId', async (ctx, next) => {
   return next();
 });
 // app.use(route.get('/new', ep.newsongs));
-// app.use(route.get('/artists', ep.allArtists));
-// app.use(route.get('/artist/:artist', ep.artists));
 // app.use(route.get('/song/:song', ep.songFromID));
 // app.use(route.get('/songstream/:song', ep.songstream));
 

@@ -67,7 +67,12 @@
       "/node_modules/",
       "/config/",
       "/test/"
-    ]
+    ],
+    "globals": {
+      "ts-jest": {
+        "skipBabel": true
+      }
+    }
   },
   "engines": {
     "node": ">= 8"

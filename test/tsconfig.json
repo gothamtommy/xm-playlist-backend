@@ -1,8 +1,9 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "types" : ["node", "jest"],
-    "target": "ES5",
+    "types" : ["jest", "node"],
+    "target": "es6",
+    "lib": ["dom", "es2017"],
     "baseUrl": ""
   },
   "include": ["*"]

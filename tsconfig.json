@@ -5,7 +5,6 @@
     "module":"commonjs",
     "lib": ["es2016"],
     "sourceMap": true,
-    "inlineSourceMap": true,
     "declaration": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

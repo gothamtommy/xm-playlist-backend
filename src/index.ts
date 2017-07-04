@@ -135,19 +135,17 @@ router.get('/spotify/:trackId', async (ctx, next) => {
   return next();
 });
 
-router.get('/goUpdatePlaylist', (ctx, next) => {
-  ctx.redirect(`https://accounts.spotify.com/authorize?client_id=${config.spotifyClientId}&response_type=code&redirect_uri=${config.location}/updatePlaylist&scope=playlist-modify-public&state=xmplaylist`);
-});
-
 router.get('/updatePlaylist', async (ctx, next) => {
   const code = ctx.query.code;
-  ctx.assert(code, 400, 'code required');
-  const lastWeek = subDays(new Date(), 7);
+  if (!code) {
+    ctx.redirect(`https://accounts.spotify.com/authorize?client_id=${config.spotifyClientId}&response_type=code&redirect_uri=${config.location}/updatePlaylist&scope=playlist-modify-public&state=xmplaylist`);
+  }
+  const thirtyDays = subDays(new Date(), 30);
   for (const chan of channels) {
     const trackIds = await Play.findAll({
       where: {
         channel: chan.number,
-        startTime: { $gt: lastWeek },
+        startTime: { $gt: thirtyDays },
       },
       attributes: [Sequelize.fn('DISTINCT', Sequelize.col('trackId')), 'trackId'],
     }).then((t) => t.map((n) => n.get('trackId')));
@@ -156,7 +154,6 @@ router.get('/updatePlaylist', async (ctx, next) => {
       attributes: ['spotifyId'],
     }).then((t) => t.map((n) => `spotify:track:${n.get('spotifyId')}`));
     const res = await addToPlaylist(code, chan.playlist, spotifyIds);
-    console.log(res)
   }
   ctx.body = 'success';
   return next();

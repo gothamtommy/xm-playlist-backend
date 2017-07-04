@@ -146,13 +146,9 @@ export async function addToPlaylist(code: string, playlistId: string, trackIds: 
     options.body.uris = chunk;
     if (first) {
       first = false;
-      await request.put(options)
-        .catch((e) => console.error(e));
-      await sleep(500);
+      await request.put(options);
       continue;
     }
-    await request.post(options)
-      .catch((e) => console.error(e));
-    await sleep(500);
+    await request.post(options);
   }
 }

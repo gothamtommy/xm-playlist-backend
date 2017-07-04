@@ -139,6 +139,7 @@ router.get('/updatePlaylist', async (ctx, next) => {
   const code = ctx.query.code;
   if (!code) {
     ctx.redirect(`https://accounts.spotify.com/authorize?client_id=${config.spotifyClientId}&response_type=code&redirect_uri=${config.location}/updatePlaylist&scope=playlist-modify-public&state=xmplaylist`);
+    return next();
   }
   const thirtyDays = subDays(new Date(), 30);
   for (const chan of channels) {

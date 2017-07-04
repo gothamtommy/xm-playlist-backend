@@ -147,10 +147,8 @@ export async function addToPlaylist(code: string, playlistId: string, trackIds: 
     if (first) {
       first = false;
       await request.put(options);
-      await sleep(500);
       continue;
     }
     await request.post(options);
-    await sleep(500);
   }
 }

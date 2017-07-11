@@ -124,6 +124,11 @@ router.get('/channels', (ctx, next) => {
 
 router.get('/spotify/:trackId', async (ctx, next) => {
   const trackId = ctx.params.trackId;
+  ctx.assert(trackId, 400, 'ID Required');
+  const force = Boolean(ctx.query.force);
+  if (force) {
+    await Spotify.findById(trackId).then((s) => s.destroy());
+  }
   let doc;
   try {
     doc = await spotifyFindAndCache(trackId);
@@ -138,6 +143,7 @@ router.get('/spotify/:trackId', async (ctx, next) => {
 router.get('/updatePlaylist', async (ctx, next) => {
   const code = ctx.query.code;
   if (!code) {
+    // tslint:disable-next-line:max-line-length
     ctx.redirect(`https://accounts.spotify.com/authorize?client_id=${config.spotifyClientId}&response_type=code&redirect_uri=${config.location}/updatePlaylist&scope=playlist-modify-public&state=xmplaylist`);
     return next();
   }

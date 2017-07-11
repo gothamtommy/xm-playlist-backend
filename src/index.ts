@@ -127,9 +127,13 @@ router.get('/spotify/:trackId', async (ctx, next) => {
   ctx.assert(trackId, 400, 'ID Required');
   const force = Boolean(ctx.query.force);
   if (force) {
-    await Spotify.findById(trackId).then((s) => s.destroy());
+    try {
+      await Spotify.findById(trackId).then((s) => s.destroy());
+    } catch (e) {
+      log(`trackId: Not found`);
+    }
   }
-  const track = await Track.findById(trackId).then((t) => t.toJSON());
+  const track = await Track.findById(trackId, { include: [Artist] }).then((t) => t.toJSON());
   let doc;
   try {
     doc = await spotifyFindAndCache(track);

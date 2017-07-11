@@ -86,3 +86,4 @@ export const Spotify = sequelize.define<SpotifyInstance, SpotifyAttributes>('spo
 Track.belongsToMany(Artist, { through: ArtistTrack });
 Play.belongsTo(Track);
 Spotify.belongsTo(Track);
+Track.hasOne(Spotify);

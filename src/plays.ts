@@ -2,7 +2,7 @@ import * as sequelize from 'sequelize';
 import * as _ from 'lodash';
 import { subDays, format } from 'date-fns';
 
-import { Play, PlayAttributes, PlayInstance, Track, Artist, sequelize as s } from '../models';
+import { Play, PlayAttributes, PlayInstance, Track, Artist, sequelize as s, Spotify } from '../models';
 import { Channel } from './channels';
 
 export async function getLast(channel: Channel): Promise<any> {
@@ -23,7 +23,7 @@ export async function getRecent(channel: Channel, last?: Date) {
     .findAll({
       where,
       order: [['startTime', 'DESC']],
-      include: [{ model: Track, include: [{ model: Artist }] }],
+      include: [{ model: Track, include: [{ model: Artist }, { model: Spotify }] }],
       limit: 15,
     })
     .then((n) => n.map((x) => x.toJSON()));

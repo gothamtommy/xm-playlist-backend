@@ -63,7 +63,7 @@ router.get('/mostHeard/:id', async (ctx, next) => {
 router.get('/track/:trackId', async (ctx, next) => {
   const trackId = ctx.params.trackId;
   ctx.assert(trackId, 400, 'Song ID required');
-  ctx.body = await Track.findById(trackId, { include: [{ model: Artist }] })
+  ctx.body = await Track.findById(trackId, { include: [Artist, Spotify] })
     .then((t) => t.toJSON());
   const daysago = subDays(new Date(), 30);
   ctx.body.playsByDay = await Play.findAll({
@@ -107,7 +107,7 @@ router.get('/artist/:id', async (ctx, next) => {
   ctx.body = {};
   ctx.body.artist = await Artist.findById(artistId);
   ctx.body.tracks = await Track.findAll({
-    where: { id: {$in: trackIds } },
+    where: { id: { $in: trackIds } },
     include: [Artist],
   });
   return next();
@@ -151,7 +151,7 @@ router.get('/updatePlaylist', async (ctx, next) => {
       attributes: [Sequelize.fn('DISTINCT', Sequelize.col('trackId')), 'trackId'],
     }).then((t) => t.map((n) => n.get('trackId')));
     const spotifyIds = await Spotify.findAll({
-      where: {trackId: {$in: trackIds } },
+      where: { trackId: { $in: trackIds } },
       attributes: ['spotifyId'],
     }).then((t) => t.map((n) => `spotify:track:${n.get('spotifyId')}`));
     const res = await addToPlaylist(code, chan.playlist, spotifyIds);
@@ -169,5 +169,5 @@ app
 
 if (!module.parent) {
   app.listen(config.port);
-  log(`https://localhost:${config.port}`);
+  log(`http://localhost:${config.port}`);
 }

@@ -129,9 +129,10 @@ router.get('/spotify/:trackId', async (ctx, next) => {
   if (force) {
     await Spotify.findById(trackId).then((s) => s.destroy());
   }
+  const track = await Track.findById(trackId).then((t) => t.toJSON());
   let doc;
   try {
-    doc = await spotifyFindAndCache(trackId);
+    doc = await spotifyFindAndCache(track);
   } catch (e) {
     ctx.throw(404, 'Not Found');
   }

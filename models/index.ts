@@ -10,9 +10,9 @@ export const sequelize = new Sequelize(
 );
 
 export interface TrackAttributes {
-  id: number;
-  songId: string;
-  name: string;
+  id?: number;
+  songId?: string;
+  name?: string;
   plays?: number;
   artists?: ArtistAttributes[];
   createdAt?: Date;

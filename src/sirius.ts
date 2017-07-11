@@ -5,7 +5,7 @@ import { format as dateFmt } from 'date-fns';
 
 // import { findOrCreateTrack } from './tracks';
 import { getLast } from './plays';
-import { Track, ArtistTrack, Play, ArtistTrackInstance, Artist } from '../models';
+import { Track, ArtistTrack, Play, ArtistTrackInstance, Artist, TrackAttributes } from '../models';
 import { channels, Channel } from './channels';
 import { encode } from './util';
 import { spotifyFindAndCache } from './spotify';
@@ -75,12 +75,12 @@ export async function checkEndpoint(channel: Channel) {
   if (last && last.track.songId === newSong.songId) {
     return false;
   }
-  const trackId = await insertPlay(newSong, channel);
+  const track = await insertPlay(newSong, channel);
   // TODO: announce
   log(newSong);
   try {
     if (process.env.NODE_ENV !== 'test') {
-      spotifyFindAndCache(trackId);
+      spotifyFindAndCache(track);
     }
   } catch (e) {
     log(`${newSong.songId} not found on spotify`);
@@ -100,7 +100,7 @@ function findOrCreateArtists(artists: string[]) {
   return Promise.all(promises);
 }
 
-export async function insertPlay(data: any, channel: Channel): Promise<number> {
+export async function insertPlay(data: any, channel: Channel): Promise<TrackAttributes> {
   const artists = await findOrCreateArtists(data.artists);
   const [track, created] = await Track
     .findOrCreate({ where: { songId: data.songId } });
@@ -120,5 +120,5 @@ export async function insertPlay(data: any, channel: Channel): Promise<number> {
     { channel: channel.number, trackId: track.get('id'), startTime: new Date(data.startTime) },
     { returning: false },
   );
-  return track.get('id');
+  return track.toJSON();
 }

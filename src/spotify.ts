@@ -1,7 +1,7 @@
 import * as request from 'request-promise-native';
 import * as _ from 'lodash';
 
-import { Track, Spotify, Artist, TrackInstance } from '../models';
+import { Track, Spotify, Artist, TrackInstance, TrackAttributes } from '../models';
 import { findOrCreateTrack } from './tracks';
 import { encode } from '../src/util';
 import config from '../config';
@@ -78,13 +78,11 @@ export async function searchTrack(artists: string[], name: string) {
   return Promise.reject('failed');
 }
 
-export async function spotifyFindAndCache(trackId: number) {
-  const doc = await Spotify.findOne({ where: { trackId } });
+export async function spotifyFindAndCache(track: TrackAttributes) {
+  const doc = await Spotify.findOne<any>({ where: { id: track.id } });
   if (doc) {
     return doc;
   }
-  const trackInstance = await Track.findById(trackId, { include: [{ model: Artist }] });
-  const track = trackInstance.toJSON();
   let search;
   try {
     search = await searchTrack(track.artists.map((n) => n.name), track.name);
@@ -92,7 +90,7 @@ export async function spotifyFindAndCache(trackId: number) {
     return Promise.reject(e);
   }
   await Spotify.create({
-    trackId,
+    trackId: track.id,
     cover: search.cover,
     durationMs: search.durationMs,
     spotifyId: search.spotifyId,

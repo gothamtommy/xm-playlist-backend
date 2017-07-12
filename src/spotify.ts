@@ -37,7 +37,11 @@ export async function getToken(): Promise<string> {
 }
 
 export async function searchTrack(artists: string[], name: string) {
-  const a = artists.join('+').replace('&', '');
+  const a = artists.join('+')
+    .replace('&', '')
+    .replace('.', '')
+    .replace('-', '')
+    .replace('\'', '');
   let t = name
     .replace('\'', '')
     .replace(/\([0-9]+\)/, '')

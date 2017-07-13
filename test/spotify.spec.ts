@@ -49,12 +49,6 @@ describe('spotify', function() {
     const res = await searchTrack(artists, name);
     expect(res.spotifyId).toBe('0Ye1olMyvB2rLjZ4vlYVWI');
   });
-  it('should find Crash 2.0', async function() {
-    const name = 'Crash 2.0-Dave Dresden Edit';
-    const artists = ['Adventure Club vs. DallasK'];
-    const res = await searchTrack(artists, name);
-    expect(res.spotifyId).toBe('27aftq9i01N0yVKZyimwlG');
-  });
   it('should find Falling', async function() {
     const name = 'Falling';
     const artists = ['Alesso'];

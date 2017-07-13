@@ -37,12 +37,15 @@ export async function getToken(): Promise<string> {
 }
 
 export async function searchTrack(artists: string[], name: string) {
-  const a = artists.join('+')
+  // TODO: cleanup
+  artists = artists.map((n) => _.startCase(n));
+  let a = artists.join('+')
     .replace('&', '')
     .replace('.', '')
+    .replace(' ', '+')
     .replace('-', '')
     .replace('\'', '');
-  let t = name
+  const t1 = name
     .replace('\'', '')
     .replace(/\([0-9]+\)/, '')
     .replace('(', '')
@@ -50,14 +53,16 @@ export async function searchTrack(artists: string[], name: string) {
     .replace('-', ' ')
     .replace('/', ' ')
     .replace(/(f((eat)|t)?)(\.)/i, '')
+    .replace('.', '')
     .replace('w/', '')
+    .replace(/edit/i, '')
     .replace(/(rem|re|mix)+\b/i, 'remix')
     .replace('  ', ' ');
   const token = await getToken();
   const options: request.Options = {
     uri: `https://api.spotify.com/v1/search`,
     qs: {
-      q: `${a} ${t}`,
+      q: `${t1} ${a}`,
       type: 'track',
       limit: 1,
     },
@@ -69,13 +74,43 @@ export async function searchTrack(artists: string[], name: string) {
   if (res.tracks.items.length > 0) {
     return parseSpotify(_.first(res.tracks.items));
   }
-  t = t.split('-')[0];
-  options.qs.q = t;
+  let popped;
+  if (artists.length > 1) {
+    popped = artists.pop();
+    a = artists.join('+')
+      .replace('&', '')
+      .replace('.', '')
+      .replace(' ', '+')
+      .replace('-', '')
+      .replace('\'', '');
+  } else {
+    return Promise.reject('failed');
+  }
+  options.qs.q = `${t1} ${a}`;
+  console.log(options.qs.q)
   const res2 = await request.get(options);
   if (res2.tracks.items.length > 0) {
     return parseSpotify(_.first(res2.tracks.items));
   }
-  options.qs.q = a;
+  if (artists.length > 1) {
+    artists.pop();
+    artists.push(popped);
+    a = artists.join('+')
+      .replace('&', '')
+      .replace('.', '')
+      .replace(' ', '+')
+      .replace('-', '')
+      .replace('\'', '');
+  } else {
+    a = popped
+      .replace('&', '')
+      .replace('.', '')
+      .replace(' ', '+')
+      .replace('-', '')
+      .replace('\'', '');
+  }
+  options.qs.q = `${t1} ${a}`;
+  console.log(options.qs.q)
   const res3 = await request.get(options);
   if (res3.tracks.items.length > 0) {
     return parseSpotify(_.first(res3.tracks.items));

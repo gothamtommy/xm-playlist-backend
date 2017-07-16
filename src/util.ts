@@ -18,7 +18,7 @@ export function decode(encoded: string) {
 
 /* remove ft feat */
 export function cleanFt(str: string) {
-  return str.replace(/(f|w)((eat.|t|eat)|(\.|\/))/i, ' ');
+  return str.replace('f.', '').replace(/(f|w)((eat.|t|eat)|(\.|\/))/i, ' ');
 }
 
 /* remove OFFICAL MUSIC VIDEO */

@@ -8,7 +8,7 @@
     "build": "rimraf build; tsc -p .",
     "start": "NODE_ENV=dev DEBUG=xmplaylist* nodemon --exec 'ts-node' src/index.ts",
     "scanner": "NODE_ENV=dev DEBUG=xmplaylist* nodemon --exec 'ts-node' src/scanner.ts",
-    "test": "NODE_ENV=test jest -w 5",
+    "test": "NODE_ENV=test jest",
     "coverage": "NODE_ENV=test jest --coverage --no-cache",
     "lint": "tslint \"src/**/*.ts\""
   },

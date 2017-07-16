@@ -53,7 +53,6 @@ export function cleanupExtra(str: string) {
   const cleanStr = str
     .replace('-', ' ')
     .replace('.', '')
-    .replace('&', '')
     .replace('(', ' ')
     .replace(')', ' ')
     .replace('\'', '')

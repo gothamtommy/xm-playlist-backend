@@ -6,10 +6,10 @@ import app from '../src/index';
 import { setup } from '../models/dbinit';
 import { insertPlay } from '../src/sirius';
 
-beforeAll(async function(done) {
-  await setup(true);
-  done();
-});
+// beforeAll(async function(done) {
+//   await setup(true);
+//   done();
+// });
 
 const play = {
   channelId: '90salternative',
@@ -31,13 +31,13 @@ const channel = {
 };
 
 describe('index', function() {
-  beforeAll(async function() {
-    const t = await insertPlay(play, channel);
-  });
-  it('should parse metadata response', async function() {
-    const res = await supertest(app.listen())
-      .get('/recent/90salternative')
-      .expect(200);
-    expect(res.body.length).toBe(1);
-  });
+  // beforeAll(async function() {
+  //   const t = await insertPlay(play, channel);
+  // });
+  // it('should parse metadata response', async function() {
+  //   const res = await supertest(app.listen())
+  //     .get('/recent/90salternative')
+  //     .expect(200);
+  //   expect(res.body.length).toBe(1);
+  // });
 });

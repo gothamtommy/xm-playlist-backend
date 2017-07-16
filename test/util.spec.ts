@@ -35,5 +35,6 @@ describe('Util', function() {
     expect(Util.cleanYear('Gimme Shelter (69)')).toBe('Gimme Shelter ');
     expect(Util.cleanYear('Hello, I Love You (68)')).toBe('Hello, I Love You ');
     expect(Util.cleanYear('The Creator (\'92)')).toBe('The Creator ');
+    expect(Util.cleanYear('Another Life (f.Ester Dean)')).toBe('Another Life (f.Ester Dean)');
   });
 });

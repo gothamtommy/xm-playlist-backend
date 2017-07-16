@@ -23,7 +23,10 @@ export function cleanFt(str: string) {
 
 /* remove OFFICAL MUSIC VIDEO */
 export function cleanMusicVideo(str: string) {
-  return str.replace(/(official|music).+(video)/i, '');
+  return str
+    .replace(/\(Official\)/i, '')
+    .replace(/\[Official\]/i, '')
+    .replace(/(official|music).+(video)/i, '');
 }
 
 export function cleanSpaces(str: string) {

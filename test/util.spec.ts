@@ -12,6 +12,7 @@ describe('Util', function() {
   });
   it('should clean clean Music Video', function() {
     expect(Util.cleanMusicVideo('Song (official video) ft. Natalie')).toBe('Song () ft. Natalie');
+    expect(Util.cleanMusicVideo('Robin Schulz (Official)')).toBe('Robin Schulz ');
   });
   it('should collapse', function() {
     expect(Util.cleanSpaces('Song blah  blah   blah')).toBe('Song blah blah blah');

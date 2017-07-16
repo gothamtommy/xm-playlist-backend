@@ -56,7 +56,7 @@ export async function searchTrack(artists: string[], name: string): Promise<any>
   const options: request.Options = {
     uri: `https://api.spotify.com/v1/search`,
     qs: {
-      q: `${cleanTrack} ${cleanArtists}`,
+      q: `${cleanTrack} ${cleanArtists} NOT karaoke`,
       type: 'track',
       limit: 1,
     },
@@ -68,7 +68,7 @@ export async function searchTrack(artists: string[], name: string): Promise<any>
   if (res.tracks.items.length > 0) {
     return parseSpotify(_.first(res.tracks.items));
   }
-  const youtube = await search(options.qs.q);
+  const youtube = await search(`${cleanTrack} ${cleanArtists}`);
   if (!youtube) {
     return Promise.reject('Youtube failed');
   }
@@ -78,7 +78,7 @@ export async function searchTrack(artists: string[], name: string): Promise<any>
         Util.cleanMusicVideo(youtube),
       ),
     ),
-  );
+  ) + ' NOT karaoke';
   console.log('GOOGLE:', options.qs.q);
   const res2 = await request.get(options);
   if (res2.tracks.items.length > 0) {

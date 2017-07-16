@@ -19,12 +19,6 @@ describe('spotify', function() {
     const res = await searchTrack(artists, name);
     expect(res.spotifyId).toBe('4HMfSzk0UsiRhulF0eb1M9');
   });
-  it('should find Felt This Good', async function() {
-    const name = 'Felt This Good';
-    const artists = ['Kap Slap', 'M Bronx'];
-    const res = await searchTrack(artists, name);
-    expect(res.spotifyId).toBe('5A4e3eCE4N7tZFRdmJz0rF');
-  });
   it('should find Feel Your Love', async function() {
     const name = 'Feel Your Love';
     const artists = ['Flux Pavillion', 'NGHTMRE'];
@@ -61,7 +55,7 @@ describe('spotify', function() {
     const res = await searchTrack(artists, name);
     expect(res.spotifyId).toBe('2z50GlkP7GinGZauNHwD7j');
   });
-  it('should find Rush Over Me f.', async function() {
+  it('should find Another Life', async function() {
     const name = 'Another Life (f.Ester Dean)';
     const artists = ['David Guetta', 'Afrojack'];
     const res = await searchTrack(artists, name);

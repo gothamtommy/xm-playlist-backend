@@ -2,10 +2,12 @@ import * as request from 'request-promise-native';
 import * as _ from 'lodash';
 
 import { Track, Spotify, Artist, TrackInstance, TrackAttributes } from '../models';
+import config from '../config';
 import { findOrCreateTrack } from './tracks';
 import { encode } from '../src/util';
-import config from '../config';
+import * as Util from './util';
 import { client, getCache } from './redis';
+import { search } from './youtube';
 
 export function parseSpotify(obj: any) {
   const cover = _.first<any>(obj.album.images) || {};
@@ -36,33 +38,23 @@ export async function getToken(): Promise<string> {
   return res.access_token;
 }
 
-export async function searchTrack(artists: string[], name: string) {
-  // TODO: cleanup
-  artists = artists.map((n) => _.startCase(n));
-  let a = artists.join('+')
-    .replace('&', '')
-    .replace('.', '')
-    .replace(' ', '+')
-    .replace('-', '')
-    .replace('\'', '');
-  const t1 = name
-    .replace('\'', '')
-    .replace(/\([0-9]+\)/, '')
-    .replace('(', '')
-    .replace(')', '')
-    .replace('-', ' ')
-    .replace('/', ' ')
-    .replace(/(f((eat)|t)?)(\.)/i, '')
-    .replace('.', '')
-    .replace('w/', '')
-    .replace(/edit/i, '')
-    .replace(/(rem|re|mix)+\b/i, 'remix')
-    .replace('  ', ' ');
+export async function searchTrack(artists: string[], name: string): Promise<any> {
+  const cleanArtists = Util.cleanupExtra(Util.cleanCutoff(artists.join(' ')));
+  const cleanTrack = Util.cleanupExtra(
+    Util.cleanRemix(
+      Util.cleanFt(
+        Util.cleanCutoff(
+          Util.cleanYear(name),
+        ),
+      ),
+    ),
+  );
+  // console.log('CLEAN: ', cleanTrack, cleanArtists);
   const token = await getToken();
   const options: request.Options = {
     uri: `https://api.spotify.com/v1/search`,
     qs: {
-      q: `${t1} ${a}`,
+      q: `${cleanTrack} ${cleanArtists}`,
       type: 'track',
       limit: 1,
     },
@@ -74,48 +66,23 @@ export async function searchTrack(artists: string[], name: string) {
   if (res.tracks.items.length > 0) {
     return parseSpotify(_.first(res.tracks.items));
   }
-  let popped;
-  if (artists.length > 1) {
-    popped = artists.pop();
-    a = artists.join('+')
-      .replace('&', '')
-      .replace('.', '')
-      .replace(' ', '+')
-      .replace('-', '')
-      .replace('\'', '');
-  } else {
-    return Promise.reject('failed');
+  const youtube = await search(options.qs.q);
+  if (!youtube) {
+    return false;
   }
-  options.qs.q = `${t1} ${a}`;
-  console.log(options.qs.q)
+  options.qs.q = Util.cleanupExtra(
+    Util.cleanRemix(
+      Util.cleanFt(
+        Util.cleanMusicVideo(youtube),
+      ),
+    ),
+  );
+  console.log('GOOGLE:', options.qs.q);
   const res2 = await request.get(options);
   if (res2.tracks.items.length > 0) {
     return parseSpotify(_.first(res2.tracks.items));
   }
-  if (artists.length > 1) {
-    artists.pop();
-    artists.push(popped);
-    a = artists.join('+')
-      .replace('&', '')
-      .replace('.', '')
-      .replace(' ', '+')
-      .replace('-', '')
-      .replace('\'', '');
-  } else {
-    a = popped
-      .replace('&', '')
-      .replace('.', '')
-      .replace(' ', '+')
-      .replace('-', '')
-      .replace('\'', '');
-  }
-  options.qs.q = `${t1} ${a}`;
-  console.log(options.qs.q)
-  const res3 = await request.get(options);
-  if (res3.tracks.items.length > 0) {
-    return parseSpotify(_.first(res3.tracks.items));
-  }
-  return Promise.reject('failed');
+  return false;
 }
 
 export async function spotifyFindAndCache(track: TrackAttributes) {
@@ -123,21 +90,21 @@ export async function spotifyFindAndCache(track: TrackAttributes) {
   if (doc) {
     return doc;
   }
-  let search;
+  let s;
   try {
-    search = await searchTrack(track.artists.map((n) => n.name), track.name);
+    s = await searchTrack(track.artists.map((n) => n.name), track.name);
   } catch (e) {
     return Promise.reject(e);
   }
   await Spotify.create({
     trackId: track.id,
-    cover: search.cover,
-    durationMs: search.durationMs,
-    spotifyId: search.spotifyId,
-    spotifyName: search.spotifyName,
-    url: search.url,
+    cover: s.cover,
+    durationMs: s.durationMs,
+    spotifyId: s.spotifyId,
+    spotifyName: s.spotifyName,
+    url: s.url,
   }, { returning: false });
-  return search;
+  return s;
 }
 
 export async function getUserToken(code: string): Promise<string> {

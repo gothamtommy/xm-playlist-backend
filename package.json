@@ -8,7 +8,7 @@
     "build": "rimraf build; tsc -p .",
     "start": "NODE_ENV=dev DEBUG=xmplaylist* nodemon --exec 'ts-node' src/index.ts",
     "scanner": "NODE_ENV=dev DEBUG=xmplaylist* nodemon --exec 'ts-node' src/scanner.ts",
-    "test": "NODE_ENV=test jest",
+    "test": "NODE_ENV=test jest -w 5",
     "coverage": "NODE_ENV=test jest --coverage --no-cache",
     "lint": "tslint \"src/**/*.ts\""
   },
@@ -21,12 +21,12 @@
     "koa-router": "^7.2.1",
     "koa2-raven": "^4.0.10",
     "lodash": "^4.17.4",
-    "pg": "^6.4.0",
+    "pg": "^6.4.1",
     "raven": "^2.1.0",
     "redis": "^2.7.1",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.4",
-    "sequelize": "^4.3.1"
+    "sequelize": "^4.3.2"
   },
   "devDependencies": {
     "@types/debug": "^0.0.29",
@@ -35,8 +35,8 @@
     "@types/koa": "^2.0.39",
     "@types/koa-logger": "^2.0.2",
     "@types/koa-router": "^7.0.22",
-    "@types/lodash": "^4.14.68",
-    "@types/node": "^8.0.11",
+    "@types/lodash": "^4.14.69",
+    "@types/node": "^8.0.13",
     "@types/progress": "^2.0.0",
     "@types/raven": "^1.2.4",
     "@types/redis": "^2.6.0",

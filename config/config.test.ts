@@ -16,4 +16,5 @@ module.exports = {
   dsn: false,
   spotifyClientId: process.env.CLIENT_ID || '',
   spotifyClientSecret: process.env.CLIENT_SECRET || '',
+  googleCredentials: process.env.GOOGLE_KEY || '',
 };

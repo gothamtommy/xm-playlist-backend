@@ -85,4 +85,10 @@ describe('spotify', function() {
     const res = await searchTrack(artists, name);
     expect(res.spotifyId).toBe('6VEbv3jRYbOeo2UZ0mkN7h');
   });
+  it('should find The Creator (\'92)', async function() {
+    const name = 'The Creator (\'92)';
+    const artists = ['Pete Rock & C.L. Smooth'];
+    const res = await searchTrack(artists, name);
+    expect(res.spotifyId).toBe('0vDgtmc5vMDyE69oYnAbUm');
+  });
 });

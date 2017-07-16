@@ -34,5 +34,6 @@ describe('Util', function() {
   it('should clean up year', function() {
     expect(Util.cleanYear('Gimme Shelter (69)')).toBe('Gimme Shelter ');
     expect(Util.cleanYear('Hello, I Love You (68)')).toBe('Hello, I Love You ');
+    expect(Util.cleanYear('The Creator (\'92)')).toBe('The Creator ');
   });
 });

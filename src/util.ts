@@ -38,7 +38,7 @@ export function cleanRemix(str: string) {
 }
 
 export function cleanYear(str: string) {
-  return str.replace(/\([0-9]+\)/, '');
+  return str.replace(/\((\'?)[0-9]+\)/, '');
 }
 
 export function cleanCutoff(str: string) {

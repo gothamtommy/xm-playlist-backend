@@ -96,6 +96,9 @@ export async function spotifyFindAndCache(track: TrackAttributes) {
   } catch (e) {
     return Promise.reject(e);
   }
+  if (!s || !s.spotifyName) {
+    return Promise.reject('Failed');
+  }
   await Spotify.create({
     trackId: track.id,
     cover: s.cover,

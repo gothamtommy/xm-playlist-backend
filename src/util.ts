@@ -18,14 +18,20 @@ export function decode(encoded: string) {
 
 /* remove ft feat */
 export function cleanFt(str: string) {
-  return str.replace('f.', '').replace(/(f|w)((eat.|t|eat)|(\.|\/))\b/i, ' ');
+  return str.replace('f.', '')
+    .replace(/(f|w)((eat.|t|eat)|(\.|\/))\b/i, ' ');
 }
 
-/* remove OFFICAL MUSIC VIDEO */
+/* remove clean */
+export function cleanClean(str: string) {
+  return str.replace(/(\(|\[)clean(\)|\])/, '');
+}
+
+/* remove OFFICAL MUSIC VIDEO Lyrics */
 export function cleanMusicVideo(str: string) {
   return str
-    .replace(/\(Official\)/i, '')
-    .replace(/\[Official\]/i, '')
+    .replace(/(\(|\[)Official(\)|\])/i, '')
+    .replace(/lyrics/i, '')
     .replace(/(official|music).+(video)/i, '');
 }
 

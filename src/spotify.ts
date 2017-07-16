@@ -43,8 +43,10 @@ export async function searchTrack(artists: string[], name: string): Promise<any>
   const cleanTrack = Util.cleanupExtra(
     Util.cleanRemix(
       Util.cleanFt(
-        Util.cleanCutoff(
-          Util.cleanYear(name),
+        Util.cleanClean(
+          Util.cleanCutoff(
+            Util.cleanYear(name),
+          ),
         ),
       ),
     ),

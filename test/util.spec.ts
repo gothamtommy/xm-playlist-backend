@@ -3,12 +3,13 @@ import * as Util from '../src/util';
 describe('Util', function() {
   it('should clean ft', function() {
     expect(Util.cleanFt('Take You There(feat.Jamie Principle)')).toBe('Take You There( Jamie Principle)');
-    expect(Util.cleanFt('Talk About Me (Feat. Victoria Zaro)')).toBe('Talk About Me (  Victoria Zaro)');
+    expect(Util.cleanFt('Talk About Me (Feat. Victoria Zaro)')).toBe('Talk About Me ( . Victoria Zaro)');
     expect(Util.cleanFt('Another Life (f.Ester Dean)')).toBe('Another Life (Ester Dean)');
     expect(Util.cleanFt('I Need You (f/Fernando Garibay)')).toBe('I Need You ( Fernando Garibay)');
-    expect(Util.cleanFt('The Right Song (feat. Natalie La Ro')).toBe('The Right Song (  Natalie La Ro');
+    expect(Util.cleanFt('The Right Song (feat. Natalie La Ro')).toBe('The Right Song ( . Natalie La Ro');
     expect(Util.cleanFt('The Right Song (w/Natalie La Ro')).toBe('The Right Song ( Natalie La Ro');
     expect(Util.cleanFt('Your Love feat Jamie Lewis')).toBe('Your Love  Jamie Lewis');
+    expect(Util.cleanFt('Morning After Dark')).toBe('Morning After Dark');
   });
   it('should clean clean Music Video', function() {
     expect(Util.cleanMusicVideo('Song (official video) ft. Natalie')).toBe('Song () ft. Natalie');

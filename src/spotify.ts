@@ -68,7 +68,7 @@ export async function searchTrack(artists: string[], name: string): Promise<any>
   }
   const youtube = await search(options.qs.q);
   if (!youtube) {
-    return false;
+    return Promise.reject('Youtube failed');
   }
   options.qs.q = Util.cleanupExtra(
     Util.cleanRemix(
@@ -82,7 +82,7 @@ export async function searchTrack(artists: string[], name: string): Promise<any>
   if (res2.tracks.items.length > 0) {
     return parseSpotify(_.first(res2.tracks.items));
   }
-  return false;
+  return Promise.reject('Everything Failed');
 }
 
 export async function spotifyFindAndCache(track: TrackAttributes) {

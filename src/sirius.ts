@@ -103,7 +103,7 @@ function findOrCreateArtists(artists: string[]) {
 export async function insertPlay(data: any, channel: Channel): Promise<TrackAttributes> {
   const artists = await findOrCreateArtists(data.artists);
   const [track, created] = await Track
-    .findOrCreate({ where: { songId: data.songId } });
+    .findOrCreate({ where: { songId: data.songId }, include: [Artist] });
   if (!created) {
     track.increment('plays');
   } else {

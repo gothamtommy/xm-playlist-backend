@@ -24,7 +24,7 @@ export function cleanFt(str: string) {
 
 /* remove clean */
 export function cleanClean(str: string) {
-  return str.replace(/(\(|\[)clean(\)|\])/, '');
+  return str.replace(/(\(|\[)clean(\)|\])/i, '');
 }
 
 /* remove OFFICAL MUSIC VIDEO Lyrics */

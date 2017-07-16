@@ -79,4 +79,10 @@ describe('spotify', function() {
     const res = await searchTrack(artists, name);
     expect(res.spotifyId).toBe('4pmc2AxSEq6g7hPVlJCPyP');
   });
+  it('should find Don\'t Kill My Vibe (Gryffin Remix)', async function() {
+    const name = 'Don\'t Kill My Vibe (Gryffin Remix)';
+    const artists = ['Sigrid'];
+    const res = await searchTrack(artists, name);
+    expect(res.spotifyId).toBe('6VEbv3jRYbOeo2UZ0mkN7h');
+  });
 });

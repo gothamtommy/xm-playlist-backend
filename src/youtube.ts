@@ -19,6 +19,7 @@ export async function search(query: string): Promise<string|false> {
     json: true,
     gzip: true,
   };
+  console.log('SEARCH:', query);
   const res = await request.get(options);
   const list = _.first<any>(res.items);
   if (list) {

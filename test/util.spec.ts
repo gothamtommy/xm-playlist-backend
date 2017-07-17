@@ -16,10 +16,10 @@ describe('Util', function() {
     expect(Util.cleanMusicVideo('Robin Schulz (Official)')).toBe('Robin Schulz ');
     expect(Util.cleanMusicVideo('Robin Schulz Lyrics')).toBe('Robin Schulz ');
   });
-  it('should collapse', function() {
-    expect(Util.cleanSpaces('Swish Swish (Clean)')).toBe('Swish Swish ');
-  });
   it('should clean clean', function() {
+    expect(Util.cleanClean('Swish Swish (Clean)')).toBe('Swish Swish ');
+  });
+  it('should collapse', function() {
     expect(Util.cleanSpaces('Song blah  blah   blah')).toBe('Song blah blah blah');
   });
   it('should clean remix', function() {

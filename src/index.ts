@@ -138,7 +138,8 @@ router.get('/spotify/:trackId', async (ctx, next) => {
     ctx.body = spotify.toJSON();
     return next();
   }
-  const track = await Track.findById(trackId, { include: [Artist] }).then((t) => t.toJSON());
+  const track = await Track.findById(trackId, { include: [Artist] })
+    .then((t) => t.toJSON());
   let doc;
   try {
     doc = await spotifyFindAndCache(track);

@@ -17,6 +17,7 @@ export interface TrackAttributes {
   artists?: ArtistAttributes[];
   createdAt?: Date;
   updatedAt?: Date;
+  spotify: SpotifyAttributes;
 }
 export type TrackInstance = Sequelize.Instance<TrackAttributes>;
 export const Track = sequelize.define<TrackInstance, TrackAttributes>('track', {

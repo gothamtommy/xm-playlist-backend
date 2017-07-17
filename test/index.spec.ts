@@ -30,7 +30,7 @@ const channel = {
   desc: "'90s Alternative/Grunge",
 };
 
-describe('index', function() {
+// describe('index', function() {
   // beforeAll(async function() {
   //   const t = await insertPlay(play, channel);
   // });
@@ -40,4 +40,4 @@ describe('index', function() {
   //     .expect(200);
   //   expect(res.body.length).toBe(1);
   // });
-});
+// });

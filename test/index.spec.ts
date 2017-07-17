@@ -6,11 +6,6 @@ import app from '../src/index';
 import { setup } from '../models/dbinit';
 import { insertPlay } from '../src/sirius';
 
-beforeAll(async function(done) {
-  await setup(true);
-  done();
-});
-
 const play = {
   channelId: '90salternative',
   channelName: 'Lithium',

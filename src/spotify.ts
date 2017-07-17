@@ -1,3 +1,4 @@
+import * as debug from 'debug';
 import * as request from 'request-promise-native';
 import * as _ from 'lodash';
 
@@ -8,6 +9,8 @@ import { encode } from '../src/util';
 import * as Util from './util';
 import { client, getCache } from './redis';
 import { search } from './youtube';
+
+const log = debug('xmplaylist');
 
 export function parseSpotify(obj: any) {
   const cover = _.first<any>(obj.album.images) || {};
@@ -79,7 +82,7 @@ export async function searchTrack(artists: string[], name: string): Promise<any>
       ),
     ),
   ) + ' NOT karaoke';
-  console.log('GOOGLE:', options.qs.q);
+  log('GOOGLE:', options.qs.q);
   const res2 = await request.get(options);
   if (res2.tracks.items.length > 0) {
     return parseSpotify(_.first(res2.tracks.items));

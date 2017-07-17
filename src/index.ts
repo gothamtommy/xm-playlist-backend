@@ -165,7 +165,8 @@ router.get('/updatePlaylist', async (ctx, next) => {
         channel: chan.number,
         startTime: { $gt: thirtyDays },
       },
-      attributes: [Sequelize.fn('DISTINCT', Sequelize.col('trackId')), 'trackId'],
+      attributes: [Sequelize.fn('DISTINCT', Sequelize.col('trackId')), 'trackId', 'startTime'],
+      order: [Sequelize.col('startTime')],
     }).then((t) => t.map((n) => n.get('trackId')));
     const spotifyIds = await Spotify.findAll({
       where: { trackId: { $in: trackIds } },

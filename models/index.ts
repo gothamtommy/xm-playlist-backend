@@ -81,6 +81,10 @@ export const Spotify = sequelize.define<SpotifyInstance, SpotifyAttributes>('spo
   cover: { type: Sequelize.STRING(200) },
   url: { type: Sequelize.STRING(200) },
   durationMs: { type: Sequelize.INTEGER },
+}, {
+  indexes: [
+    { fields: ['trackId'], unique: true },
+  ],
 });
 
 Track.belongsToMany(Artist, { through: ArtistTrack });

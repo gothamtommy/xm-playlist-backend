@@ -10,5 +10,5 @@ export function setup(force = false): any {
 }
 
 if (!module.parent) {
-  setup(true);
+  setup();
 }

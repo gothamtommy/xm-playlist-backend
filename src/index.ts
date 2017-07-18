@@ -94,22 +94,33 @@ router.get('/trackActivity/:id', async (ctx, next) => {
 
 router.get('/artist/:id', async (ctx, next) => {
   const artistId = ctx.params.id;
+  const channel = _.find(channels, _.matchesProperty('id', ctx.query.channel));
   ctx.assert(artistId, 400, 'Artist ID required');
-  const trackIds = await Track.findAll({
+  let trackIds = await Track.findAll({
     attributes: ['id'],
     include: [{
       model: Artist,
       where: { id: artistId },
       attributes: [],
     }],
-  }).then((t) => t.map((n) => n.get('id')));
-  ctx.assert(trackIds.length, 400, 'No songs found');
+  }).then((t) => t.map((n) => n.get('id')))
+    .catch(() => []);
+  if (channel) {
+    trackIds = await Play.findAll({
+      where: {
+        trackId: { $in: trackIds },
+        channel: channel.number,
+      },
+    })
+    .then((t) => t.map((n) => n.get('trackId')))
+    .catch(() => []);
+  }
   ctx.body = {};
   ctx.body.artist = await Artist.findById(artistId);
   ctx.body.tracks = await Track.findAll({
     where: { id: { $in: trackIds } },
-    include: [Artist],
-  });
+    include: [Artist, Spotify],
+  }).catch(() => []);
   return next();
 });
 

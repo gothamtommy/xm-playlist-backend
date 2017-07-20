@@ -93,7 +93,8 @@ router.get('/popular/:id', async (ctx, next) => {
       [Sequelize.fn('COUNT', Sequelize.col('trackId')), 'count'],
     ],
     group: [['trackId']],
-  }).then((t) => t.map((n) => n.toJSON()));
+  }).then((t) => t.map((n) => n.toJSON()))
+    .filter((n: any) => n.count > 1);
   const ids = lastThirty.map((n) => n.trackId);
   const keyed: any = _.keyBy(lastThirty, _.identity('trackId'));
   const tracks = await Track.findAll({

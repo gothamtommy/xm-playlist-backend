@@ -15,6 +15,7 @@ import { channels } from './channels';
 import { getRecent, mostHeard } from './plays';
 import { Track, Artist, Play, Spotify } from '../models';
 import { spotifyFindAndCache, addToPlaylist } from './spotify';
+import { playsByDay } from './tracks';
 
 const log = debug('xmplaylist');
 const app = new Koa();
@@ -125,14 +126,7 @@ router.get('/track/:trackId', async (ctx, next) => {
   ctx.body = await Track.findById(trackId, { include: [Artist, Spotify] })
     .then((t) => t.toJSON());
   const daysago = subDays(new Date(), 30);
-  ctx.body.playsByDay = await Play.findAll({
-    where: { trackId, startTime: { $gt: daysago } },
-    attributes: [
-      [sequelize.fn('date_trunc', 'day', sequelize.col('startTime')), 'day'],
-      [sequelize.fn('COUNT', 'trackId'), 'count'],
-    ],
-    group: ['day'],
-  }).then((t) => t.map((n) => n.toJSON()));
+  ctx.body.playsByDay = await playsByDay(trackId);
   return next();
 });
 
@@ -140,14 +134,7 @@ router.get('/trackActivity/:id', async (ctx, next) => {
   const trackId = ctx.params.id;
   ctx.assert(trackId, 400, 'Song ID required');
   const daysago = subDays(new Date(), 30);
-  ctx.body = await Play.findAll({
-    where: { trackId, startTime: { $gt: daysago } },
-    attributes: [
-      [sequelize.fn('date_trunc', 'day', sequelize.col('startTime')), 'day'],
-      [sequelize.fn('COUNT', 'trackId'), 'count'],
-    ],
-    group: ['day'],
-  }).then((t) => t.map((n) => n.toJSON()));
+  ctx.body = await playsByDay(trackId);
   return next();
 });
 

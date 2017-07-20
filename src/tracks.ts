@@ -1,6 +1,11 @@
-import { Track, Artist, ArtistTrack, ArtistTrackInstance } from '../models';
+import * as sequelize from 'sequelize';
+import * as debug from 'debug';
+import { subDays, addDays, startOfDay, setHours } from 'date-fns';
 
+import { Track, Artist, ArtistTrack, ArtistTrackInstance, Play } from '../models';
 import { encode } from '../src/util';
+
+const log = debug('xmplaylist');
 
 export function findOrCreateArtists(artists: string[]): Promise<ArtistTrackInstance[]> {
   const promises: Array<Promise<ArtistTrackInstance>> = artists.map((n): any  => {
@@ -35,9 +40,34 @@ export async function findOrCreateTrack(data) {
   }
 }
 
-// TODO
-// export async function artists() {
-//   const db = await mongo;
-//   return db.collection('tracks')
-//     .distinct('artists');
-// }
+export async function playsByDay(trackId: number) {
+  let daysago = subDays(new Date(), 30);
+  const plays: any = await Play.findAll({
+    where: { trackId, startTime: { $gt: daysago } },
+    attributes: [
+      [sequelize.fn('date_trunc', 'day', sequelize.col('startTime')), 'day'],
+      [sequelize.fn('COUNT', 'trackId'), 'count'],
+    ],
+    group: ['day'],
+    order: [sequelize.col('day')],
+  }).then((t) => t.map((n) => n.toJSON()));
+  let hasZero = false;
+  for (let i = 0; i <= 30; i++) {
+    plays[i].count = Number(plays[i].count);
+    const str = daysago.toISOString().split('T')[0] + 'T00:00:00.000Z';
+    if (str !== new Date(plays[i].day).toISOString()) {
+      plays.splice(i, 0, {
+        day: str,
+        count: 0,
+      });
+    }
+    if (!hasZero && plays[i].count === 0) {
+      hasZero = true;
+    }
+    daysago = addDays(daysago, 1);
+  }
+  if (!hasZero) {
+    plays[0].count = 0;
+  }
+  return plays;
+}

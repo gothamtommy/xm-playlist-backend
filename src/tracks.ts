@@ -54,7 +54,7 @@ export async function playsByDay(trackId: number) {
   let hasZero = false;
   for (let i = 0; i <= 30; i++) {
     const str = daysago.toISOString().split('T')[0] + 'T00:00:00.000Z';
-    if (str !== new Date(plays[i].day).toISOString()) {
+    if (!plays[i] || str !== new Date(plays[i].day).toISOString()) {
       plays.splice(i, 0, {
         day: str,
         count: 0,

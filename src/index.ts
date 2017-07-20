@@ -99,7 +99,6 @@ router.get('/popular/:id', async (ctx, next) => {
   const tracks = await Track.findAll({
     where: {
       id: { $in: ids },
-      createdAt: { $gte: thirtyDays },
     },
     include: [Artist, Spotify],
   }).then((t) => t.map((n) => {

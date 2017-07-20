@@ -53,7 +53,6 @@ export async function playsByDay(trackId: number) {
   }).then((t) => t.map((n) => n.toJSON()));
   let hasZero = false;
   for (let i = 0; i <= 30; i++) {
-    plays[i].count = Number(plays[i].count);
     const str = daysago.toISOString().split('T')[0] + 'T00:00:00.000Z';
     if (str !== new Date(plays[i].day).toISOString()) {
       plays.splice(i, 0, {
@@ -61,6 +60,7 @@ export async function playsByDay(trackId: number) {
         count: 0,
       });
     }
+    plays[i].count = Number(plays[i].count);
     if (!hasZero && plays[i].count === 0) {
       hasZero = true;
     }

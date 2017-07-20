@@ -59,7 +59,7 @@ export async function searchTrack(artists: string[], name: string): Promise<any>
   const options: request.Options = {
     uri: `https://api.spotify.com/v1/search`,
     qs: {
-      q: `${cleanTrack} ${cleanArtists} NOT karaoke`,
+      q: `${cleanTrack} ${cleanArtists} NOT karaoke NOT tribute`,
       type: 'track',
       limit: 1,
     },
@@ -81,7 +81,7 @@ export async function searchTrack(artists: string[], name: string): Promise<any>
         Util.cleanMusicVideo(youtube),
       ),
     ),
-  ) + ' NOT karaoke';
+  ) + ' NOT karaoke NOT tribute';
   log('GOOGLE:', options.qs.q);
   const res2 = await request.get(options);
   if (res2.tracks.items.length > 0) {

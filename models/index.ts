@@ -24,6 +24,10 @@ export const Track = sequelize.define<TrackInstance, TrackAttributes>('track', {
   songId: { type: Sequelize.STRING(15), unique: true },
   name: { type: Sequelize.STRING(200) },
   plays: { type: Sequelize.INTEGER, defaultValue: 1 },
+}, {
+  indexes: [
+    { fields: ['createdAt'] },
+  ],
 });
 
 export interface ArtistAttributes {

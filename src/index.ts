@@ -15,7 +15,6 @@ import { channels } from './channels';
 import { getRecent, mostHeard } from './plays';
 import { Track, Artist, Play, Spotify } from '../models';
 import { spotifyFindAndCache, addToPlaylist } from './spotify';
-const tracks = require('./tracks');
 
 const log = debug('xmplaylist');
 const app = new Koa();
@@ -39,7 +38,7 @@ app.use((ctx, next) => {
 });
 
 // routes
-router.get('/recent/:id', async (ctx, next) => {
+router.get('/channel/:id', async (ctx, next) => {
   ctx.assert(ctx.params.id, 400, 'Channel does not exist');
   const channel = _.find(channels, _.matchesProperty('id', ctx.params.id));
   ctx.assert(channel, 400, 'Channel does not exist');
@@ -49,6 +48,66 @@ router.get('/recent/:id', async (ctx, next) => {
   } else {
     ctx.body = await getRecent(channel);
   }
+  return next();
+});
+
+router.get('/newest/:id', async (ctx, next) => {
+  ctx.assert(ctx.params.id, 400, 'Channel does not exist');
+  const channel = _.find(channels, _.matchesProperty('id', ctx.params.id));
+  ctx.assert(channel, 400, 'Channel does not exist');
+  const thirtyDays = subDays(new Date(), 30);
+  const ids: number[] = await Play.findAll({
+    where: {
+      channel: channel.number,
+      startTime: { $gt: thirtyDays },
+    },
+    attributes: [
+      Sequelize.fn('DISTINCT', Sequelize.col('trackId')),
+      'trackId',
+    ],
+  }).then((t) => t.map((n) => n.get('trackId')));
+  ctx.body = await Track.findAll({
+    where: {
+      id: { $in: ids },
+    },
+    order: [['createdAt', 'desc']],
+    limit: 50,
+    include: [Artist, Spotify],
+  }).then((t) => t.map((n) => n.toJSON()));
+  return next();
+});
+
+router.get('/popular/:id', async (ctx, next) => {
+  ctx.assert(ctx.params.id, 400, 'Channel does not exist');
+  const channel = _.find(channels, _.matchesProperty('id', ctx.params.id));
+  ctx.assert(channel, 400, 'Channel does not exist');
+  const thirtyDays = subDays(new Date(), 30);
+  const lastThirty = await Play.findAll({
+    where: {
+      channel: channel.number,
+      startTime: { $gt: thirtyDays },
+    },
+    attributes: [
+      Sequelize.fn('DISTINCT', Sequelize.col('trackId')),
+      'trackId',
+      [Sequelize.fn('COUNT', Sequelize.col('trackId')), 'count'],
+    ],
+    group: [['trackId']],
+  }).then((t) => t.map((n) => n.toJSON()));
+  const ids = lastThirty.map((n) => n.trackId);
+  const keyed: any = _.keyBy(lastThirty, _.identity('trackId'));
+  const tracks = await Track.findAll({
+    where: {
+      id: { $in: ids },
+      createdAt: { $gte: thirtyDays },
+    },
+    include: [Artist, Spotify],
+  }).then((t) => t.map((n) => {
+    const res: any = n.toJSON();
+    res.count = keyed[res.id].count;
+    return res;
+  }));
+  ctx.body = tracks.sort((a, b) => b.count - a.count);
   return next();
 });
 

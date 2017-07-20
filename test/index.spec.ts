@@ -25,11 +25,17 @@ const channel = {
   desc: "'90s Alternative/Grunge",
 };
 
+beforeAll(async function(done) {
+  await setup(true);
+  done();
+});
+
 describe('index', function() {
   it('should parse metadata response', async function() {
+    await setup();
     const t = await insertPlay(play, channel);
     const res = await supertest(app.listen())
-      .get('/recent/90salternative')
+      .get('/channel/90salternative')
       .expect(200);
     expect(res.body.length).toBe(1);
   });

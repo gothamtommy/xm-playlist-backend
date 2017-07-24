@@ -11,6 +11,7 @@ import { client, getCache } from './redis';
 import { search } from './youtube';
 
 const log = debug('xmplaylist');
+const blacklist = `NOT karaoke NOT tribute NOT Demonstration NOT Performance`;
 
 export function parseSpotify(obj: any) {
   const cover = _.first<any>(obj.album.images) || {};
@@ -59,7 +60,7 @@ export async function searchTrack(artists: string[], name: string): Promise<any>
   const options: request.Options = {
     uri: `https://api.spotify.com/v1/search`,
     qs: {
-      q: `${cleanTrack} ${cleanArtists} NOT karaoke NOT tribute`,
+      q: `${cleanTrack} ${cleanArtists} ${blacklist}`,
       type: 'track',
       limit: 1,
     },
@@ -81,7 +82,7 @@ export async function searchTrack(artists: string[], name: string): Promise<any>
         Util.cleanMusicVideo(youtube),
       ),
     ),
-  ) + ' NOT karaoke NOT tribute';
+  ) + blacklist;
   log('GOOGLE:', options.qs.q);
   const res2 = await request.get(options);
   if (res2.tracks.items.length > 0) {

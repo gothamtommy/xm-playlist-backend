@@ -17,7 +17,7 @@ export interface TrackAttributes {
   artists?: ArtistAttributes[];
   createdAt?: Date;
   updatedAt?: Date;
-  spotify: SpotifyAttributes;
+  spotify?: SpotifyAttributes;
 }
 export type TrackInstance = Sequelize.Instance<TrackAttributes>;
 export const Track = sequelize.define<TrackInstance, TrackAttributes>('track', {
@@ -33,7 +33,7 @@ export const Track = sequelize.define<TrackInstance, TrackAttributes>('track', {
 export interface ArtistAttributes {
   id?: number;
   name?: string;
-  artist_track: ArtistTrackAttributes;
+  artist_track?: ArtistTrackAttributes;
 }
 export type ArtistInstance = Sequelize.Instance<ArtistAttributes>;
 export const Artist = sequelize.define<ArtistInstance, ArtistAttributes>('artist', {
@@ -43,7 +43,7 @@ export const Artist = sequelize.define<ArtistInstance, ArtistAttributes>('artist
 });
 
 export interface ArtistTrackAttributes {
-  trackId: string;
+  trackId: number | string;
   artistId: number;
 }
 export type ArtistTrackInstance = Sequelize.Instance<ArtistTrackAttributes>;
@@ -53,7 +53,7 @@ export const ArtistTrack = sequelize.define<ArtistTrackInstance, ArtistTrackAttr
 });
 
 export interface PlayAttributes {
-  trackId: string;
+  trackId: number | string;
   startTime?: Date;
   channel?: number;
   track?: TrackAttributes;

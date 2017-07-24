@@ -43,7 +43,6 @@ describe('sirius', function() {
     expect(name).toBe('Jupiter');
   });
   it('should get update from channel', async function() {
-    await setup();
     const scope = nock('https://www.siriusxm.com')
       .get(/thebeat/)
       .reply(200, channelMetadataResponse);
@@ -52,7 +51,6 @@ describe('sirius', function() {
     expect(res).toBe(true);
   });
   it('should skip song that has already been recorded', async function() {
-    await setup();
     const scope = nock('https://www.siriusxm.com')
       .get(/thebeat/)
       .times(2)
@@ -64,7 +62,6 @@ describe('sirius', function() {
     expect(res2).toBe(false);
   });
   it('should skip invalid id', async function() {
-    await setup();
     const scope = nock('https://www.siriusxm.com')
       .get(/thebeat/)
       .reply(200, channelMetadataInvalidId);

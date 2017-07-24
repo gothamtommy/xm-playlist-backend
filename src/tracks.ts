@@ -7,13 +7,13 @@ import { encode } from '../src/util';
 
 const log = debug('xmplaylist');
 
-export function findOrCreateArtists(artists: string[]): Promise<ArtistTrackInstance[]> {
-  const promises: Array<Promise<ArtistTrackInstance>> = artists.map((n): any  => {
-    return Artist
-      .findOrCreate({ where: { name: n }})
-      .spread((artist: ArtistTrackInstance, created) => {
-        return artist.toJSON();
-      });
+export function findOrCreateArtists(artists: string[]): Promise<any[]> {
+  const promises: Array<Promise<ArtistTrackInstance>> = artists.map(async (name): Promise<any> => {
+    const artist = await Artist.findOne({ where: { name } });
+    if (artist) {
+      return artist;
+    }
+    return Artist.create({ name });
   });
   return Promise.all(promises);
 }

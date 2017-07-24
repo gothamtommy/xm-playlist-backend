@@ -3,7 +3,7 @@ import * as request from 'request-promise-native';
 import * as _ from 'lodash';
 import { format as dateFmt } from 'date-fns';
 
-// import { findOrCreateTrack } from './tracks';
+import { findOrCreateArtists } from './tracks';
 import { getLast } from './plays';
 import {
   Track,
@@ -95,29 +95,19 @@ export async function checkEndpoint(channel: Channel) {
       log(`${newSong.songId} not found on spotify`);
     }
   }
-
   return true;
-}
-
-function findOrCreateArtists(artists: string[]) {
-  const promises: Array<Promise<ArtistTrackInstance>> = artists.map((n): any  => {
-    return Artist
-      .findOrCreate({ where: { name: n }})
-      .spread((artist: ArtistTrackInstance, created) => {
-        return artist;
-      });
-  });
-  return Promise.all(promises);
 }
 
 export async function insertPlay(data: any, channel: Channel): Promise<TrackAttributes> {
   const artists = await findOrCreateArtists(data.artists);
-  const [track, created] = await Track
-    .findOrCreate({ where: { songId: data.songId } });
-  if (!created) {
+  let track = await Track.findOne({ where: { songId: data.songId } });
+  if (track) {
     track.increment('plays');
   } else {
-    await track.update({ name: data.name });
+    track = await Track.create({
+      songId: data.songId,
+      name: data.name,
+    });
     const at = artists.map((artist) => {
       return {
         artistId: artist.get('id'),

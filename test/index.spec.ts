@@ -32,7 +32,6 @@ beforeAll(async function(done) {
 
 describe('index', function() {
   it('should parse metadata response', async function() {
-    await setup();
     const t = await insertPlay(play, channel);
     const res = await supertest(app.listen())
       .get('/channel/90salternative')

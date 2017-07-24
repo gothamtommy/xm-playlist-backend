@@ -11,7 +11,7 @@ import { client, getCache } from './redis';
 import { search } from './youtube';
 
 const log = debug('xmplaylist');
-const blacklist = `NOT karaoke NOT tribute NOT Demonstration NOT Performance`;
+const blacklist = `NOT karaoke NOT tribute NOT Demonstration NOT Performance NOT made famous`;
 
 export function parseSpotify(obj: any) {
   const cover = _.first<any>(obj.album.images) || {};

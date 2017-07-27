@@ -96,7 +96,7 @@ router.get('/popular/:id', async (ctx, next) => {
   }).then((t) => t.map((n) => n.toJSON()));
   lastThirty = lastThirty
     .filter((n: any) => n.count > 1)
-    .sort((a, b) => a.count - b.count)
+    .sort((a, b) => b.count - a.count)
     .slice(0, 50);
   const ids = lastThirty.map((n) => n.trackId);
   const keyed: any = _.keyBy(lastThirty, _.identity('trackId'));

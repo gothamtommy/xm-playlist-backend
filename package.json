@@ -13,6 +13,7 @@
     "lint": "tslint \"src/**/*.ts\""
   },
   "dependencies": {
+    "chromeless": "^1.0.0",
     "date-fns": "^2.0.0-alpha.1",
     "debug": "^2.6.8",
     "kcors": "^2.2.1",

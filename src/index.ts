@@ -8,7 +8,6 @@ import * as Router from 'koa-router';
 import * as _ from 'lodash';
 import * as sequelize from 'sequelize';
 import { subDays } from 'date-fns';
-import * as Sequelize from 'sequelize';
 
 import config from '../config';
 import { channels } from './channels';
@@ -63,7 +62,7 @@ router.get('/newest/:id', async (ctx, next) => {
       startTime: { $gt: thirtyDays },
     },
     attributes: [
-      Sequelize.fn('DISTINCT', Sequelize.col('trackId')),
+      sequelize.fn('DISTINCT', sequelize.col('trackId')),
       'trackId',
     ],
   }).then((t) => t.map((n) => n.get('trackId')));
@@ -83,19 +82,22 @@ router.get('/popular/:id', async (ctx, next) => {
   const channel = _.find(channels, _.matchesProperty('id', ctx.params.id));
   ctx.assert(channel, 400, 'Channel does not exist');
   const thirtyDays = subDays(new Date(), 30);
-  const lastThirty = await Play.findAll({
+  let lastThirty: any = await Play.findAll({
     where: {
       channel: channel.number,
       startTime: { $gt: thirtyDays },
     },
     attributes: [
-      Sequelize.fn('DISTINCT', Sequelize.col('trackId')),
+      sequelize.fn('DISTINCT', sequelize.col('trackId')),
       'trackId',
-      [Sequelize.fn('COUNT', Sequelize.col('trackId')), 'count'],
+      [sequelize.fn('COUNT', sequelize.col('trackId')), 'count'],
     ],
     group: [['trackId']],
-  }).then((t) => t.map((n) => n.toJSON()))
-    .filter((n: any) => n.count > 1);
+  }).then((t) => t.map((n) => n.toJSON()));
+  lastThirty = lastThirty
+    .filter((n: any) => n.count > 1)
+    .sort((a, b) => a.count - b.count)
+    .slice(0, 50);
   const ids = lastThirty.map((n) => n.trackId);
   const keyed: any = _.keyBy(lastThirty, _.identity('trackId'));
   const tracks = await Track.findAll({
@@ -140,7 +142,7 @@ router.get('/trackActivity/:id', async (ctx, next) => {
 
 router.get('/artist/:id', async (ctx, next) => {
   const artistId = ctx.params.id;
-  const channel = _.find(channels, _.matchesProperty('id', ctx.query.channel));
+  const channel = channels.find(_.matchesProperty('id', ctx.query.channel));
   ctx.assert(artistId, 400, 'Artist ID required');
   let trackIds = await Track.findAll({
     attributes: ['id'],
@@ -222,7 +224,11 @@ router.get('/updatePlaylist', async (ctx, next) => {
         channel: chan.number,
         startTime: { $gt: thirtyDays },
       },
-      attributes: [Sequelize.fn('DISTINCT', Sequelize.col('trackId')), 'trackId', 'startTime'],
+      attributes: [
+        sequelize.fn('DISTINCT', sequelize.col('trackId')),
+        'trackId',
+        'startTime',
+      ],
     }).then((t) => t.map((n) => n.get('trackId')));
     const spotifyIds = await Spotify.findAll({
       where: { trackId: { $in: trackIds } },
@@ -234,9 +240,6 @@ router.get('/updatePlaylist', async (ctx, next) => {
   ctx.body = 'success';
   return next();
 });
-// app.use(route.get('/new', ep.newsongs));
-// app.use(route.get('/song/:song', ep.songFromID));
-// app.use(route.get('/songstream/:song', ep.songstream));
 
 app
   .use(router.routes())

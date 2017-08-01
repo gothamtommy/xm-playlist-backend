@@ -93,6 +93,7 @@ export async function checkEndpoint(channel: Channel) {
         console.log(doc.toJSON());
         console.log('DAYS', differenceInDays(new Date(), doc.get('createdAt')))
         if (differenceInDays(new Date(), doc.get('createdAt')) > 7) {
+          doc.destroy();
           return matchSpotify(track);
         }
         return doc;

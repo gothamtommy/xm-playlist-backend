@@ -92,7 +92,8 @@ export async function checkEndpoint(channel: Channel) {
       .then(async (doc) => {
         log('DAYS', differenceInDays(new Date(), doc.get('createdAt')));
         if (differenceInDays(new Date(), doc.get('createdAt')) > 7) {
-          return matchSpotify(track, true);
+          await Spotify.findOne({ where: { trackId: track.id } }).then((d) => d.destroy());
+          return matchSpotify(track, false);
         }
         return doc;
       })

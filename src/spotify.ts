@@ -108,7 +108,7 @@ export async function searchTrack(artists: string[], name: string): Promise<Spot
   return Promise.reject('Everything Failed');
 }
 
-export async function matchSpotify(track: TrackAttributes) {
+export async function matchSpotify(track: TrackAttributes, update = false) {
   let s;
   try {
     s = await searchTrack(track.artists.map((n) => n.name), track.name);
@@ -117,6 +117,16 @@ export async function matchSpotify(track: TrackAttributes) {
   }
   if (!s || !s.spotifyName) {
     return Promise.reject('Failed');
+  }
+  if (update) {
+    return Spotify.findOne({ where: { trackId: track.id } }).then((doc) => doc.update({
+      trackId: track.id,
+      cover: s.cover,
+      durationMs: s.durationMs,
+      spotifyId: s.spotifyId,
+      spotifyName: s.spotifyName,
+      url: s.url,
+    }));
   }
   return Spotify.create({
     trackId: track.id,
@@ -129,9 +139,8 @@ export async function matchSpotify(track: TrackAttributes) {
 }
 
 export async function spotifyFindAndCache(track: TrackAttributes) {
-  const doc = await Spotify.findOne({ where: { id: track.id } });
+  const doc = await Spotify.findOne({ where: { trackId: track.id } });
   if (doc) {
-    console.log('EXISTS');
     return doc;
   }
   return matchSpotify(track);

@@ -86,23 +86,18 @@ export async function checkEndpoint(channel: Channel) {
   const track = await insertPlay(newSong, channel);
   // TODO: announce
   log(newSong);
-  if (!track.spotify) {
-    try {
-      if (process.env.NODE_ENV !== 'test') {
-        spotifyFindAndCache(track)
-          .then((doc) => {
-            console.log(doc.toJSON());
-            console.log('DAYS', differenceInDays(new Date(), doc.get('createdAt')))
-            if (differenceInDays(new Date(), doc.get('createdAt')) > 7) {
-              return matchSpotify(track);
-            }
-            return doc;
-          })
-          .catch((err) => console.log('spotifyFindAndCacheError', err));
-      }
-    } catch (e) {
-      log(`${newSong.songId} not found on spotify`);
-    }
+
+  if (process.env.NODE_ENV !== 'test') {
+    spotifyFindAndCache(track)
+      .then((doc) => {
+        console.log(doc.toJSON());
+        console.log('DAYS', differenceInDays(new Date(), doc.get('createdAt')))
+        if (differenceInDays(new Date(), doc.get('createdAt')) > 7) {
+          return matchSpotify(track);
+        }
+        return doc;
+      })
+      .catch((err) => console.log('spotifyFindAndCacheError', err));
   }
   return true;
 }

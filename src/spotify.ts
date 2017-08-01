@@ -53,6 +53,9 @@ export function optionalBlacklist(track: string, artists: string) {
   if (!all.toLowerCase().includes('style')) {
     bl += ' NOT Style';
   }
+  if (!all.toLowerCase().includes('Acous')) {
+    bl += ' NOT Acoustic';
+  }
   return ' ' + bl;
 }
 

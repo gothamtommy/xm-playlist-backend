@@ -131,6 +131,7 @@ export async function matchSpotify(track: TrackAttributes) {
 export async function spotifyFindAndCache(track: TrackAttributes) {
   const doc = await Spotify.findOne({ where: { id: track.id } });
   if (doc) {
+    console.log('EXISTS');
     return doc;
   }
   return matchSpotify(track);

@@ -1,8 +1,9 @@
 import * as debug from 'debug';
 import * as request from 'request-promise-native';
 import * as _ from 'lodash';
+import * as Sequelize from 'sequelize';
 
-import { Track, Spotify, Artist, TrackInstance, TrackAttributes } from '../models';
+import { Track, Spotify, Artist, TrackInstance, TrackAttributes, SpotifyAttributes } from '../models';
 import config from '../config';
 import { findOrCreateTrack } from './tracks';
 import { encode } from '../src/util';
@@ -13,7 +14,14 @@ import { search } from './youtube';
 const log = debug('xmplaylist');
 const blacklist = `NOT karaoke NOT tribute NOT Demonstration NOT Performance`;
 
-export function parseSpotify(obj: any) {
+export interface SpotifyParsed {
+  cover: string;
+  spotifyId: string;
+  spotifyName: string;
+  durationMs: number;
+  url: string;
+}
+export function parseSpotify(obj: any): SpotifyParsed {
   const cover = _.first<any>(obj.album.images) || {};
   return {
     cover: cover.url,
@@ -22,6 +30,15 @@ export function parseSpotify(obj: any) {
     durationMs: obj.duration_ms,
     url: obj.external_urls.spotify,
   };
+}
+
+export function optionalBlacklist(track: string, artists: string) {
+  const all = track + artists;
+  let bl = blacklist;
+  if (!all.toLowerCase().includes('instrumental')) {
+    bl += ' NOT Instrumental';
+  }
+  return ' ' + bl;
 }
 
 export async function getToken(): Promise<string> {
@@ -42,7 +59,7 @@ export async function getToken(): Promise<string> {
   return res.access_token;
 }
 
-export async function searchTrack(artists: string[], name: string): Promise<any> {
+export async function searchTrack(artists: string[], name: string): Promise<SpotifyParsed> {
   const cleanArtists = Util.cleanupExtra(Util.cleanCutoff(artists.join(' ')));
   const cleanTrack = Util.cleanupExtra(
     Util.cleanRemix(
@@ -60,7 +77,7 @@ export async function searchTrack(artists: string[], name: string): Promise<any>
   const options: request.Options = {
     uri: `https://api.spotify.com/v1/search`,
     qs: {
-      q: `${cleanTrack} ${cleanArtists} ${blacklist}`,
+      q: `${cleanTrack} ${cleanArtists}` + optionalBlacklist(cleanTrack, cleanArtists),
       type: 'track',
       limit: 1,
     },
@@ -82,7 +99,7 @@ export async function searchTrack(artists: string[], name: string): Promise<any>
         Util.cleanMusicVideo(youtube),
       ),
     ),
-  ) + ' ' + blacklist;
+  ) + optionalBlacklist(cleanTrack, cleanArtists);
   log('GOOGLE:', options.qs.q);
   const res2 = await request.get(options);
   if (res2.tracks.items.length > 0) {
@@ -91,11 +108,7 @@ export async function searchTrack(artists: string[], name: string): Promise<any>
   return Promise.reject('Everything Failed');
 }
 
-export async function spotifyFindAndCache(track: TrackAttributes) {
-  const doc = await Spotify.findOne<any>({ where: { id: track.id } });
-  if (doc) {
-    return doc;
-  }
+export async function matchSpotify(track: TrackAttributes) {
   let s;
   try {
     s = await searchTrack(track.artists.map((n) => n.name), track.name);
@@ -105,15 +118,22 @@ export async function spotifyFindAndCache(track: TrackAttributes) {
   if (!s || !s.spotifyName) {
     return Promise.reject('Failed');
   }
-  await Spotify.create({
+  return Spotify.create({
     trackId: track.id,
     cover: s.cover,
     durationMs: s.durationMs,
     spotifyId: s.spotifyId,
     spotifyName: s.spotifyName,
     url: s.url,
-  }, { returning: false });
-  return s;
+  });
+}
+
+export async function spotifyFindAndCache(track: TrackAttributes) {
+  const doc = await Spotify.findOne({ where: { id: track.id } });
+  if (doc) {
+    return doc;
+  }
+  return matchSpotify(track);
 }
 
 export async function getUserToken(code: string): Promise<string> {

@@ -70,6 +70,7 @@ export const Play = sequelize.define<PlayInstance, PlayAttributes>('play', {
 });
 
 export interface SpotifyAttributes {
+  id?: number;
   trackId?: number;
   cover?: string;
   url?: string;

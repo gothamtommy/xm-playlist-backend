@@ -1,7 +1,7 @@
 import * as debug from 'debug';
 import * as request from 'request-promise-native';
 import * as _ from 'lodash';
-import { format as dateFmt } from 'date-fns';
+import { format as dateFmt, differenceInDays } from 'date-fns';
 
 import { findOrCreateArtists } from './tracks';
 import { getLast } from './plays';
@@ -16,7 +16,7 @@ import {
 } from '../models';
 import { channels, Channel } from './channels';
 import { encode } from './util';
-import { spotifyFindAndCache } from './spotify';
+import { spotifyFindAndCache, searchTrack, matchSpotify } from './spotify';
 
 // https://www.siriusxm.com/metadata/pdt/en-us/json/channels/thebeat/timestamp/02-25-08:10:00
 const baseurl = 'https://www.siriusxm.com';
@@ -89,7 +89,15 @@ export async function checkEndpoint(channel: Channel) {
   if (!track.spotify) {
     try {
       if (process.env.NODE_ENV !== 'test') {
-        spotifyFindAndCache(track);
+        spotifyFindAndCache(track)
+          .then((doc) => {
+            console.log('DAYS', differenceInDays(new Date(), doc.get('createdAt')))
+            if (differenceInDays(new Date(), doc.get('createdAt')) > 7) {
+              return matchSpotify(track);
+            }
+            return doc;
+          })
+          .catch(() => true);
       }
     } catch (e) {
       log(`${newSong.songId} not found on spotify`);

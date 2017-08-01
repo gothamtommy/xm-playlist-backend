@@ -13,7 +13,7 @@
     "lint": "tslint \"src/**/*.ts\""
   },
   "dependencies": {
-    "chromeless": "^1.0.0",
+    "chromeless": "^1.0.1",
     "date-fns": "^2.0.0-alpha.1",
     "debug": "^2.6.8",
     "kcors": "^2.2.1",
@@ -23,7 +23,7 @@
     "koa2-raven": "^4.0.10",
     "lodash": "^4.17.4",
     "pg": "7.0.2",
-    "raven": "^2.1.0",
+    "raven": "^2.1.1",
     "redis": "^2.7.1",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.4",
@@ -39,7 +39,7 @@
     "@types/lodash": "^4.14.71",
     "@types/node": "^8.0.17",
     "@types/progress": "^2.0.0",
-    "@types/raven": "^1.2.4",
+    "@types/raven": "^2.1.0",
     "@types/redis": "^2.6.0",
     "@types/request-promise-native": "^1.0.6",
     "@types/sequelize": "^4.0.67",

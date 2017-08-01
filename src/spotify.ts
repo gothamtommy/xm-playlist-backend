@@ -44,6 +44,9 @@ export function optionalBlacklist(track: string, artists: string) {
   if (!all.toLowerCase().includes('originally')) {
     bl += ' NOT Originally';
   }
+  if (!all.toLowerCase().includes('arrangement')) {
+    bl += ' NOT Arrangement';
+  }
   return ' ' + bl;
 }
 

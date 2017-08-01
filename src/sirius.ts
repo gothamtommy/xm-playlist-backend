@@ -90,14 +90,13 @@ export async function checkEndpoint(channel: Channel) {
   if (process.env.NODE_ENV !== 'test') {
     spotifyFindAndCache(track)
       .then(async (doc) => {
-        console.log(doc.toJSON());
-        console.log('DAYS', differenceInDays(new Date(), doc.get('createdAt')))
+        log('DAYS', differenceInDays(new Date(), doc.get('createdAt')));
         if (differenceInDays(new Date(), doc.get('createdAt')) > 7) {
           return matchSpotify(track, true);
         }
         return doc;
       })
-      .catch((err) => console.log('spotifyFindAndCacheError', err));
+      .catch((err) => log('spotifyFindAndCacheError', err));
   }
   return true;
 }

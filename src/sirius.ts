@@ -91,7 +91,7 @@ export async function checkEndpoint(channel: Channel) {
     spotifyFindAndCache(track)
       .then(async (doc) => {
         log('DAYS', differenceInDays(new Date(), doc.get('createdAt')));
-        if (differenceInDays(new Date(), doc.get('createdAt')) > 7) {
+        if (differenceInDays(new Date(), doc.get('createdAt')) > 10) {
           await Spotify.findOne({ where: { trackId: track.id } }).then((d) => d.destroy());
           return matchSpotify(track, false);
         }

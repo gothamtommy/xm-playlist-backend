@@ -12,7 +12,19 @@ import { client, getCache } from './redis';
 import { search } from './youtube';
 
 const log = debug('xmplaylist');
-const blacklist = `NOT karaoke NOT tribute NOT Demonstration NOT Performance`;
+const blacklist = [
+  'karaoke',
+  'tribute',
+  'demonstration',
+  'performance',
+  'instrumental',
+  'famous',
+  'originally',
+  'arrangement',
+  'cover',
+  'style',
+  'acoustic',
+];
 
 export interface SpotifyParsed {
   cover: string;
@@ -33,30 +45,14 @@ export function parseSpotify(obj: any): SpotifyParsed {
 }
 
 export function optionalBlacklist(track: string, artists: string) {
-  const all = track + artists;
-  let bl = blacklist;
-  if (!all.toLowerCase().includes('instrumental')) {
-    bl += ' NOT Instrumental';
+  let bl = '';
+  const all = track.toLowerCase() + artists.toLowerCase();
+  for (const b in blacklist) {
+    if (all.includes(b)) {
+      bl += ` NOT ${b}`;
+    }
   }
-  if (!all.toLowerCase().includes('famous')) {
-    bl += ' NOT Famous';
-  }
-  if (!all.toLowerCase().includes('originally')) {
-    bl += ' NOT Originally';
-  }
-  if (!all.toLowerCase().includes('arrangement')) {
-    bl += ' NOT Arrangement';
-  }
-  if (!all.toLowerCase().includes('cover')) {
-    bl += ' NOT Cover';
-  }
-  if (!all.toLowerCase().includes('style')) {
-    bl += ' NOT Style';
-  }
-  if (!all.toLowerCase().includes('Acous')) {
-    bl += ' NOT Acoustic';
-  }
-  return ' ' + bl;
+  return bl;
 }
 
 export async function getToken(): Promise<string> {

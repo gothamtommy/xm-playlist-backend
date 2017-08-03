@@ -114,7 +114,7 @@ export async function searchTrack(artists: string[], name: string): Promise<Spot
         Util.cleanMusicVideo(youtube),
       ),
     ),
-  ) + optionalBlacklist(cleanTrack, cleanArtists);
+  ) + optionalBlacklist(youtube, youtube);
   console.log('GOOGLE:', options.qs.q);
   const res2 = await request.get(options);
   if (res2.tracks.items.length > 0) {

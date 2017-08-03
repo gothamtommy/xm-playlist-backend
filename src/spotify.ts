@@ -103,6 +103,7 @@ export async function searchTrack(artists: string[], name: string): Promise<Spot
     json: true,
     gzip: true,
   };
+  console.log('ORIGINAL:', options.qs.q);
   const res = await request.get(options);
   if (res.tracks.items.length > 0) {
     return parseSpotify(_.first(res.tracks.items));
@@ -118,7 +119,7 @@ export async function searchTrack(artists: string[], name: string): Promise<Spot
       ),
     ),
   ) + optionalBlacklist(cleanTrack, cleanArtists);
-  log('GOOGLE:', options.qs.q);
+  console.log('GOOGLE:', options.qs.q);
   const res2 = await request.get(options);
   if (res2.tracks.items.length > 0) {
     return parseSpotify(_.first(res2.tracks.items));

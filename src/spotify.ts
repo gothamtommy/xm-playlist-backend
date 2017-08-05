@@ -51,7 +51,7 @@ export function optionalBlacklist(track: string, artists: string) {
       return ` NOT ${b}`;
     }
     return '';
-  }).join();
+  }).join('');
 }
 
 export async function getToken(): Promise<string> {

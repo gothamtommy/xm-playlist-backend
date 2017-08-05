@@ -19,7 +19,8 @@ export function decode(encoded: string) {
 /* remove ft feat */
 export function cleanFt(str: string) {
   return str.replace('f.', '')
-    .replace(/(f|w)((eat.|t|eat)|(\.|\/))\b/i, ' ');
+    .replace(/(f|w)((eat.|t|eat)|(\.|\/))\b/i, ' ')
+    .replace(' ft ', ' ');
 }
 
 /* remove clean */
@@ -63,6 +64,7 @@ export function cleanupExtra(str: string) {
     .replace('-', ' ')
     .replace('.', '')
     .replace(',', '')
+    .replace('&', ' ')
     .replace('(', ' ')
     .replace(')', ' ')
     .replace('\'', '')

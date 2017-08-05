@@ -10,6 +10,7 @@ describe('Util', function() {
     expect(Util.cleanFt('The Right Song (w/Natalie La Ro')).toBe('The Right Song ( Natalie La Ro');
     expect(Util.cleanFt('Your Love feat Jamie Lewis')).toBe('Your Love  Jamie Lewis');
     expect(Util.cleanFt('Morning After Dark')).toBe('Morning After Dark');
+    expect(Util.cleanFt('Robin Thicke ft T.I. & Pharrell')).toBe('Robin Thicke T.I. & Pharrell');
   });
   it('should clean clean Music Video', function() {
     expect(Util.cleanMusicVideo('Song (official video) ft. Natalie')).toBe('Song () ft. Natalie');

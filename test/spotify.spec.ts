@@ -91,4 +91,10 @@ describe('spotify', function() {
     const res = await searchTrack(artists, name);
     expect(res.spotifyId).toBe('0vDgtmc5vMDyE69oYnAbUm');
   });
+  it('should find Blurred Lines', async function() {
+    const name = 'Blurred Lines';
+    const artists = ['Robin Thicke ft T.I. & Pharrell'];
+    const res = await searchTrack(artists, name);
+    expect(res.spotifyId).toBe('0n4bITAu0Y0nigrz3MFJMb');
+  });
 });

@@ -45,14 +45,13 @@ export function parseSpotify(obj: any): SpotifyParsed {
 }
 
 export function optionalBlacklist(track: string, artists: string) {
-  let bl = '';
   const all = track.toLowerCase() + artists.toLowerCase();
-  for (const b in blacklist) {
-    if (all.includes(b)) {
-      bl += ` NOT ${b}`;
+  return blacklist.map((b) => {
+    if (!all.includes(b)) {
+      return ` NOT ${b}`;
     }
-  }
-  return bl;
+    return '';
+  }).join();
 }
 
 export async function getToken(): Promise<string> {
@@ -91,7 +90,7 @@ export async function searchTrack(artists: string[], name: string): Promise<Spot
   const options: request.Options = {
     uri: `https://api.spotify.com/v1/search`,
     qs: {
-      q: `${cleanTrack} ${cleanArtists}` + optionalBlacklist(cleanTrack, cleanArtists),
+      q: `${cleanTrack} ${cleanArtists} ${optionalBlacklist(cleanTrack, cleanArtists)}`,
       type: 'track',
       limit: 1,
     },

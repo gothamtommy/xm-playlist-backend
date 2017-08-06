@@ -181,7 +181,7 @@ router.get('/updatePlaylist', async (ctx, next) => {
     ctx.redirect(`https://accounts.spotify.com/authorize?client_id=${config.spotifyClientId}&response_type=code&redirect_uri=${config.location}/updatePlaylist&scope=playlist-modify-public&state=xmplaylist`);
     return next();
   }
-  updatePlaylists(code).catch((e) => console.error(e));
+  updatePlaylists(code);
   ctx.body = '"success"';
   return next();
 });
@@ -194,10 +194,9 @@ router.get('/triggerUpdate', async (ctx, next) => {
     .wait('#login-username')
     .type(config.spotifyUsername, 'input#login-username')
     .type(config.spotifyPassword, 'input#login-password')
-    .click('.btn-green')
-    .catch((e) => console.error(e));
+    .click('.btn-green');
 
-  await chromeless.end().catch((e) => console.error(e));
+  await chromeless.end();
   ctx.body = '"success"';
   return next();
 });

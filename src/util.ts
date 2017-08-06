@@ -67,7 +67,6 @@ export function cleanupExtra(str: string) {
     .replace('&', ' ')
     .replace('(', ' ')
     .replace(')', ' ')
-    .replace('\'', '')
     .replace('!', ' ');
   const words = cleanStr.split(' ').filter((n) => n.length > 1);
   return words.join(' ');

@@ -14,7 +14,7 @@ export async function search(query: string): Promise<string|false> {
       part: 'snippet',
       safeSearch: 'none',
       fields: 'items',
-      q: query,
+      q: _.trim(query),
     },
     json: true,
     gzip: true,

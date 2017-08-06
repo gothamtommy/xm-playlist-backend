@@ -37,7 +37,7 @@ export function cleanMusicVideo(str: string) {
 }
 
 export function cleanSpaces(str: string) {
-  return str.replace(/  +/g, ' ');
+  return _.trim(str.replace(/  +/g, ' '));
 }
 
 export function cleanRemix(str: string) {

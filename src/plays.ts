@@ -24,51 +24,39 @@ export async function getRecent(channel: Channel, last?: Date) {
       where,
       order: [['startTime', 'DESC']],
       include: [{ model: Track, include: [{ model: Artist }, { model: Spotify }] }],
-      limit: 15,
-    })
-    .then((n) => n.map((x) => x.toJSON()));
+      limit: 20,
+    });
 }
 
-export async function mostHeard(channel: Channel) {
-  const date = format(subDays(new Date(), 1), 'YYYY-MM-DD HH:mm:ss');
-  const trackAndCount: any = await s.query(`
-    SELECT "trackId", count('play.trackId') AS "playCount"
-    FROM "plays" AS "play"
-    WHERE "play"."channel" = ${channel.number}
-      AND "startTime" > '${date}'
-    GROUP BY "play"."trackId"
-    ORDER BY "playCount" DESC LIMIT 20;
-    `).spread((results, metadata) => {
-      return results;
-    });
-  const trackIds = trackAndCount.map((n) => n.trackId);
-  const tracks = await Track
-    .findAll({
-      where: { id: {$in: trackIds } },
-      include: [{ model: Artist }],
-    })
-    .then((n) => n.map((x) => x.toJSON()));
-  return tracks.map((n: any) => {
-    n.playCount = _.find(trackAndCount, _.matchesProperty('trackId', n.id)).playCount;
-    n.playCount = Number(n.playCount);
-    return n;
-  });
-  // const db = await mongo;
-  // return db.collection('stream')
-  //   .aggregate([
-  //     { $match: {
-  //       startTime: { $gte: date },
-  //       channelId: channel.id,
-  //     } },
-  //     { $group: {
-  //       _id: '$songId',
-  //       count: { $sum: 1 },
-  //       songId: { $first: '$songId' },
-  //       name: { $first: '$name' },
-  //       artistsId: { $first: '$artistsId' },
-  //       artists: { $first: '$artists' },
-  //     } },
-  //     { $sort: { count: -1 } },
-  //   ])
-  //   .toArray();
+export async function popular(channel: Channel, limit = 50) {
+  const thirtyDays = subDays(new Date(), 30);
+  let lastThirty: any = await Play.findAll({
+    where: {
+      channel: channel.number,
+      startTime: { $gt: thirtyDays },
+    },
+    attributes: [
+      sequelize.fn('DISTINCT', sequelize.col('trackId')),
+      'trackId',
+      [sequelize.fn('COUNT', sequelize.col('trackId')), 'count'],
+    ],
+    group: [['trackId']],
+  }).then((t) => t.map((n) => n.toJSON()));
+  lastThirty = lastThirty
+    .filter((n: any) => n.count > 1)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, limit);
+  const ids = lastThirty.map((n) => n.trackId);
+  const keyed: any = _.keyBy(lastThirty, _.identity('trackId'));
+  const tracks = await Track.findAll({
+    where: {
+      id: { $in: ids },
+    },
+    include: [Artist, Spotify],
+  }).then((t) => t.map((n) => {
+    const res: any = n.toJSON();
+    res.count = keyed[res.id].count;
+    return res;
+  }));
+  return tracks.sort((a, b) => b.count - a.count);
 }

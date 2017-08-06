@@ -13,7 +13,7 @@ import channelMetadataResponse from './mock/channelMetadataResponse';
 import channelMetadataResponse1 from './mock/channelMetadataResponse1';
 import { setup } from '../models/dbinit';
 
-const bpm = _.find(channels, _.matchesProperty('id', 'thebeat'));
+const bpm = channels.find(_.matchesProperty('id', 'thebeat'));
 
 beforeAll(async function(done) {
   await setup(true);

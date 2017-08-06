@@ -2,14 +2,25 @@ import * as debug from 'debug';
 import * as request from 'request-promise-native';
 import * as _ from 'lodash';
 import * as Sequelize from 'sequelize';
+import { subDays } from 'date-fns';
 
-import { Track, Spotify, Artist, TrackInstance, TrackAttributes, SpotifyAttributes } from '../models';
+import {
+  Track,
+  Spotify,
+  Artist,
+  TrackInstance,
+  TrackAttributes,
+  SpotifyAttributes,
+  Play,
+} from '../models';
 import config from '../config';
+import { channels } from './channels';
 import { findOrCreateTrack } from './tracks';
 import { encode } from '../src/util';
 import * as Util from './util';
 import { client, getCache } from './redis';
 import { search } from './youtube';
+import { popular } from './plays';
 
 const log = debug('xmplaylist');
 const blacklist = [
@@ -105,7 +116,7 @@ export async function searchTrack(artists: string[], name: string): Promise<Spot
   }
   const youtube = await search(`${cleanTrack} ${cleanArtists}`);
   if (!youtube) {
-    console.log('youtube failed')
+    console.log('youtube failed');
     return Promise.reject('Youtube failed');
   }
   options.qs.q = Util.cleanupExtra(
@@ -199,15 +210,67 @@ export async function addToPlaylist(code: string, playlistId: string, trackIds: 
     json: true,
     gzip: true,
   };
-  let first = true;
   const chunks = _.chunk(trackIds, 100);
   for (const chunk of chunks) {
     options.body.uris = chunk;
-    if (first) {
-      first = false;
-      await request.put(options);
-      continue;
-    }
     await request.post(options);
+  }
+}
+
+export async function removeFromPlaylist(code: string, playlistId: string, trackIds: string[]) {
+  const token = await getUserToken(code);
+  const options: request.Options = {
+    uri: `https://api.spotify.com/v1/users/xmplaylist/playlists/${playlistId}/tracks`,
+    body: {
+      tracks: [],
+    },
+    headers: { Authorization: `Bearer ${token}` },
+    json: true,
+    gzip: true,
+  };
+  const chunks = _.chunk(trackIds, 100);
+  for (const chunk of chunks) {
+    options.body.tracks = chunk.map((n) => {
+      return { uri: n };
+    });
+    await request.delete(options);
+  }
+}
+
+export async function playlistTracks(code: string, playlistId: string) {
+  const token = await getUserToken(code);
+  const options: request.Options = {
+    uri: `https://api.spotify.com/v1/users/xmplaylist/playlists/${playlistId}/tracks`,
+    headers: { Authorization: `Bearer ${token}` },
+    json: true,
+    gzip: true,
+  };
+  let res = await request.get(options);
+  const items: string[] = [];
+  res.items.forEach((n) => items.push(n.track.uri));
+  while (res.next) {
+    options.uri = res.next;
+    res = await request.get(options);
+    res.items.forEach((n) => items.push(n.track.uri));
+  }
+  return items;
+}
+
+export async function updatePlaylists(code: string) {
+  const thirtyDays = subDays(new Date(), 30);
+  for (const chan of channels) {
+    let trackIds = await popular(chan, 1000)
+      .then((t) => t.map((n) => {
+        if (!n.spotify) {
+          return;
+        }
+        return `spotify:track:${n.spotify.spotifyId}`;
+      }));
+    trackIds = _.compact(trackIds);
+    const current = await playlistTracks(code, chan.playlist);
+    const toRemove = _.difference(current, trackIds);
+    await removeFromPlaylist(code, chan.playlist, toRemove);
+    const toAdd = _.pullAll(trackIds, current);
+    await addToPlaylist(code, chan.playlist, toAdd);
   }
 }

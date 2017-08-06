@@ -8,12 +8,13 @@ import * as Router from 'koa-router';
 import * as _ from 'lodash';
 import * as sequelize from 'sequelize';
 import { subDays } from 'date-fns';
+import { Chromeless } from 'chromeless';
 
 import config from '../config';
 import { channels } from './channels';
-import { getRecent, mostHeard } from './plays';
+import { getRecent, popular } from './plays';
 import { Track, Artist, Play, Spotify } from '../models';
-import { spotifyFindAndCache, addToPlaylist } from './spotify';
+import { spotifyFindAndCache, updatePlaylists } from './spotify';
 import { playsByDay } from './tracks';
 
 const log = debug('xmplaylist');
@@ -40,7 +41,7 @@ app.use((ctx, next) => {
 // routes
 router.get('/channel/:id', async (ctx, next) => {
   ctx.assert(ctx.params.id, 400, 'Channel does not exist');
-  const channel = _.find(channels, _.matchesProperty('id', ctx.params.id));
+  const channel = channels.find(_.matchesProperty('id', ctx.params.id));
   ctx.assert(channel, 400, 'Channel does not exist');
   if (ctx.query.last) {
     const last = new Date(parseInt(ctx.query.last, 10));
@@ -53,7 +54,7 @@ router.get('/channel/:id', async (ctx, next) => {
 
 router.get('/newest/:id', async (ctx, next) => {
   ctx.assert(ctx.params.id, 400, 'Channel does not exist');
-  const channel = _.find(channels, _.matchesProperty('id', ctx.params.id));
+  const channel = channels.find(_.matchesProperty('id', ctx.params.id));
   ctx.assert(channel, 400, 'Channel does not exist');
   const thirtyDays = subDays(new Date(), 30);
   const ids: number[] = await Play.findAll({
@@ -79,46 +80,9 @@ router.get('/newest/:id', async (ctx, next) => {
 
 router.get('/popular/:id', async (ctx, next) => {
   ctx.assert(ctx.params.id, 400, 'Channel does not exist');
-  const channel = _.find(channels, _.matchesProperty('id', ctx.params.id));
+  const channel = channels.find(_.matchesProperty('id', ctx.params.id));
   ctx.assert(channel, 400, 'Channel does not exist');
-  const thirtyDays = subDays(new Date(), 30);
-  let lastThirty: any = await Play.findAll({
-    where: {
-      channel: channel.number,
-      startTime: { $gt: thirtyDays },
-    },
-    attributes: [
-      sequelize.fn('DISTINCT', sequelize.col('trackId')),
-      'trackId',
-      [sequelize.fn('COUNT', sequelize.col('trackId')), 'count'],
-    ],
-    group: [['trackId']],
-  }).then((t) => t.map((n) => n.toJSON()));
-  lastThirty = lastThirty
-    .filter((n: any) => n.count > 1)
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 50);
-  const ids = lastThirty.map((n) => n.trackId);
-  const keyed: any = _.keyBy(lastThirty, _.identity('trackId'));
-  const tracks = await Track.findAll({
-    where: {
-      id: { $in: ids },
-    },
-    include: [Artist, Spotify],
-  }).then((t) => t.map((n) => {
-    const res: any = n.toJSON();
-    res.count = keyed[res.id].count;
-    return res;
-  }));
-  ctx.body = tracks.sort((a, b) => b.count - a.count);
-  return next();
-});
-
-router.get('/mostHeard/:id', async (ctx, next) => {
-  ctx.assert(ctx.params.id, 400, 'Channel does not exist');
-  const channel = _.find(channels, _.matchesProperty('id', ctx.params.id));
-  ctx.assert(channel, 400, 'Channel does not exist');
-  ctx.body = await mostHeard(channel);
+  ctx.body = await popular(channel);
   return next();
 });
 
@@ -217,27 +181,24 @@ router.get('/updatePlaylist', async (ctx, next) => {
     ctx.redirect(`https://accounts.spotify.com/authorize?client_id=${config.spotifyClientId}&response_type=code&redirect_uri=${config.location}/updatePlaylist&scope=playlist-modify-public&state=xmplaylist`);
     return next();
   }
-  const thirtyDays = subDays(new Date(), 30);
-  for (const chan of channels) {
-    const trackIds = await Play.findAll({
-      where: {
-        channel: chan.number,
-        startTime: { $gt: thirtyDays },
-      },
-      attributes: [
-        sequelize.fn('DISTINCT', sequelize.col('trackId')),
-        'trackId',
-        'startTime',
-      ],
-    }).then((t) => t.map((n) => n.get('trackId')));
-    const spotifyIds = await Spotify.findAll({
-      where: { trackId: { $in: trackIds } },
-      attributes: ['spotifyId'],
-      order: [['createdAt', 'DESC']],
-    }).then((t) => t.map((n) => `spotify:track:${n.get('spotifyId')}`));
-    const res = await addToPlaylist(code, chan.playlist, spotifyIds);
-  }
-  ctx.body = 'success';
+  updatePlaylists(code).catch((e) => console.error(e));
+  ctx.body = '"success"';
+  return next();
+});
+
+router.get('/triggerUpdate', async (ctx, next) => {
+  const chromeless = new Chromeless();
+  const screenshot = await chromeless
+    .goto(`${config.host}/updatePlaylist`)
+    .click('.btn,.btn-sm')
+    .wait('#login-username')
+    .type(config.spotifyUsername, 'input#login-username')
+    .type(config.spotifyPassword, 'input#login-password')
+    .click('.btn-green')
+    .catch((e) => console.error(e));
+
+  await chromeless.end().catch((e) => console.error(e));
+  ctx.body = '"success"';
   return next();
 });
 

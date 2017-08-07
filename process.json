@@ -15,7 +15,7 @@
     }
   }, {
     "name": "chrome",
-    "script": "google-chrome",
-    "args": "--remote-debugging-port=9222 --disable-gpu --headless"
+    "interpreter": "google-chrome",
+    "interpreter_args": "--remote-debugging-port=9222 --disable-gpu --headless"
   }]
 }

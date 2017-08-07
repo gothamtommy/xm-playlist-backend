@@ -1,5 +1,6 @@
 import * as nock from 'nock';
 import * as _ from 'lodash';
+import { expect } from 'chai';
 
 import {
   checkEndpoint,
@@ -15,32 +16,31 @@ import { setup } from '../models/dbinit';
 
 const bpm = channels.find(_.matchesProperty('id', 'thebeat'));
 
-beforeAll(async function(done) {
-  await setup(true);
-  done();
-});
-
 describe('sirius', function() {
+  beforeEach(function() {
+    this.timeout(10000);
+    return setup(true);
+  });
   it('should parse metadata response', function() {
     const meta = channelMetadataResponse.channelMetadataResponse.metaData;
     const currentEvent = meta.currentEvent;
     const stream = parseChannelMetadataResponse(meta, currentEvent);
-    expect(stream.name).toBe('Closer (R3HAB Mix)');
-    expect(stream.songId).toBe('$O1FhQ');
-    expect(stream.channelNumber).toBe(51);
-    expect(stream.channelName).toBe('BPM');
-    expect(stream.channelId).toBe('thebeat');
-    expect(stream.artists.length).toBe(2);
-    expect(stream.artistsId).toBe('FQv');
+    expect(stream.name).to.eq('Closer (R3HAB Mix)');
+    expect(stream.songId).to.eq('$O1FhQ');
+    expect(stream.channelNumber).to.eq(51);
+    expect(stream.channelName).to.eq('BPM');
+    expect(stream.channelId).to.eq('thebeat');
+    expect(stream.artists.length).to.eq(2);
+    expect(stream.artistsId).to.eq('FQv');
   });
   it('should parse artists', function() {
     const artists = parseArtists('Axwell/\\Ingrosso/Adventure Club vs. DallasK');
-    expect(artists.length).toBe(2);
-    expect(artists[0]).toBe('Axwell/\\Ingrosso');
+    expect(artists.length).to.eq(2);
+    expect(artists[0]).to.eq('Axwell/\\Ingrosso');
   });
   it('should parse song name', function() {
     const name = parseName('Jupiter #bpmDebut');
-    expect(name).toBe('Jupiter');
+    expect(name).to.eq('Jupiter');
   });
   it('should get update from channel', async function() {
     const scope = nock('https://www.siriusxm.com')
@@ -48,7 +48,7 @@ describe('sirius', function() {
       .reply(200, channelMetadataResponse);
     const res = await checkEndpoint(bpm);
     scope.done();
-    expect(res).toBe(true);
+    expect(res).to.eq(true);
   });
   it('should skip song that has already been recorded', async function() {
     const scope = nock('https://www.siriusxm.com')
@@ -58,8 +58,8 @@ describe('sirius', function() {
     const res = await checkEndpoint(bpm);
     const res2 = await checkEndpoint(bpm);
     scope.done();
-    expect(res).toBe(true);
-    expect(res2).toBe(false);
+    expect(res).to.eq(true);
+    expect(res2).to.eq(false);
   });
   it('should skip invalid id', async function() {
     const scope = nock('https://www.siriusxm.com')
@@ -67,6 +67,6 @@ describe('sirius', function() {
       .reply(200, channelMetadataInvalidId);
     const res = await checkEndpoint(bpm);
     scope.done();
-    expect(res).toBe(false);
+    expect(res).to.eq(false);
   });
 });

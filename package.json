@@ -8,8 +8,8 @@
     "build": "rimraf build; tsc -p .",
     "start": "NODE_ENV=dev DEBUG=xmplaylist* nodemon --exec 'ts-node' src/index.ts",
     "scanner": "NODE_ENV=dev DEBUG=xmplaylist* nodemon --exec 'ts-node' src/scanner.ts",
-    "test": "NODE_ENV=test jest --maxWorkers 1",
-    "coverage": "NODE_ENV=test jest --coverage --no-cache",
+    "test": "NODE_ENV=test mocha --require test/tshook.js test/*.spec.ts",
+    "coverage": "NODE_ENV=test nyc npm run test",
     "lint": "tslint \"src/**/*.ts\""
   },
   "dependencies": {
@@ -31,49 +31,46 @@
   },
   "devDependencies": {
     "@types/debug": "^0.0.30",
-    "@types/jest": "^20.0.6",
     "@types/kcors": "^2.2.1",
     "@types/koa": "^2.0.39",
     "@types/koa-logger": "^2.0.2",
     "@types/koa-router": "^7.0.22",
     "@types/lodash": "^4.14.71",
+    "@types/mocha": "^2.2.41",
     "@types/node": "^8.0.19",
-    "@types/progress": "^2.0.0",
     "@types/raven": "^2.1.0",
     "@types/redis": "^2.6.0",
     "@types/request-promise-native": "^1.0.6",
     "@types/sequelize": "^4.0.67",
     "@types/supertest": "^2.0.2",
-    "jest": "^20.0.4",
+    "chai": "^4.1.1",
+    "mocha": "^3.5.0",
     "nock": "^9.0.14",
     "nodemon": "^1.11.0",
+    "nyc": "^11.1.0",
     "rimraf": "^2.6.1",
     "supertest": "^3.0.0",
-    "ts-jest": "^20.0.10",
     "ts-node": "^3.3.0",
     "tslint": "^5.5.0",
     "typescript": "^2.4.2"
   },
-  "jest": {
-    "transform": {
-      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|\\.(spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
+  "nyc": {
+    "sourceMap": true,
+    "instrument": true,
+    "require": [
+      "./test/tshook.js"
     ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/config/",
-      "/test/"
+    "include": [
+      "src/**/*.ts"
     ],
-    "globals": {
-      "ts-jest": {
-        "skipBabel": true
-      }
-    }
+    "extension": [
+      ".ts"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "exclude": []
   },
   "engines": {
     "node": ">= 8"

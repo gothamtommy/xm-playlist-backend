@@ -7,11 +7,15 @@
     "env": {
       "NODE_ENV": "prod"
     }
-  },{
+  }, {
     "name": "xmcron",
     "script": "build/src/scanner.js",
     "env": {
       "NODE_ENV": "prod"
     }
+  }, {
+    "name": "chrome",
+    "script": "google-chrome",
+    "args": "--remote-debugging-port=9222 --disable-gpu --headless"
   }]
 }

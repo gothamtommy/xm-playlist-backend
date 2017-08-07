@@ -15,7 +15,7 @@
     }
   }, {
     "name": "chrome",
-    "script": "a",
+    "script": "build/src/index.js",
     "interpreter": "/usr/bin/google-chrome",
     "interpreter_args": "--remote-debugging-port=9222 --disable-gpu --headless"
   }]

@@ -196,7 +196,9 @@ router.get('/triggerUpdate', async (ctx, next) => {
     .type(config.spotifyPassword, 'input#login-password')
     .click('.btn-green');
 
-  await chromeless.end();
+  if (process.env.NODE_ENV !== 'prod') {
+    await chromeless.end();
+  }
   ctx.body = '"success"';
   return next();
 });

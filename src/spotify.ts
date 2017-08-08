@@ -271,8 +271,8 @@ export async function updatePlaylists(code: string) {
         return [];
       });
     const toRemove = _.difference(current, trackIds);
-    await removeFromPlaylist(code, chan.playlist, toRemove).catch(e => console.error('REMOVE', e));
+    await removeFromPlaylist(code, chan.playlist, toRemove).catch((e) => console.error('REMOVE', e));
     const toAdd = _.pullAll(trackIds, current);
-    await addToPlaylist(code, chan.playlist, toAdd).catch(e => console.error('ADD ERROR', e));
+    await addToPlaylist(code, chan.playlist, toAdd).catch((e) => console.error('ADD ERROR', e));
   }
 }

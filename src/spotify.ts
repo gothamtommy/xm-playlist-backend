@@ -2,7 +2,6 @@ import * as debug from 'debug';
 import * as request from 'request-promise-native';
 import * as _ from 'lodash';
 import * as Sequelize from 'sequelize';
-import { subDays } from 'date-fns';
 
 import {
   Track,
@@ -257,7 +256,6 @@ export async function playlistTracks(code: string, playlistId: string) {
 }
 
 export async function updatePlaylists(code: string) {
-  const thirtyDays = subDays(new Date(), 30);
   for (const chan of channels) {
     let trackIds = await popular(chan, 1000)
       .then((t) => t.map((n) => {
@@ -267,10 +265,14 @@ export async function updatePlaylists(code: string) {
         return `spotify:track:${n.spotify.spotifyId}`;
       }));
     trackIds = _.compact(trackIds);
-    const current = await playlistTracks(code, chan.playlist);
+    const current = await playlistTracks(code, chan.playlist)
+      .catch((e) => {
+        console.error('GET TRACKS?', e);
+        return [];
+      });
     const toRemove = _.difference(current, trackIds);
-    await removeFromPlaylist(code, chan.playlist, toRemove);
+    await removeFromPlaylist(code, chan.playlist, toRemove).catch(e => console.error('REMOVE', e));
     const toAdd = _.pullAll(trackIds, current);
-    await addToPlaylist(code, chan.playlist, toAdd);
+    await addToPlaylist(code, chan.playlist, toAdd).catch(e => console.error('ADD ERROR', e));
   }
 }

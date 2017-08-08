@@ -194,7 +194,8 @@ router.get('/triggerUpdate', async (ctx, next) => {
     .wait('#login-username')
     .type(config.spotifyUsername, 'input#login-username')
     .type(config.spotifyPassword, 'input#login-password')
-    .click('.btn-green');
+    .click('.btn-green')
+    .wait(5000);
 
   if (process.env.NODE_ENV !== 'prod') {
     await chromeless.end();

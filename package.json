@@ -38,7 +38,7 @@
     "@types/lodash": "^4.14.71",
     "@types/mocha": "^2.2.41",
     "@types/node": "^8.0.19",
-    "@types/raven": "^2.1.0",
+    "@types/raven": "^2.1.1",
     "@types/redis": "^2.6.0",
     "@types/request-promise-native": "^1.0.6",
     "@types/sequelize": "^4.0.67",
@@ -51,7 +51,7 @@
     "rimraf": "^2.6.1",
     "supertest": "^3.0.0",
     "ts-node": "^3.3.0",
-    "tslint": "^5.5.0",
+    "tslint": "^5.6.0",
     "typescript": "^2.4.2"
   },
   "nyc": {

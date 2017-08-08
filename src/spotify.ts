@@ -264,7 +264,7 @@ export async function updatePlaylists(code: string) {
         }
         return `spotify:track:${n.spotify.spotifyId}`;
       }));
-    trackIds = _.compact(trackIds);
+    trackIds = _.uniq(_.compact(trackIds));
     const current = await playlistTracks(code, chan.playlist)
       .catch((e) => {
         console.error('GET TRACKS?', e);

@@ -62,11 +62,8 @@ router.get('/newest/:id', async (ctx, next) => {
       channel: channel.number,
       startTime: { $gt: thirtyDays },
     },
-    attributes: [
-      sequelize.fn('DISTINCT', sequelize.col('trackId')),
-      'trackId',
-    ],
-  }).then((t) => t.map((n) => n.get('trackId')));
+    attributes: [sequelize.fn('DISTINCT', sequelize.col('trackId')), 'trackId'],
+  }).then(t => t.map(n => n.get('trackId')));
   ctx.body = await Track.findAll({
     where: {
       id: { $in: ids },
@@ -74,7 +71,7 @@ router.get('/newest/:id', async (ctx, next) => {
     order: [['createdAt', 'desc']],
     limit: 50,
     include: [Artist, Spotify],
-  }).then((t) => t.map((n) => n.toJSON()));
+  }).then(t => t.map(n => n.toJSON()));
   return next();
 });
 
@@ -89,8 +86,9 @@ router.get('/popular/:id', async (ctx, next) => {
 router.get('/track/:trackId', async (ctx, next) => {
   const trackId = ctx.params.trackId;
   ctx.assert(trackId, 400, 'Song ID required');
-  ctx.body = await Track.findById(trackId, { include: [Artist, Spotify] })
-    .then((t) => t.toJSON());
+  ctx.body = await Track.findById(trackId, {
+    include: [Artist, Spotify],
+  }).then(t => t.toJSON());
   const daysago = subDays(new Date(), 30);
   ctx.body.playsByDay = await playsByDay(trackId);
   return next();
@@ -108,24 +106,27 @@ router.get('/artist/:id', async (ctx, next) => {
   const artistId = ctx.params.id;
   const channel = channels.find(_.matchesProperty('id', ctx.query.channel));
   ctx.assert(artistId, 400, 'Artist ID required');
-  let trackIds = await Track.findAll({
-    attributes: ['id'],
-    include: [{
-      model: Artist,
-      where: { id: artistId },
-      attributes: [],
-    }],
-  }).then((t) => t.map((n) => n.get('id')))
+  let trackIds = await Track
+    .findAll({
+      attributes: ['id'],
+      include: [{
+        model: Artist,
+        where: { id: artistId },
+        attributes: [],
+      }],
+    })
+    .then((t) => t.map((n) => n.get('id')))
     .catch(() => []);
   if (channel) {
-    trackIds = await Play.findAll({
-      where: {
-        trackId: { $in: trackIds },
-        channel: channel.number,
-      },
-    })
-    .then((t) => t.map((n) => n.get('trackId')))
-    .catch(() => []);
+    trackIds = await Play
+      .findAll({
+        where: {
+          trackId: { $in: trackIds },
+          channel: channel.number,
+        },
+      })
+      .then((t) => t.map((n) => n.get('trackId')))
+      .catch(() => []);
   }
   ctx.body = {};
   ctx.body.artist = await Artist.findById(artistId);
@@ -161,8 +162,9 @@ router.get('/spotify/:trackId', async (ctx, next) => {
     ctx.body = spotify.toJSON();
     return next();
   }
-  const track = await Track.findById(trackId, { include: [Artist] })
-    .then((t) => t.toJSON());
+  const track = await Track.findById(trackId, { include: [Artist] }).then((t) =>
+    t.toJSON(),
+  );
   let doc;
   try {
     doc = await spotifyFindAndCache(track);
@@ -178,7 +180,9 @@ router.get('/updatePlaylist', async (ctx, next) => {
   const code = ctx.query.code;
   if (!code) {
     // tslint:disable-next-line:max-line-length
-    ctx.redirect(`https://accounts.spotify.com/authorize?client_id=${config.spotifyClientId}&response_type=code&redirect_uri=${config.location}/updatePlaylist&scope=playlist-modify-public&state=xmplaylist`);
+    ctx.redirect(
+      `https://accounts.spotify.com/authorize?client_id=${config.spotifyClientId}&response_type=code&redirect_uri=${config.location}/updatePlaylist&scope=playlist-modify-public&state=xmplaylist`,
+    );
     return next();
   }
   updatePlaylists(code);
@@ -204,9 +208,7 @@ router.get('/triggerUpdate', async (ctx, next) => {
   return next();
 });
 
-app
-  .use(router.routes())
-  .use(router.allowedMethods());
+app.use(router.routes()).use(router.allowedMethods());
 
 if (!module.parent) {
   app.listen(config.port);

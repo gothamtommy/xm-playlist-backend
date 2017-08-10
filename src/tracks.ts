@@ -2,13 +2,21 @@ import * as sequelize from 'sequelize';
 import * as debug from 'debug';
 import { subDays, addDays, startOfDay, setHours } from 'date-fns';
 
-import { Track, Artist, ArtistTrack, ArtistTrackInstance, Play } from '../models';
+import {
+  Track,
+  Artist,
+  ArtistTrack,
+  ArtistTrackInstance,
+  Play,
+} from '../models';
 import { encode } from '../src/util';
 
 const log = debug('xmplaylist');
 
 export function findOrCreateArtists(artists: string[]): Promise<any[]> {
-  const promises: Array<Promise<ArtistTrackInstance>> = artists.map(async (name): Promise<any> => {
+  const promises: Array<
+    Promise<ArtistTrackInstance>
+  > = artists.map(async (name): Promise<any> => {
     const artist = await Artist.findOne({ where: { name } });
     if (artist) {
       return artist;
@@ -20,12 +28,11 @@ export function findOrCreateArtists(artists: string[]): Promise<any[]> {
 
 export async function findOrCreateTrack(data) {
   const artists = await findOrCreateArtists(data.artists);
-  const [track, created] = await Track
-    .findOrCreate({
-      where: {
-        songId: encode(data.songId),
-      },
-    });
+  const [track, created] = await Track.findOrCreate({
+    where: {
+      songId: encode(data.songId),
+    },
+  });
   if (!created) {
     track.increment('plays');
   } else {

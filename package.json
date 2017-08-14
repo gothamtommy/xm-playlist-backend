@@ -22,12 +22,12 @@
     "koa-router": "^7.2.1",
     "koa2-raven": "^4.0.12",
     "lodash": "^4.17.4",
-    "pg": "7.1.0",
+    "pg": "7.1.2",
     "raven": "^2.1.1",
     "redis": "^2.8.0",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.4",
-    "sequelize": "4.4.2"
+    "sequelize": "4.4.10"
   },
   "devDependencies": {
     "@types/debug": "^0.0.30",
@@ -41,7 +41,7 @@
     "@types/raven": "^2.1.2",
     "@types/redis": "^2.6.0",
     "@types/request-promise-native": "^1.0.6",
-    "@types/sequelize": "^4.0.67",
+    "@types/sequelize": "^4.0.68",
     "@types/supertest": "^2.0.2",
     "chai": "^4.1.1",
     "mocha": "^3.5.0",

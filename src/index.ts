@@ -191,7 +191,7 @@ router.get('/updatePlaylist', async (ctx, next) => {
 });
 
 router.get('/triggerUpdate', async (ctx, next) => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
   const page = await browser.newPage();
   await page.goto(`${config.host}/updatePlaylist`, { waitUntil: 'networkidle' });
   await page.click('.btn,.btn-sm');

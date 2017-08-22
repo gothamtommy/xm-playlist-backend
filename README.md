@@ -1,5 +1,6 @@
 # xm-playlist-backend
-backend for https://xmplaylist.com Scans sirius endpoints and does a best effort to match songs on spotify. Adds those songs to playlists.
+Backend for https://xmplaylist.com 
+Scans siriusxm and does a best effort to match songs on spotify. Adds those songs to playlists.
 
 [![build status](https://img.shields.io/travis/scttcper/xm-playlist-backend.svg)](https://travis-ci.org/scttcper/xm-playlist-backend)
 [![coverage status](https://codecov.io/gh/scttcper/xm-playlist-backend/branch/master/graph/badge.svg)](https://codecov.io/gh/scttcper/xm-playlist-backend)

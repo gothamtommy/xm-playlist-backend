@@ -38,4 +38,9 @@ module.exports = {
 ```
 
 ### Run
-```npm start```
+```
+# server
+npm start
+# sirius xm scanner
+npm run scanner
+```

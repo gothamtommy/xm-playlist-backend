@@ -10,7 +10,8 @@
     "scanner": "NODE_ENV=dev DEBUG=xmplaylist* nodemon --exec 'ts-node' src/scanner.ts",
     "test": "NODE_ENV=test mocha --require test/tshook.js test/*.spec.ts",
     "coverage": "NODE_ENV=test nyc npm run test",
-    "lint": "tslint \"src/**/*.ts\""
+    "lint": "tslint \"src/**/*.ts\"",
+    "setupdb": "NODE_ENV=dev ts-node models/dbinit.ts"
   },
   "dependencies": {
     "date-fns": "^2.0.0-alpha.1",

@@ -38,9 +38,11 @@ module.exports = {
 ```
 
 ### Run
+server
 ```
-# server
 npm start
-# sirius xm scanner
+```
+sirius xm scanner
+```
 npm run scanner
 ```

@@ -38,4 +38,4 @@ module.exports = {
 ```
 
 ### Run
-```npm run```
+```npm start```

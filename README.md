@@ -7,8 +7,11 @@ backend for https://xmplaylist.com Scans sirius endpoints and does a best effort
 ### Requirements
 - node > v8
 - postgres
-- setup config.env.ts
+- `npm install`
+- setup config/config.env.ts
+- run `npm run setupdb` to setup tables
 
+##### example config
 ```typescript
 module.exports = {
   username: '',
@@ -33,3 +36,6 @@ module.exports = {
   googleCredentials: 'credentials',
 };
 ```
+
+### Run
+```npm run```

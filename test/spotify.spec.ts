@@ -46,12 +46,6 @@ describe('spotify', function() {
     const res = await searchTrack(artists, name);
     expect(res.spotifyId).to.eq('43mNwDn0zOH2HKl5B4aqcx');
   });
-  it('should find Rush Over Me FT', async function() {
-    const name = 'Rush Over Me (ft. HALIENE)';
-    const artists = ['Illenium', 'SevenLions', 'SaidTheSky'];
-    const res = await searchTrack(artists, name);
-    expect(res.spotifyId).to.eq('2z50GlkP7GinGZauNHwD7j');
-  });
   it('should find Another Life', async function() {
     const name = 'Another Life (f.Ester Dean)';
     const artists = ['David Guetta', 'Afrojack'];

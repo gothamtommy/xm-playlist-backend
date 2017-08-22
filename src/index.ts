@@ -8,7 +8,7 @@ import * as Router from 'koa-router';
 import * as _ from 'lodash';
 import * as sequelize from 'sequelize';
 import { subDays } from 'date-fns';
-import { Chromeless } from 'chromeless';
+import * as puppeteer from 'puppeteer';
 
 import config from '../config';
 import { channels } from './channels';
@@ -63,7 +63,7 @@ router.get('/newest/:id', async (ctx, next) => {
       startTime: { $gt: thirtyDays },
     },
     attributes: [sequelize.fn('DISTINCT', sequelize.col('trackId')), 'trackId'],
-  }).then(t => t.map(n => n.get('trackId')));
+  }).then((t) => t.map((n) => n.get('trackId')));
   ctx.body = await Track.findAll({
     where: {
       id: { $in: ids },
@@ -71,7 +71,7 @@ router.get('/newest/:id', async (ctx, next) => {
     order: [['createdAt', 'desc']],
     limit: 50,
     include: [Artist, Spotify],
-  }).then(t => t.map(n => n.toJSON()));
+  }).then((t) => t.map((n) => n.toJSON()));
   return next();
 });
 
@@ -88,7 +88,7 @@ router.get('/track/:trackId', async (ctx, next) => {
   ctx.assert(trackId, 400, 'Song ID required');
   ctx.body = await Track.findById(trackId, {
     include: [Artist, Spotify],
-  }).then(t => t.toJSON());
+  }).then((t) => t.toJSON());
   const daysago = subDays(new Date(), 30);
   ctx.body.playsByDay = await playsByDay(trackId);
   return next();
@@ -191,19 +191,17 @@ router.get('/updatePlaylist', async (ctx, next) => {
 });
 
 router.get('/triggerUpdate', async (ctx, next) => {
-  const chromeless = new Chromeless();
-  const screenshot = await chromeless
-    .goto(`${config.host}/updatePlaylist`)
-    .click('.btn,.btn-sm')
-    .wait('#login-username')
-    .type(config.spotifyUsername, 'input#login-username')
-    .type(config.spotifyPassword, 'input#login-password')
-    .click('.btn-green')
-    .wait(5000);
-
-  if (process.env.NODE_ENV !== 'prod') {
-    await chromeless.end();
-  }
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto(`${config.host}/updatePlaylist`, { waitUntil: 'networkidle' });
+  await page.click('.btn,.btn-sm');
+  await page.waitForSelector('#login-username');
+  await page.click('input#login-username');
+  await page.type(config.spotifyUsername);
+  await page.click('input#login-password');
+  await page.type(config.spotifyPassword);
+  await page.click('.btn-green');
+  await page.waitForNavigation();
   ctx.body = '"success"';
   return next();
 });

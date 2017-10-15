@@ -6,14 +6,14 @@ import * as koaRaven from 'koa2-raven';
 import * as Raven from 'raven';
 import * as Router from 'koa-router';
 import * as _ from 'lodash';
-import * as sequelize from 'sequelize';
+import { Op, col, fn } from 'sequelize';
 import { subDays } from 'date-fns';
 import * as puppeteer from 'puppeteer';
 
 import config from '../config';
 import { channels } from './channels';
 import { getRecent, popular } from './plays';
-import { Track, Artist, Play, Spotify } from '../models';
+import { Artist, Play, sequelize, Spotify, Track } from '../models';
 import { spotifyFindAndCache, updatePlaylists } from './spotify';
 import { playsByDay } from './tracks';
 
@@ -60,13 +60,13 @@ router.get('/newest/:id', async (ctx, next) => {
   const ids: number[] = await Play.findAll({
     where: {
       channel: channel.number,
-      startTime: { $gt: thirtyDays },
+      startTime: { [Op.gt]: thirtyDays },
     },
-    attributes: [sequelize.fn('DISTINCT', sequelize.col('trackId')), 'trackId'],
+    attributes: [fn('DISTINCT', col('trackId')), 'trackId'],
   }).then((t) => t.map((n) => n.get('trackId')));
   ctx.body = await Track.findAll({
     where: {
-      id: { $in: ids },
+      id: { [Op.in]: ids },
     },
     order: [['createdAt', 'desc']],
     limit: 50,
@@ -121,7 +121,7 @@ router.get('/artist/:id', async (ctx, next) => {
     trackIds = await Play
       .findAll({
         where: {
-          trackId: { $in: trackIds },
+          trackId: { [Op.in]: trackIds },
           channel: channel.number,
         },
       })
@@ -131,7 +131,7 @@ router.get('/artist/:id', async (ctx, next) => {
   ctx.body = {};
   ctx.body.artist = await Artist.findById(artistId);
   ctx.body.tracks = await Track.findAll({
-    where: { id: { $in: trackIds } },
+    where: { id: { [Op.in]: trackIds } },
     include: [Artist, Spotify],
   }).catch(() => []);
   return next();

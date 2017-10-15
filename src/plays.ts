@@ -1,4 +1,4 @@
-import * as sequelize from 'sequelize';
+import { Op, col, fn } from 'sequelize';
 import * as _ from 'lodash';
 import { subDays, format } from 'date-fns';
 
@@ -24,7 +24,7 @@ export async function getLast(channel: Channel): Promise<any> {
 export async function getRecent(channel: Channel, last?: Date) {
   const where: any = { channel: channel.number };
   if (last) {
-    where.startTime = { $lt: last };
+    where.startTime = { [Op.lt]: last };
   }
   return await Play.findAll({
     where,
@@ -41,12 +41,12 @@ export async function popular(channel: Channel, limit = 50) {
   let lastThirty: any = await Play.findAll({
     where: {
       channel: channel.number,
-      startTime: { $gt: thirtyDays },
+      startTime: { [Op.gt]: thirtyDays },
     },
     attributes: [
-      sequelize.fn('DISTINCT', sequelize.col('trackId')),
+      fn('DISTINCT', col('trackId')),
       'trackId',
-      [sequelize.fn('COUNT', sequelize.col('trackId')), 'count'],
+      [fn('COUNT', col('trackId')), 'count'],
     ],
     group: [['trackId']],
   }).then((t) => t.map((n) => n.toJSON()));
@@ -58,7 +58,7 @@ export async function popular(channel: Channel, limit = 50) {
   const keyed: any = _.keyBy(lastThirty, _.identity('trackId'));
   const tracks = await Track.findAll({
     where: {
-      id: { $in: ids },
+      id: { [Op.in]: ids },
     },
     include: [Artist, Spotify],
   }).then((t) =>

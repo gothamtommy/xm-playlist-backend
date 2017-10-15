@@ -1,4 +1,4 @@
-import * as sequelize from 'sequelize';
+import { Op, col, fn } from 'sequelize';
 import * as debug from 'debug';
 import { subDays, addDays, startOfDay, setHours } from 'date-fns';
 
@@ -50,13 +50,13 @@ export async function findOrCreateTrack(data) {
 export async function playsByDay(trackId: number) {
   let daysago = subDays(new Date(), 30);
   const plays: any = await Play.findAll({
-    where: { trackId, startTime: { $gt: daysago } },
+    where: { trackId, startTime: { [Op.gt]: daysago } },
     attributes: [
-      [sequelize.fn('date_trunc', 'day', sequelize.col('startTime')), 'day'],
-      [sequelize.fn('COUNT', 'trackId'), 'count'],
+      [fn('date_trunc', 'day', col('startTime')), 'day'],
+      [fn('COUNT', 'trackId'), 'count'],
     ],
     group: ['day'],
-    order: [sequelize.col('day')],
+    order: [col('day')],
   }).then((t) => t.map((n) => n.toJSON()));
   let hasZero = false;
   for (let i = 0; i <= 30; i++) {

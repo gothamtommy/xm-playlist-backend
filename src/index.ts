@@ -179,7 +179,6 @@ router.get('/spotify/:trackId', async (ctx, next) => {
 router.get('/updatePlaylist', async (ctx, next) => {
   const code = ctx.query.code;
   if (!code) {
-    // tslint:disable-next-line:max-line-length
     ctx.redirect(
       `https://accounts.spotify.com/authorize?client_id=${config.spotifyClientId}&response_type=code&redirect_uri=${config.location}/updatePlaylist&scope=playlist-modify-public&state=xmplaylist`,
     );
@@ -196,10 +195,8 @@ router.get('/triggerUpdate', async (ctx, next) => {
   await page.goto(`${config.host}/updatePlaylist`, { waitUntil: 'networkidle' });
   await page.click('.btn,.btn-sm');
   await page.waitForSelector('#login-username');
-  await page.click('input#login-username');
-  await page.type(config.spotifyUsername);
-  await page.click('input#login-password');
-  await page.type(config.spotifyPassword);
+  await page.type('input#login-username', config.spotifyUsername);
+  await page.type('input#login-password', config.spotifyPassword);
   await page.click('.btn-green');
   await page.waitForNavigation();
   ctx.body = '"success"';

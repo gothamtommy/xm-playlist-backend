@@ -14,7 +14,7 @@ import {
 import { Channel } from './channels';
 
 export async function getLast(channel: Channel): Promise<any> {
-  return await Play.findOne({
+  return Play.findOne({
     where: { channel: channel.number },
     order: [['startTime', 'DESC']],
     include: [{ model: Track }],
@@ -26,14 +26,14 @@ export async function getRecent(channel: Channel, last?: Date) {
   if (last) {
     where.startTime = { [Op.lt]: last };
   }
-  return await Play.findAll({
+  return Play.findAll({
     where,
     order: [['startTime', 'DESC']],
     include: [
       { model: Track, include: [{ model: Artist }, { model: Spotify }] },
     ],
     limit: 20,
-  });
+  }).then((t) => t.map((n) => n.toJSON()));
 }
 
 export async function popular(channel: Channel, limit = 50) {

@@ -5,7 +5,7 @@ import config from '../config';
 
 const uri = 'https://www.googleapis.com/youtube/v3/search';
 
-export async function search(query: string): Promise<string|false> {
+export async function search(query: string): Promise<string | false> {
   const options: request.Options = {
     uri,
     qs: {

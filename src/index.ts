@@ -194,7 +194,6 @@ router.get('/triggerUpdate', async (ctx, next) => {
   const page = await browser.newPage();
   await page.goto(`${config.host}/updatePlaylist`, { waitUntil: 'networkidle2' });
   await page.click('.btn,.btn-sm');
-  await page.waitForSelector('#login-username');
   await page.type('input#login-username', config.spotifyUsername);
   await page.type('input#login-password', config.spotifyPassword);
   await page.click('.btn-green');

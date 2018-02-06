@@ -190,18 +190,27 @@ router.get('/updatePlaylist', async (ctx, next) => {
 });
 
 router.get('/triggerUpdate', async (ctx, next) => {
-  const browser = await puppeteer.launch({
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  });
-  const page = await browser.newPage();
-  await page.goto(`${config.host}/updatePlaylist`, {
-    waitUntil: 'networkidle2',
-  });
-  await page.click('.btn,.btn-sm');
-  await page.type('input#login-username', config.spotifyUsername);
-  await page.type('input#login-password', config.spotifyPassword);
-  await page.click('.btn-green');
-  await page.waitForNavigation();
+  let browser;
+  try {
+    browser = await puppeteer.launch({
+     args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
+    const page = await browser.newPage();
+    await page.goto(`${config.host}/updatePlaylist`, {
+      waitUntil: 'networkidle2',
+    });
+    await page.click('.btn,.btn-sm');
+    await page.type('input#login-username', config.spotifyUsername);
+    await page.type('input#login-password', config.spotifyPassword);
+    await page.click('.btn-green');
+    await page.waitForNavigation();
+  } catch (e) {
+    ctx.body = '"fail"';
+  } finally {
+    if (browser) {
+      browser.close();
+    }
+  }
   ctx.body = '"success"';
   return next();
 });

@@ -1,8 +1,8 @@
 {
   "apps": [
     {
-      "name": "xm",
-      "script": "build/src/index.js",
+      "name": "xmcron",
+      "script": "build/src/scanner.js",
       "env": {
         "NODE_ENV": "prod"
       }

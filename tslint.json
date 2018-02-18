@@ -5,6 +5,14 @@
     "no-var-requires": false,
     "object-literal-sort-keys": false,
     "interface-name": false,
-    "ordered-imports": false
+    "no-console": false,
+    "no-unused-variable": true,
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "lowercase-last",
+        "named-imports-order": "lowercase-first"
+      }
+    ]
   }
 }

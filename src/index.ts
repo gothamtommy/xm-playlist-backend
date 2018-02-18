@@ -1,20 +1,19 @@
-import * as debug from 'debug';
-import * as Koa from 'koa';
-import * as kcors from 'kcors';
-import * as logger from 'koa-logger';
-import * as koaRaven from 'koa2-raven';
-import * as Raven from 'raven';
-import * as Router from 'koa-router';
-import * as _ from 'lodash';
-import { Op, col, fn } from 'sequelize';
 import { subDays } from 'date-fns';
-import * as puppeteer from 'puppeteer';
+import * as debug from 'debug';
+import * as kcors from 'kcors';
+import * as Koa from 'koa';
+import * as logger from 'koa-logger';
+import * as Router from 'koa-router';
+import * as koaRaven from 'koa2-raven';
+import * as _ from 'lodash';
+import * as Raven from 'raven';
+import { col, fn, Op } from 'sequelize';
 
 import config from '../config';
+import { Artist, Play, Spotify, Track } from '../models';
 import { channels } from './channels';
 import { getRecent, popular } from './plays';
-import { Artist, Play, sequelize, Spotify, Track } from '../models';
-import { spotifyFindAndCache, updatePlaylists } from './spotify';
+import { spotifyFindAndCache } from './spotify';
 import { playsByDay } from './tracks';
 
 const log = debug('xmplaylist');
@@ -89,7 +88,6 @@ router.get('/track/:trackId', async (ctx, next) => {
   ctx.body = await Track.findById(trackId, {
     include: [Artist, Spotify],
   }).then((t) => t.toJSON());
-  const daysago = subDays(new Date(), 30);
   ctx.body.playsByDay = await playsByDay(trackId);
   return next();
 });
@@ -97,7 +95,6 @@ router.get('/track/:trackId', async (ctx, next) => {
 router.get('/trackActivity/:id', async (ctx, next) => {
   const trackId = ctx.params.id;
   ctx.assert(trackId, 400, 'Song ID required');
-  const daysago = subDays(new Date(), 30);
   ctx.body = await playsByDay(trackId);
   return next();
 });
@@ -173,45 +170,6 @@ router.get('/spotify/:trackId', async (ctx, next) => {
   }
   ctx.assert(doc, 404, 'Not Found');
   ctx.body = doc;
-  return next();
-});
-
-router.get('/updatePlaylist', async (ctx, next) => {
-  const code = ctx.query.code;
-  if (!code) {
-    ctx.redirect(
-      `https://accounts.spotify.com/authorize?client_id=${config.spotifyClientId}&response_type=code&redirect_uri=${config.location}/updatePlaylist&scope=playlist-modify-public&state=xmplaylist`,
-    );
-    return next();
-  }
-  updatePlaylists(code);
-  ctx.body = '"success"';
-  return next();
-});
-
-router.get('/triggerUpdate', async (ctx, next) => {
-  let browser;
-  try {
-    browser = await puppeteer.launch({
-     args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
-    const page = await browser.newPage();
-    await page.goto(`${config.host}/updatePlaylist`, {
-      waitUntil: 'networkidle2',
-    });
-    await page.click('.btn,.btn-sm');
-    await page.type('input#login-username', config.spotifyUsername);
-    await page.type('input#login-password', config.spotifyPassword);
-    await page.click('.btn-green');
-    await page.waitForNavigation();
-  } catch (e) {
-    ctx.body = '"fail"';
-  } finally {
-    if (browser) {
-      browser.close();
-    }
-  }
-  ctx.body = '"success"';
   return next();
 });
 

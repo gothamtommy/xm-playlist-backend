@@ -1,22 +1,20 @@
+import { differenceInDays, format as dateFmt } from 'date-fns';
 import * as debug from 'debug';
 import * as request from 'request-promise-native';
-import * as _ from 'lodash';
-import { format as dateFmt, differenceInDays } from 'date-fns';
 
-import { findOrCreateArtists } from './tracks';
-import { getLast } from './plays';
 import {
-  Track,
+  Artist,
   ArtistTrack,
   Play,
-  ArtistTrackInstance,
-  Artist,
-  TrackAttributes,
   Spotify,
+  Track,
+  TrackAttributes,
 } from '../models';
-import { channels, Channel } from './channels';
+import { Channel } from './channels';
+import { getLast } from './plays';
+import { matchSpotify, spotifyFindAndCache } from './spotify';
+import { findOrCreateArtists } from './tracks';
 import { encode } from './util';
-import { spotifyFindAndCache, searchTrack, matchSpotify } from './spotify';
 
 // https://www.siriusxm.com/metadata/pdt/en-us/json/channels/thebeat/timestamp/02-25-08:10:00
 const baseurl = 'https://www.siriusxm.com';

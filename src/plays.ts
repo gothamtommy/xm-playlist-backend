@@ -1,15 +1,13 @@
-import { Op, col, fn } from 'sequelize';
+import { subDays } from 'date-fns';
 import * as _ from 'lodash';
-import { subDays, format } from 'date-fns';
+import { col, fn, Op } from 'sequelize';
 
 import {
+  Artist,
   Play,
   PlayAttributes,
-  PlayInstance,
-  Track,
-  Artist,
-  sequelize as s,
   Spotify,
+  Track,
 } from '../models';
 import { Channel } from './channels';
 

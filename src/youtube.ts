@@ -1,5 +1,5 @@
-import * as request from 'request-promise-native';
 import * as _ from 'lodash';
+import * as request from 'request-promise-native';
 
 import config from '../config';
 

@@ -1,27 +1,14 @@
-import * as debug from 'debug';
-import * as request from 'request-promise-native';
 import * as _ from 'lodash';
-import * as Sequelize from 'sequelize';
+import * as request from 'request-promise-native';
 
-import {
-  Track,
-  Spotify,
-  Artist,
-  TrackInstance,
-  TrackAttributes,
-  SpotifyAttributes,
-  Play,
-} from '../models';
 import config from '../config';
+import { Spotify, TrackAttributes } from '../models';
 import { channels } from './channels';
-import { findOrCreateTrack } from './tracks';
-import { encode } from '../src/util';
-import * as Util from './util';
-import { client, getCache } from './redis';
-import { search } from './youtube';
 import { popular } from './plays';
+import { client, getCache } from './redis';
+import * as Util from './util';
+import { search } from './youtube';
 
-const log = debug('xmplaylist');
 const blacklist = [
   'karaoke',
   'tribute',
@@ -133,7 +120,7 @@ export async function searchTrack(artists: string[], name: string): Promise<Spot
   return Promise.reject('Everything Failed');
 }
 
-export async function matchSpotify(track: TrackAttributes, update = false) {
+export async function matchSpotify(track: TrackAttributes, update = false): Promise<any> {
   let s;
   try {
     s = await searchTrack(track.artists.map((n) => n.name), track.name);
@@ -163,7 +150,7 @@ export async function matchSpotify(track: TrackAttributes, update = false) {
   });
 }
 
-export async function spotifyFindAndCache(track: TrackAttributes) {
+export async function spotifyFindAndCache(track: TrackAttributes): Promise<any> {
   const doc = await Spotify.findOne({ where: { trackId: track.id } });
   if (doc) {
     return doc;
@@ -181,7 +168,7 @@ export async function getUserToken(code: string): Promise<string> {
     uri: 'https://accounts.spotify.com/api/token',
     headers: { Authorization: `Basic ${auth}` },
     form: {
-      redirect_uri: `${config.location}/updatePlaylist`,
+      redirect_uri: `https://example.com/`,
       grant_type: 'authorization_code',
       code,
       state: 'xmplaylist',
@@ -192,10 +179,6 @@ export async function getUserToken(code: string): Promise<string> {
   const res = await request.post(options);
   client.setex('spotifyusertoken:cache', res.expires_in - 100, res.access_token);
   return res.access_token;
-}
-
-function sleep(ms = 0) {
-  return new Promise((r) => setTimeout(r, ms));
 }
 
 export async function addToPlaylist(code: string, playlistId: string, trackIds: string[]) {

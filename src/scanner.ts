@@ -1,11 +1,11 @@
 import * as debug from 'debug';
-import * as Raven from 'raven';
 import * as delay from 'delay';
 import * as pForever from 'p-forever';
+import * as Raven from 'raven';
 
-import { checkEndpoint } from './sirius';
-import { channels } from './channels';
 import config from '../config';
+import { channels } from './channels';
+import { checkEndpoint } from './sirius';
 
 const log = debug('xmplaylist');
 

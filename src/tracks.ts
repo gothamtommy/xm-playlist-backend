@@ -1,17 +1,14 @@
-import { Op, col, fn } from 'sequelize';
-import * as debug from 'debug';
-import { subDays, addDays, startOfDay, setHours } from 'date-fns';
+import { addDays, subDays } from 'date-fns';
+import { col, fn, Op } from 'sequelize';
 
 import {
-  Track,
   Artist,
   ArtistTrack,
   ArtistTrackInstance,
   Play,
+  Track,
 } from '../models';
 import { encode } from '../src/util';
-
-const log = debug('xmplaylist');
 
 export function findOrCreateArtists(artists: string[]): Promise<any[]> {
   const promises: Array<

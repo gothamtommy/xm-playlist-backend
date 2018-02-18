@@ -1,6 +1,7 @@
-import { Play, Track, ArtistTrack } from '../models';
 import { subDays } from 'date-fns';
 import { Op } from 'sequelize';
+
+import { ArtistTrack, Play, Track } from '../models';
 
 async function loop() {
   const old = subDays(new Date(), 120);

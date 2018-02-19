@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
-import { searchTrack } from '../src/spotify';
 import { setup } from '../models/dbinit';
+import { searchTrack } from '../src/spotify';
 
 describe('spotify', function() {
   it('should find Say My Name', async function() {

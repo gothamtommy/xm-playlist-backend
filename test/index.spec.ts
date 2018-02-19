@@ -1,10 +1,10 @@
+import { expect } from 'chai';
 import * as nock from 'nock';
 import * as supertest from 'supertest';
-import { expect } from 'chai';
 import channelMetadataResponse from './mock/channelMetadataResponse';
 
-import app from '../src/index';
 import { setup } from '../models/dbinit';
+import { server } from '../src/index';
 import { insertPlay } from '../src/sirius';
 
 const play = {
@@ -33,7 +33,7 @@ describe('index', function() {
   });
   it('should parse metadata response', async function() {
     const t = await insertPlay(play, channel);
-    const res = await supertest(app.listen())
+    const res = await supertest(server.listener)
       .get('/channel/90salternative')
       .expect(200);
     expect(res.body.length).to.eq(1);

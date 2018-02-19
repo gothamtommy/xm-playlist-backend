@@ -5,7 +5,6 @@ import { col, fn, Op } from 'sequelize';
 import {
   Artist,
   Play,
-  PlayAttributes,
   Spotify,
   Track,
 } from '../models';

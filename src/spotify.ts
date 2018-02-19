@@ -95,14 +95,14 @@ export async function searchTrack(artists: string[], name: string): Promise<Spot
     json: true,
     gzip: true,
   };
-  console.log('ORIGINAL:', options.qs.q);
+  // console.log('ORIGINAL:', options.qs.q);
   const res = await request.get(options);
   if (res.tracks.items.length > 0) {
     return parseSpotify(_.first(res.tracks.items));
   }
   const youtube = await search(`${cleanTrack} ${cleanArtists}`);
   if (!youtube) {
-    console.log('youtube failed');
+    // console.log('youtube failed');
     return Promise.reject('Youtube failed');
   }
   options.qs.q = Util.cleanupExtra(
@@ -112,7 +112,7 @@ export async function searchTrack(artists: string[], name: string): Promise<Spot
       ),
     ),
   ) + optionalBlacklist(youtube, youtube);
-  console.log('GOOGLE:', options.qs.q);
+  // console.log('GOOGLE:', options.qs.q);
   const res2 = await request.get(options);
   if (res2.tracks.items.length > 0) {
     return parseSpotify(_.first(res2.tracks.items));

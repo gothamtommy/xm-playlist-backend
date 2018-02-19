@@ -1,18 +1,18 @@
-import * as nock from 'nock';
-import * as _ from 'lodash';
 import { expect } from 'chai';
+import * as _ from 'lodash';
+import * as nock from 'nock';
 
+import { setup } from '../models/dbinit';
+import { channels } from '../src/channels';
 import {
   checkEndpoint,
-  parseName,
   parseArtists,
   parseChannelMetadataResponse,
+  parseName,
 } from '../src/sirius';
-import { channels } from '../src/channels';
 import channelMetadataInvalidId from './mock/channelMetadataInvalidId';
 import channelMetadataResponse from './mock/channelMetadataResponse';
 import channelMetadataResponse1 from './mock/channelMetadataResponse1';
-import { setup } from '../models/dbinit';
 
 const bpm = channels.find(_.matchesProperty('id', 'thebeat'));
 

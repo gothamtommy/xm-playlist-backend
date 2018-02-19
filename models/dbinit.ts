@@ -1,8 +1,6 @@
-import { Track, Artist, ArtistTrack, Play, Spotify } from './index';
+import * as delay from 'delay';
 
-function sleep(time: number) {
-  return new Promise((resolve) => setTimeout(resolve, time));
-}
+import { Artist, ArtistTrack, Play, Spotify, Track } from './index';
 
 export function setup(force = false): any {
   const opt = { force };
@@ -11,7 +9,7 @@ export function setup(force = false): any {
     .then(() => ArtistTrack.sync(opt))
     .then(() => Play.sync(opt))
     .then(() => Spotify.sync(opt))
-    .then(() => sleep(2000));
+    .then(() => delay(2000));
 }
 
 if (!module.parent) {

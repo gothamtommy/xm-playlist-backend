@@ -3,7 +3,6 @@
     "moduleResolution": "node",
     "target": "es5",
     "sourceMap": true,
-    "declaration": true,
     "lib": ["dom", "es2017"],
     "outDir": "build",
     "typeRoots": [

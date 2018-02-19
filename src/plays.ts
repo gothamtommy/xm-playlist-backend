@@ -18,7 +18,7 @@ export async function getLast(channel: Channel): Promise<any> {
   });
 }
 
-export async function getRecent(channel: Channel, last?: Date) {
+export async function getRecent(channel: Channel, last?: Date): Promise<any> {
   const where: any = { channel: channel.number };
   if (last) {
     where.startTime = { [Op.lt]: last };

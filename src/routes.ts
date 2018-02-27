@@ -1,6 +1,6 @@
 import * as Boom from 'boom';
 import { subDays } from 'date-fns';
-import { Request, ResponseToolkit, ServerRoute } from 'hapi';
+import { Request, RequestQuery, ResponseToolkit, ServerRoute } from 'hapi';
 import { assert } from 'hoek';
 import * as Joi from 'joi';
 import * as _ from 'lodash';
@@ -14,8 +14,8 @@ import { playsByDay } from './tracks';
 const channelRoute: ServerRoute = {
   path: '/channel/{id}',
   method: 'GET',
-  config: {
-    cors: true,
+  options: {
+    cors: { origin: 'ignore' },
     validate: {
       params: {
         id: Joi.string(),
@@ -28,8 +28,9 @@ const channelRoute: ServerRoute = {
   handler: (req: Request, h: ResponseToolkit) => {
     const channel = channels.find(_.matchesProperty('id', req.params.id));
     assert(!_.isUndefined(channel), Boom.notFound('Channel not Found'));
-    if (req.query.last) {
-      const last = new Date(parseInt(req.query.last, 10));
+    const query: RequestQuery = req.query as RequestQuery;
+    if (query.last) {
+      const last = new Date(parseInt(query.last as string, 10));
       return getRecent(channel, last);
     }
     return getRecent(channel);
@@ -39,8 +40,8 @@ const channelRoute: ServerRoute = {
 const newestRoute: ServerRoute = {
   path: '/newest/{id}',
   method: 'GET',
-  config: {
-    cors: true,
+  options: {
+    cors: { origin: 'ignore' },
     validate: {
       params: {
         id: Joi.string(),
@@ -72,8 +73,8 @@ const newestRoute: ServerRoute = {
 const popularRoute: ServerRoute = {
   path: '/popular/{id}',
   method: 'GET',
-  config: {
-    cors: true,
+  options: {
+    cors: { origin: 'ignore' },
     validate: {
       params: {
         id: Joi.string(),
@@ -90,8 +91,8 @@ const popularRoute: ServerRoute = {
 const trackRoute: ServerRoute = {
   path: '/track/{id}',
   method: 'GET',
-  config: {
-    cors: true,
+  options: {
+    cors: { origin: 'ignore' },
     validate: {
       params: {
         id: Joi.number().positive(),
@@ -111,8 +112,8 @@ const trackRoute: ServerRoute = {
 const trackActivityRoute: ServerRoute = {
   path: '/trackActivity/{id}',
   method: 'GET',
-  config: {
-    cors: true,
+  options: {
+    cors: { origin: 'ignore' },
     validate: {
       params: {
         id: Joi.number().positive(),
@@ -128,8 +129,8 @@ const trackActivityRoute: ServerRoute = {
 const artistRoute: ServerRoute = {
   path: '/artist/{id}',
   method: 'GET',
-  config: {
-    cors: true,
+  options: {
+    cors: { origin: 'ignore' },
     validate: {
       params: {
         id: Joi.number().positive(),

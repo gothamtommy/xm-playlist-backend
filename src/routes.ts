@@ -1,6 +1,6 @@
 import * as Boom from 'boom';
 import { subDays } from 'date-fns';
-import { Request, RequestQuery, ResponseToolkit, ServerRoute } from 'hapi';
+import { Request, ResponseToolkit, ServerRoute } from 'hapi';
 import { assert } from 'hoek';
 import * as Joi from 'joi';
 import * as _ from 'lodash';
@@ -28,7 +28,7 @@ const channelRoute: ServerRoute = {
   handler: (req: Request, h: ResponseToolkit) => {
     const channel = channels.find(_.matchesProperty('id', req.params.id));
     assert(!_.isUndefined(channel), Boom.notFound('Channel not Found'));
-    const query: RequestQuery = req.query as RequestQuery;
+    const query: any = req.query as any;
     if (query.last) {
       const last = new Date(parseInt(query.last as string, 10));
       return getRecent(channel, last);

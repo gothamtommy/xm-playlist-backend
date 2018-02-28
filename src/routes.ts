@@ -15,7 +15,7 @@ const channelRoute: ServerRoute = {
   path: '/channel/{id}',
   method: 'GET',
   options: {
-    cors: { origin: 'ignore' },
+    cors: { origin: '*' },
     validate: {
       params: {
         id: Joi.string(),
@@ -41,7 +41,7 @@ const newestRoute: ServerRoute = {
   path: '/newest/{id}',
   method: 'GET',
   options: {
-    cors: { origin: 'ignore' },
+    cors: { origin: '*' },
     validate: {
       params: {
         id: Joi.string(),
@@ -74,7 +74,7 @@ const popularRoute: ServerRoute = {
   path: '/popular/{id}',
   method: 'GET',
   options: {
-    cors: { origin: 'ignore' },
+    cors: { origin: '*' },
     validate: {
       params: {
         id: Joi.string(),
@@ -92,7 +92,7 @@ const trackRoute: ServerRoute = {
   path: '/track/{id}',
   method: 'GET',
   options: {
-    cors: { origin: 'ignore' },
+    cors: { origin: '*' },
     validate: {
       params: {
         id: Joi.number().positive(),
@@ -113,7 +113,7 @@ const trackActivityRoute: ServerRoute = {
   path: '/trackActivity/{id}',
   method: 'GET',
   options: {
-    cors: { origin: 'ignore' },
+    cors: { origin: '*' },
     validate: {
       params: {
         id: Joi.number().positive(),
@@ -130,7 +130,7 @@ const artistRoute: ServerRoute = {
   path: '/artist/{id}',
   method: 'GET',
   options: {
-    cors: { origin: 'ignore' },
+    cors: { origin: '*' },
     validate: {
       params: {
         id: Joi.number().positive(),

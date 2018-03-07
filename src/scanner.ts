@@ -9,7 +9,7 @@ import { checkEndpoint } from './sirius';
 
 const log = debug('xmplaylist');
 
-const sentry = Raven.config(config.dsn, { autoBreadcrumbs: false });
+const sentry = Raven.config(config.dsn, { autoBreadcrumbs: false }).install();
 
 async function updateAll() {
   for (const channel of channels) {

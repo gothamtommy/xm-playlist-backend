@@ -6,7 +6,7 @@ import * as url from 'url';
 import config from '../config';
 import { updatePlaylists } from '../src/spotify';
 
-const sentry = Raven.config(config.dsn, { autoBreadcrumbs: false });
+const sentry = Raven.config(config.dsn, { autoBreadcrumbs: false }).install();
 
 async function main() {
   let browser: puppeteer.Browser;

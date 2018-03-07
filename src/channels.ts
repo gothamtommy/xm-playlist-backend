@@ -5,8 +5,7 @@ export interface Channel {
   number: number;
   genre: string;
   desc: string;
-  img?: string;
-  playlist?: string;
+  playlist: string;
 }
 export const channels: Channel[] = [
   {
@@ -499,13 +498,14 @@ export const channels: Channel[] = [
   //   genre: 'Jazz/Standards',
   //   desc: 'Smooth/Contemporary Jazz',
   // },
-  // {
-  //   id: 'purejazz',
-  //   number: 67,
-  //   name: 'Real Jazz',
-  //   genre: 'Jazz/Standards',
-  //   desc: 'Classic Jazz',
-  // },
+  {
+    id: 'purejazz',
+    number: 67,
+    name: 'Real Jazz',
+    genre: 'Jazz/Standards',
+    desc: 'Classic Jazz',
+    playlist: '3mDuSPlntj533CvZXvMnDS',
+  },
   // {
   //   id: 'spa73',
   //   number: 68,
@@ -555,13 +555,14 @@ export const channels: Channel[] = [
   //   genre: 'Classical',
   //   desc: 'Opera/Classical Voices',
   // },
-  // {
-  //   id: 'symphonyhall',
-  //   number: 76,
-  //   name: 'Symphony Hall',
-  //   genre: 'Classical',
-  //   desc: 'Classical Music',
-  // },
+  {
+    id: 'symphonyhall',
+    number: 76,
+    name: 'Symphony Hall',
+    genre: 'Classical',
+    desc: 'Classical Music',
+    playlist: '4KdXsNll67tp8qsp8wT0jF',
+  },
   // {
   //   id: 'rumbon',
   //   number: 158,
